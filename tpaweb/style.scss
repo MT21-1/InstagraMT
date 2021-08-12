@@ -1,0 +1,1752 @@
+$phone : 480px;
+$tablet : 1024px;
+$mainColor: #072AC8;
+$secColor: #00A6FB;
+$lightMainColor: white;
+$line:rgb(231, 231, 231);
+$lightSecColor: rgb(240, 246, 250);
+$popUpWidth: 200px;
+
+.body,html::-webkit-scrollbar{
+    width: 8px;
+}
+
+.body,html::-webkit-scrollbar-track{
+    background-color: $lightSecColor;
+    border-radius: 100px;
+}
+
+.body,html::-webkit-scrollbar-thumb{
+    background-color: $mainColor;
+    border-radius: 100px;
+}
+
+html, body{
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    width: 100vw;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    font-family: Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    p{
+        margin: 5px 0 5px 0;
+        padding: 0%;
+    }
+}
+// Header
+.pembungkus{
+    z-index: 10;
+    position: fixed;
+    height: 60px;
+    width: 100%;
+    min-width: 320px;
+    border-bottom: 2px solid  $line;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $lightMainColor;
+    .header{
+        margin: 0%;
+        padding: 4px;
+        background-color: $lightMainColor;
+        
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 70%;
+        height: 55px;
+        .logo{
+            font-family: "Style Script", cursive;
+            font-size: 1rem;
+            width: fit-content;
+            
+        }
+        .searchBar{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: fit-content ;
+            input{
+                background-color: rgb(240, 240, 240);
+                border-radius: 8px;
+                padding: 0.4rem 1.4rem 0.4rem 1.4rem;
+                font-size: 0.8rem;
+                border: 2px solid rgb(220, 220, 220)
+                
+            }
+        }
+        .iconDiv{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 200px;
+            svg{
+                height: 2rem;
+                color: black;
+                object-fit: contain;
+            }
+            img{
+                height: 2rem;
+                width: 2rem;
+                object-fit: contain;
+                border-radius: 50%;
+            }
+            #msgMobile{
+                display: none;
+            }
+        }
+        .navDiv{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 160px;
+            a{
+                overflow: hidden;
+                text-decoration: none;
+                color: white;
+                background-color: $secColor;
+                padding: 0.7rem;
+                border-radius: 7px;
+                transition-duration: 0.6s;
+                font-family: Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+                font-size: 1rem;
+                font-weight: 500;
+                &:hover{
+                    background-color:$mainColor;
+                    color: $lightMainColor;
+                }
+               
+            }
+        }
+    }
+    @media screen and (max-width: $tablet){
+        .header{
+            margin: 0%;
+            padding: 0 1rem 0 1rem;
+            width: 100%;
+            height: 50px;
+            .logo{
+                font-size: 1rem;
+                width: fit-content;
+            }
+            .searchBar{
+                width: fit-content;
+                
+                input{
+                    padding: 0.4rem 1.4rem 0.4rem 1.4rem;
+                    font-size: 0.8rem;
+                    width: 130px;
+                    margin: 0 1rem 0 1rem;
+                }
+            }
+            .iconDiv{
+                width: fit-content;
+                svg{
+                    height: 2rem;
+                    padding: 0 0.2rem 0 0.2rem;
+                }
+                img{
+                    height: 2rem;
+                    width: 2rem;
+                }
+            }
+        }
+    }
+    @media screen and (max-width: $phone) {
+        .header{
+            width: 100%;
+            height: 40px;
+            .logo{
+                font-size: 1rem;
+                width: fit-content;
+            }
+            .searchBar{
+                display: none;
+                width: fit-content;
+                input{
+                    padding: 0.1rem 1.1rem 0.1rem 1.1rem;
+                    font-size: 0.8rem;
+                    width: 90px;
+                }
+            }
+            .iconDiv{
+                width: fit-content;
+                svg{
+                    height: 2.5rem;
+                    padding: 0 0.5rem 0 0.5rem;
+                }
+                img{
+                    height: 2rem;
+                    width: 2rem;
+                }
+                #home{
+                    display: none;
+                }
+                #explore{
+                    display:none;
+                }
+                #profile{
+                    display: none;
+                }
+                #msg{
+                    display: none;
+                }
+                #msgMobile{
+                    display:block;
+                }
+            }
+        }
+    }
+    
+}
+
+
+//Login
+#loginOuterDiv{
+    display: flex;
+    width: 100%;
+    height: 800px;
+    align-items: center;
+    justify-content: center;
+    background-color: $lightSecColor;
+    #loginMainDiv{
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        background-color: $lightSecColor;
+        width: 700px;
+        min-height: 600px;
+        height: 600px;
+        #loginImageDiv{
+            img{
+                object-fit: contain;
+                height: 650px;
+            }
+            
+        }
+        #loginFormDiv{
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 600px;
+            background-color: $lightSecColor;
+            #loginForm{
+                padding: 3rem 2.5rem 3rem 2.5rem;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: space-between;
+                background-color: $lightMainColor;
+                border: 1px solid $line;
+                height: 330px;
+                #title{
+                    font-family: "Style Script", cursive;
+                    font-size: 3rem;
+                    width: fit-content;
+                    margin: 0;
+                }
+
+                form{
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    width: 100%;
+                    input{
+                        padding: 0.4rem 1rem 0.4rem 1rem;
+                        border:1px solid $line;
+                        border-radius: 2px;
+                        margin-top:0.4rem;
+                        width: 200px;
+                        font-size: 12px;
+                        background-color: rgb(240, 240, 240);
+                        color: black;
+                    }
+                    #loginButton{
+                        margin-top:1rem;
+                        overflow: hidden;
+                        text-decoration: none;
+                        color: white;
+                        background-color: $secColor;
+                        padding: 0.4rem 1rem 0.4rem 1rem;
+                        border-radius: 3px;
+                        transition-duration: 0.6s;
+                        
+                        font-size: 0.8rem;
+                        font-weight: 600;
+                        width: 100%;
+                        &:hover{
+                            cursor: pointer;
+                        }
+                    }
+                }
+
+                #orDiv{
+                    display: flex;
+                    width: 100%;
+                    justify-content: space-between;
+                    color: darkgray;
+                    p{
+                        margin:0px 8px 0px 8px;
+                    }
+                    hr{
+                        background-color: darkgray;
+                        height: 0.1px;
+                        width: 100%;
+                    }
+                }
+
+                #altLogin{
+                   display: flex;
+                   justify-content: center;
+                   align-items: center;
+                   background-color: $lightMainColor;
+                   border: none;
+                   width: 100%;
+                    span{
+                        color: $mainColor;
+                        font-size: 1rem;
+                        font-weight: 600;
+                    }
+
+                    img{
+                        object-fit: contain;
+                        height: 20px;
+                        margin-right:5px;
+                    }
+
+                    &:hover{
+                        cursor: pointer;
+                    }
+                    
+                }
+
+                a{
+                    text-align: center;
+                    width: 100%;
+                    text-decoration: none;
+                    font-size: 0.8rem;
+                }
+            }
+            
+            #signUpDiv{
+                padding: 1rem 2.5rem 1rem 2.5rem;
+                background-color: $lightMainColor;
+                border: 1px solid $line;
+                a{
+                    text-decoration: none;
+                    margin-left: 5px;
+                    color: $secColor;
+                    font-weight: 500;
+                }
+            }
+
+            #downloadDiv{
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                height: 100px;
+                p{
+                    font-size: 14px;
+                    font-weight: 300;
+                }
+                span{
+                    margin-top: 10px;
+                    display: flex;
+                    justify-content: space-evenly;
+                    width: 100%;
+                    padding:0 1rem 0 1rem;
+                    img{
+                        object-fit: contain;
+                        height: 45px;
+                    }
+                    
+                }
+            }
+        }
+        
+    }
+    @media screen and (max-width: $tablet){
+        #loginImageDiv{
+            display: none;
+        }
+    }
+    @media screen and (max-width: $phone) {
+        
+        #loginMainDiv{
+            min-width: 320px;
+            height: 100%;
+            background-color: $lightMainColor;
+            #loginImageDiv{
+                display: none;
+            }
+            #loginFormDiv{
+                width: 100%;
+                
+                min-width: 260px;
+                background: $lightMainColor;
+                #loginForm{
+                    border:none;
+                    form{
+                        input{
+                            width: 100%;
+                            padding: 0.7rem 0rem 0.7rem 0rem;
+                        }
+                    }
+                    
+                }
+                #signUpDiv{
+                    display: flex;
+                    justify-content: center;
+                    border:none;
+                    height: fit-content;
+                }
+            }
+        
+        }
+    }
+}
+//Footer
+.footer{
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    background-color: $lightSecColor;
+    justify-content: center;
+    align-items: center;
+    .links{
+        display: flex;
+        flex-wrap: wrap;
+        width: 600px;
+        justify-content: space-evenly;
+        a{
+            text-decoration: none;
+            font-size: 11px;
+            color: black;
+            margin: 0 4px 0 4px;
+        }
+    }
+    span{
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        width: 400px;
+        font-size: 12px;
+        select{
+            font-size: 12px;
+            background-color: $lightSecColor;
+            border:none;
+        }
+
+    }
+    @media screen and (max-width: $tablet){
+        .links{
+            width: 500px;
+        }
+    }
+    @media screen and (max-width: $phone) {
+        .links{
+            width: 300px;
+        }
+    }
+}
+
+
+//Sign Up
+#registerOuterDiv{
+    display: flex;
+    width: 100%;
+    height: 900px;
+    align-items: flex-start;
+    justify-content: center;
+    background-color: $lightSecColor;
+    #registerMainDiv{
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        background-color: $lightSecColor;
+        width: 100%;
+        height: 100%;
+        
+        #registerFormDiv{
+            display: flex;
+            margin-top:4rem;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 820px;
+            width: 360px;
+            background-color: $lightSecColor;
+            .signUp{
+                color: darkgray;
+                text-align: center;
+                font-size: 18px;
+                font-weight: 500;
+            }
+            .terms{
+                color: darkgray;
+                text-align: center;
+                font-size: 12px;
+                font-weight: 300;
+                a{
+                    font-weight: 500;
+                    color: darkgray;
+                }
+            }
+            #registerForm{
+                padding: 2rem 2.5rem 2rem 2.5rem;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: space-between;
+                background-color: $lightMainColor;
+                border: 1px solid $line;
+                height: 550px;
+                
+                #title{
+                    font-family: "Style Script", cursive;
+                    font-size: 3rem;
+                    width: fit-content;
+                    margin: 0;
+                }
+
+                form{
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    width: 100%;
+                    input{
+                        padding: 0.7rem 1rem 0.7rem 1rem;
+                        border:1px solid $line;
+                        border-radius: 2px;
+                        margin-top:0.4rem;
+                        width: 240px;
+                        font-size: 12px;
+                        background-color: rgb(240, 240, 240);
+                        color: black;
+                    }
+                    #registerButton{
+                        margin-top:1rem;
+                        overflow: hidden;
+                        text-decoration: none;
+                        color: white;
+                        background-color: $secColor;
+                        padding: 0.4rem 1rem 0.4rem 1rem;
+                        border-radius: 3px;
+                        transition-duration: 0.6s;
+                        
+                        font-size: 0.8rem;
+                        font-weight: 600;
+                        width: 100%;
+                        &:hover{
+                            cursor: pointer;
+                        }
+                    }
+                }
+
+                #orDiv{
+                    display: flex;
+                    width: 100%;
+                    justify-content: space-between;
+                    color: darkgray;
+                    p{
+                        margin:0px 8px 0px 8px;
+                    }
+                    hr{
+                        background-color: darkgray;
+                        height: 0.1px;
+                        width: 100%;
+                    }
+                }
+
+                #altLogin{
+                   display: flex;
+                   justify-content: center;
+                   align-items: center;
+                   background-color: $secColor;
+                   padding: 0.5rem 1rem 0.5rem 1rem;
+                   border-radius: 5px;
+                   border:none;
+                   width: 100%;
+                    span{
+                        color: $lightMainColor;
+                        font-size: 1rem;
+                        font-weight: 600;
+                    }
+
+                    img{
+                        object-fit: contain;
+                        height: 20px;
+                        margin-right:5px;
+                    }
+
+                    &:hover{
+                        cursor: pointer;
+                    }
+                    
+                }
+
+                a{
+                    text-align: center;
+                    width: 100%;
+                    text-decoration: none;
+                    font-size: 0.8rem;
+                }
+            }
+            
+            #signUpDiv{
+                padding: 1.5rem 2.5rem 1.5rem 2.5rem;
+                font-size: 14px;
+                background-color: $lightMainColor;
+                border: 1px solid $line;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                a{
+                    text-decoration: none;
+                    margin-left: 5px;
+                    color: $secColor;
+                    font-weight: 500;
+                }
+            }
+
+            #downloadDiv{
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                height: 100px;
+                p{
+                    font-size: 14px;
+                    font-weight: 300;
+                }
+                span{
+                    margin-top: 10px;
+                    display: flex;
+                    justify-content: space-evenly;
+                    width: 100%;
+                    padding:0 1rem 0 1rem;
+                    img{
+                        object-fit: contain;
+                        height: 45px;
+                    }
+                    
+                }
+            }
+        }
+        
+    }
+    @media screen and (max-width: $phone) {
+        #registerMainDiv{
+            min-width: 320px;
+            height: 100%;
+            background-color: $lightMainColor;
+            #registerFormDiv{
+                width: 100%;
+                min-width: 260px;
+                background: $lightMainColor;
+                #registerForm{
+                    border:none;
+                    form{
+                        input{
+                            width: 100%;
+                            
+                            padding: 0.7rem 0rem 0.7rem 0rem;
+                        }
+                    }
+                    
+                }
+                #signUpDiv{
+                    display: flex;
+                    justify-content: center;
+                    border:none;
+                    height: fit-content;
+                    padding: 0;
+                }
+            }
+        }
+
+    }
+    
+}
+
+//Verify Page
+#verifyOuterDiv{
+    display: flex;
+    width: 100%;
+    height: 700px;
+    align-items: flex-start;
+    justify-content: center;
+    background-color: $lightSecColor;
+    #verifyMainDiv{
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        background-color: $lightSecColor;
+        width: 100%;
+        height: 700px;
+        
+        #verifyFormDiv{
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: fit-content;
+            width: 360px;
+            background-color: $lightSecColor;
+            
+            #verifyForm{
+                padding: 2rem 2.5rem 2rem 2.5rem;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: space-between;
+                background-color: $lightMainColor;
+                border: 1px solid $line;
+                height: 550px;
+                #title{
+                    font-family: "Style Script", cursive;
+                    font-size: 3rem;
+                    width: fit-content;
+                    margin: 0;
+                }
+
+                .verifyText{
+                    color: darkgray;
+                    text-align: center;
+                    font-size: 18px;
+                    font-weight: 500;
+                }
+
+                form{
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    width: 100%;
+                    input{
+                        padding: 0.7rem 1rem 0.7rem 1rem;
+                        border:1px solid $line;
+                        border-radius: 2px;
+                        margin-top:0.4rem;
+                        width: 240px;
+                        font-size: 12px;
+                        background-color: rgb(240, 240, 240);
+                        color: black;
+                    }
+                    #verifyButton{
+                        margin-top:0;
+                        overflow: hidden;
+                        text-decoration: none;
+                        color: white;
+                        background-color: $secColor;
+                        padding: 0.4rem 1rem 0.4rem 1rem;
+                        border-radius: 3px;
+                        transition-duration: 0.6s;
+                        
+                        font-size: 0.8rem;
+                        font-weight: 600;
+                        width: 100%;
+                        &:hover{
+                            cursor: pointer;
+                        }
+                    }
+                }
+            }
+            
+            #signUpDiv{
+                padding: 1.5rem 2.5rem 1.5rem 2.5rem;
+                font-size: 14px;
+                background-color: $lightMainColor;
+                border: 1px solid $line;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                a{
+                    text-decoration: none;
+                    margin-left: 5px;
+                    color: $secColor;
+                    font-weight: 500;
+                }
+            }
+
+        }
+        
+    }
+    @media screen and (max-width: $phone) {
+        #verifyMainDiv{
+            min-width: 320px;
+            height: 100%;
+            background-color: $lightMainColor;
+            #verifyFormDiv{
+                width: 100%;
+                min-width: 260px;
+                background: $lightMainColor;
+                #verifyForm{
+                    border:none;
+                    form{
+                        input{
+                            width: 100%;
+                            
+                            padding: 0.7rem 0rem 0.7rem 0rem;
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+    
+}
+.resend{
+    color: darkgray;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 300;
+    p{
+        margin: 0%;
+        padding: 0%;
+        display: inline;    
+        font-size:12px;
+    }
+    #resendTimer{
+        a{
+            margin: 0%;
+            padding: 0%;
+            text-decoration: none;
+            font-weight: 600;
+        }
+    }
+    
+}
+//Forgot Password Page
+#forgotOuterDiv{
+    display: flex;
+    width: 100%;
+    height: 700px;
+    align-items: flex-start;
+    justify-content: center;
+    background-color: $lightSecColor;
+    #forgotMainDiv{
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        background-color: $lightSecColor;
+        width: 100%;
+        height: 750px;
+        
+        #forgotFormDiv{
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: fit-content;
+            width: 360px;
+            background-color: $lightSecColor;
+            
+            #forgotForm{
+                padding: 2rem 2.5rem 2rem 2.5rem;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: space-between;
+                background-color: $lightMainColor;
+                border: 1px solid $line;
+                height: 450px;
+                img{
+                    object-fit: contain;
+                    width: 150px;
+                }
+                h1{
+                    font-size: 1.5rem;
+                    width: fit-content;
+                    margin: 0;
+                }
+
+                .forgotText{
+                    color: darkgray;
+                    text-align: center;
+                    font-size: 14px;
+                    font-weight: 500;
+                }
+
+                form{
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    width: 100%;
+                    input{
+                        padding: 0.7rem 1rem 0.7rem 1rem;
+                        border:1px solid $line;
+                        border-radius: 2px;
+                        margin-top:0.4rem;
+                        width: 240px;
+                        font-size: 12px;
+                        background-color: rgb(240, 240, 240);
+                        color: black;
+                    }
+                    #sendButton{
+                        margin-top:0;
+                        overflow: hidden;
+                        text-decoration: none;
+                        color: white;
+                        background-color: $secColor;
+                        padding: 0.4rem 1rem 0.4rem 1rem;
+                        border-radius: 3px;
+                        transition-duration: 0.6s;
+                        
+                        font-size: 0.8rem;
+                        font-weight: 600;
+                        width: 100%;
+                        &:hover{
+                            cursor: pointer;
+                        }
+                    }
+                }
+                #orDiv{
+                    display: flex;
+                    width: 100%;
+                    justify-content: space-between;
+                    color: darkgray;
+                    p{
+                        margin:0px 8px 0px 8px;
+                    }
+                    hr{
+                        background-color: darkgray;
+                        height: 0.1px;
+                        width: 100%;
+                    }
+                }
+                a{
+                    text-decoration: none;
+                    color: $secColor;
+                    font-weight: 500;
+                    font-size:16px;
+                }
+                
+            }
+            
+            .backButton{
+                padding: 1rem 1.5rem 1rem 1.5rem;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: space-between;
+                background-color: $lightMainColor;
+                border: 1px solid $line;
+                a{
+                    text-decoration: none;
+                    font-weight: 500;
+                }
+            }
+
+        }
+        
+    }
+    @media screen and (max-width: $phone) {
+        #forgotMainDiv{
+            min-width: 320px;
+            height: 100%;
+            background-color: $lightMainColor;
+            #forgotFormDiv{
+                width: 100%;
+                min-width: 260px;
+                background: $lightMainColor;
+                #forgotForm{
+                    border:none;
+                    form{
+                        input{
+                            width: 100%;
+                            
+                            padding: 0.7rem 0rem 0.7rem 0rem;
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+    
+}
+
+//Reset Pass Page
+#resetOuterDiv{
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+    align-items: center;
+    justify-content: center;
+    background-color: $lightSecColor;
+    #resetMainDiv{
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        background-color: $lightSecColor;
+        width: 100%;
+        height: 500px;
+        
+        #resetFormDiv{
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: fit-content;
+            width: 360px;
+            background-color: $lightSecColor;
+            
+            #resetForm{
+                padding: 2rem 2.5rem 2rem 2.5rem;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: space-between;
+                background-color: $lightMainColor;
+                border: 1px solid $line;
+                height: 180px;
+                h1{
+                    font-size: 1.5rem;
+                    width: fit-content;
+                    margin: 0;
+                }
+
+                .resetText{
+                    color: darkgray;
+                    text-align: center;
+                    font-size: 14px;
+                    font-weight: 500;
+                }
+
+                form{
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    width: 100%;
+                    input{
+                        padding: 0.7rem 1rem 0.7rem 1rem;
+                        border:1px solid $line;
+                        border-radius: 2px;
+                        margin-top:0.4rem;
+                        width: 240px;
+                        font-size: 12px;
+                        background-color: rgb(240, 240, 240);
+                        color: black;
+                    }
+                    #sendButton{
+                        margin-top:0;
+                        overflow: hidden;
+                        text-decoration: none;
+                        color: white;
+                        background-color: $secColor;
+                        padding: 0.4rem 1rem 0.4rem 1rem;
+                        border-radius: 3px;
+                        transition-duration: 0.6s;
+                        
+                        font-size: 0.8rem;
+                        font-weight: 600;
+                        width: 100%;
+                        &:hover{
+                            cursor: pointer;
+                        }
+                    }
+                }
+                a{
+                    text-decoration: none;
+                    color: $secColor;
+                    font-weight: 500;
+                    font-size:16px;
+                }
+                
+            }
+            
+            .backButton{
+                padding: 1rem 1.5rem 1rem 1.5rem;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: space-between;
+                background-color: $lightMainColor;
+                border: 1px solid $line;
+                a{
+                    text-decoration: none;
+                    font-weight: 500;
+                }
+            }
+
+        }
+        
+    }
+    @media screen and (max-width: $phone) {
+        #resetMainDiv{
+            min-width: 320px;
+            height: 100%;
+            background-color: $lightMainColor;
+            #resetFormDiv{
+                width: 100%;
+                min-width: 260px;
+                background: $lightMainColor;
+                #resetForm{
+                    border:none;
+                    form{
+                        input{
+                            width: 100%;
+                            
+                            padding: 0.7rem 0rem 0.7rem 0rem;
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+    
+}
+
+.popUp{
+    position: relative;
+    width: $popUpWidth;
+    padding: 0.5rem 1rem 1rem 1rem;
+    background-color: $lightMainColor;
+    border: 1px solid $line;    
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+    a{
+        font-size: 16px;
+        text-decoration: none;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        padding: 0.3rem 0rem 0.3rem 0rem;
+        color: black;
+        svg{
+            width: 24px;
+            padding: 0.2rem 0.5rem 0.2rem 0rem;
+            object-fit: contain;
+        }
+        button{
+            
+            font-size: 16px;
+            font-weight: 500;
+            padding: 0.5rem 0.5rem 0rem 0.5rem;
+            width: 100%;
+            background-color: $lightMainColor;
+            border: none;
+            border-top:2px solid $line;
+            cursor: pointer;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+        }
+    }
+}
+.popUp:after{
+    content:"";
+    width: 15px;
+    height: 15px;
+    transform: rotate(-45deg);
+    background-color: $lightMainColor;
+    border: 1px solid $line;    
+    position: absolute;
+    z-index: -1;
+    top:-8px;
+    left:$popUpWidth;
+    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.5);
+}
+
+// Home
+.outerDiv{
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background-color: $lightSecColor;    
+    .innerDiv{
+        display: flex;
+        background-color: $lightSecColor;
+        width: 70%;
+        min-height: 100vh;
+        padding-top: 2rem;
+        
+        .leftHomeDiv{
+            padding: 4rem 0rem 0rem 0rem;
+            width: 66%;
+            display: flex;
+            
+            align-items: center;
+            flex-direction: column;
+            .storyDiv::-webkit-scrollbar{
+                display: none;
+            }
+            .storyDiv{
+                overflow-x: scroll;
+                overflow-y:hidden;
+                background-color: $lightMainColor;
+                border:1px solid $line;
+                width: 100%;
+                height: 4rem;
+                display: flex;
+                padding: 0.8rem;
+                img{
+                    width: 3.5rem;
+                    height: 3.5rem;
+                    object-fit: contain;
+                    border-radius: 50%;
+                    border:2px solid transparent;
+                    background: linear-gradient(to bottom left, #fd1892, #b8fd33);
+                    padding: 0.5px;
+                    margin:0 0.5rem 0 0.5rem;
+                }
+
+            }
+        }
+
+        .rightHomeDiv{
+            position: fixed;
+            top: 60px;
+            left: 62.4%;
+            min-height: 100vh;
+            width: 22.5%;
+            background-color: $lightSecColor;
+            padding: 2rem 0rem 2rem 1rem;
+            .profileSuggestion{
+                margin: 0.8rem 0rem 0.8rem 0rem;
+                display: flex;
+                justify-content: space-between;
+                img{
+                    object-fit: contain;
+                    height: 4rem;
+                    width: 4rem;
+                    border-radius: 50%;
+                    border:1px solid $line;
+                }
+                .profileDetail{
+                    display: flex;
+                    div{
+                        margin-left: 1rem;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: flex-start;
+                        p{
+                            margin: 0%;
+                            padding: 0%;
+                        }
+                        .username{
+                            font-weight: bold;
+                        }
+                        .subname{
+                            font-weight: 400;
+                            color: darkgray;
+                        }
+                    }
+                }
+                
+                a{
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    text-decoration: none;
+                    color: $secColor;
+                    font-weight: bold;
+                    font-size: 14px;
+                }
+            }
+            span{
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                color: darkgray;
+                font-weight: bold;
+                a{
+                    text-decoration: none;
+                    color: rgb(32, 32, 32);
+                    font-weight: 500;
+                }
+            }
+
+            .friendSuggestion{
+                margin: 0.8rem 0rem 0.8rem 0rem;
+                display: flex;
+                justify-content: space-between;
+                img{
+                    object-fit: contain;
+                    height: 3rem;
+                    width: 3rem;
+                    border-radius: 50%;
+                    border:1px solid $line;
+                }
+                .profileDetail{
+                    display: flex;
+                    div{
+                        margin-left: 1rem;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: flex-start;
+                        p{
+                            margin: 0%;
+                            padding: 0%;
+                        }
+                        .username{
+                            font-weight: bold;
+                        }
+                        .subname{
+                            font-size: 13px;
+                            font-weight: 400;
+                            color: darkgray;
+                        }
+                    }
+                }
+                
+                a{
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    text-decoration: none;
+                    color: $secColor;
+                    font-weight: bold;
+                    font-size: 14px;
+                }
+            }
+            //Footer for home
+            .footer{
+                height: 100px;
+                display: flex;
+                flex-direction: column;
+                background-color: $lightSecColor;
+                justify-content: center;
+                align-items: center;
+                .links{
+                    display: flex;
+                    flex-wrap: wrap;
+                    width: 100%;
+                    justify-content: space-evenly;
+                    a{
+                        text-decoration: none;
+                        font-size: 11px;
+                        color: black;
+                        margin: 0 4px 0 4px;
+                    }
+                }
+                span{
+                    display: flex;
+                    justify-content: space-evenly;
+                    align-items: center;
+                    width: 100%;
+                    font-size: 12px;
+                    select{
+                        font-size: 12px;
+                        background-color: $lightSecColor;
+                        border:none;
+                    }
+
+                }
+            }
+        }
+        @media screen and (max-width: $tablet) {
+            .rightHomeDiv{
+                display: none;
+            }
+            .leftHomeDiv{
+                width: 100%;
+            }
+    
+        }
+    }
+    @media screen and (max-width: $phone) {
+        .innerDiv{
+            width: 100%;
+            background-color: $lightMainColor;
+            margin: 0;
+            padding: 0;
+        }
+        .leftHomeDiv{
+            width: 100%;
+        }
+
+    }
+    
+}
+
+.postDiv{
+    margin: 1rem 0 1rem 0;
+    background-color: $lightMainColor;
+    border:1px solid $line;
+    width: 100%;
+    display: flex;
+    padding: 0.8rem;
+    flex-direction: column;
+    .postProfileDiv{
+        padding:0.5rem 0rem 0.5rem 0rem;
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        a{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            color: black;
+            font-weight: 600;
+            span{
+                margin-left: 1rem;
+            }
+            span:hover{
+                text-decoration: underline;
+            }
+            img{
+                width: 3rem;
+                height: 3rem;
+                border-radius: 50%;
+            }
+            
+
+        }
+        button{
+            width: 40px;
+            background-color: transparent;
+            border:none;
+            cursor: pointer;
+        }
+
+    }
+    .pictureDiv{
+        width: 100%;
+        img{
+            object-fit: contain;
+            width: 100%;
+        }
+    }
+    .interactDiv{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: 1rem 0 1rem 0;
+
+        .interactInnerDiv{
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+            .leftInnerDiv{
+                display: flex;
+                width: 145px;
+                justify-content: space-between;
+            }
+            button{
+                width: 45px;
+                cursor: pointer;
+                background-color: transparent;
+                border:none;
+            }
+        }
+    }
+    #likes{
+        margin: 0.1rem 0 0.1rem 0;
+        padding: 0%;
+        width: 100%;
+        font-weight: 600;
+    }
+
+    .captionDiv{
+        display: flex;
+        width: 100%;
+        #username{
+            font-weight: 600;
+        }
+        #caption{
+            margin-left: 0.4rem;
+        }
+    }
+    .viewMoreComments{
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        padding: 0%;
+        margin: 0%;
+        text-decoration: none;
+        color: darkgray;
+        font-weight: 400;
+        width: 100%;
+        
+    }
+    .commentSection{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+    #time{
+        display: flex;
+        width: 100%;
+        color: darkgray;
+        font-size: 12px;
+    }
+    .inputCommentSection{
+        border-top:1px solid $line;
+        padding:12px 0 0 0 ;
+        margin:12px 0 12px 0; 
+        display: flex;
+        width: 100%;
+        button{
+            width: 45px;
+            cursor: pointer;
+            background-color: transparent;
+            border:none;
+        }
+        input{
+            font-weight: 400;
+            width: 100%;
+            border:none
+        }
+        #postButton{
+            color: $secColor;
+            font-weight: 700;
+        }
+    }
+}
+
+@media screen and (max-width: $phone) {
+    .postDiv{
+        border: none;
+        margin:0%;
+        margin-top:1rem;
+        .inputCommentSection{
+            display: none;
+        }
+    }
+
+}
+
+.comment{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    #usernameComment{
+        font-weight: 600;
+    }
+    #comment{
+        margin-left: 0.4rem;
+    }
+    .commentValue{
+        display: flex;
+        
+    }
+    .interactComment{
+        button{
+            width: 30px;
+            cursor: pointer;
+            background-color: transparent;
+            border:none;
+        }
+    }
+}
+
+.errorText{
+    color: red;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+// Profile Page
+
+.homeOuterDiv{
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background-color: $lightSecColor;    
+    .homeInnerDiv{
+        display: flex;
+        flex-direction: column;
+        background-color: $lightSecColor;
+        width: 70%;
+        min-height: 100vh;
+        padding-top: 60px;
+
+        .profileUpperDiv{
+
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            min-height: 300px;
+            max-height: fit-content;
+            width: 100%;
+            .profileImageDiv{
+                min-height: 200px;
+                height: 100%;
+                width: 30%;
+                display: flex;
+                justify-content: center;
+                align-items: flex-start;
+                img{
+                    object-fit: contain;
+                    border-radius: 50%  ;
+                    width: 180px;
+                    height: 180px;
+                }
+            }
+            .profileDetailDiv{
+                min-width: 400px;
+                min-height: 300px;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: flex-start;
+                
+                .profileUsernameDiv{
+                    display: flex;
+                    min-width: 450px;
+                    max-width: 100%;
+                    justify-content: space-between;
+                    align-items: center;
+                    height: fit-content;
+                    h1{
+                        margin: 0%;
+                        font-weight: 300;
+                    }
+                    #follow{
+                        background-color: $secColor;
+                        color: white;
+                        border: none;
+                        font-weight: bold;
+                        padding: 0rem 1.5rem 0rem 1.5rem;
+                        border-radius: 5px;
+                        min-height: 30px;
+                    }
+
+                    #dropDown{
+                        background-color: $secColor;
+                        color: white;
+                        border: none;
+                        padding: 0rem 1rem 0rem 1rem;
+                        min-height: 30px;
+                        border-radius: 5px;
+                        svg{
+                            height: 1.5rem;
+                            width: 1.5rem;
+                        }
+                    }
+                    #settings{
+                        background: none;
+                        border: none;
+                        padding: 0rem 1rem 0rem 1rem;
+                        min-height: 30px;
+                        svg{
+                            height: 1.5rem;
+                            width: 1.5rem;
+                        }
+                    }
+                }
+
+                .profileStatsDiv{
+                    margin: 0.7rem 0rem 0.7rem 0rem;
+                    display: flex;
+                    width: 330px;
+                    justify-content: space-between;
+                    align-items: center;
+                }
+                .subProfileDiv{
+                    margin: 0rem 0rem 0.7rem 0rem;
+                    .profileDescription{
+                        max-width: 450px;
+                    }
+                }
+                #followedBy{
+                    color: darkgray;
+                    font-size: 12px;
+                    font-weight: 600;
+                    b{
+                        color: black;
+                    }
+                }
+            }
+        }
+
+        .profileBottomDiv{
+            width: 100%;
+            border-top: 2px solid $line;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            .postNavbar{
+                display: flex;
+                width: 100%;
+                justify-content: center;
+                align-items: center;
+                button{
+
+                    background:none;
+                    border:none;
+                    padding: 1rem 2rem 0rem 2rem;
+                    font-size: 12px;
+                    color: darkgray;
+                    cursor: pointer;
+                }
+            }
+            .postDiv{
+                height: fit-content;
+                width: 100%;
+                display: flex;
+                flex-wrap: wrap;
+                flex-direction: row;
+                justify-content: flex-start;
+                background: $lightSecColor;
+                border: none;
+                button{
+                    cursor: pointer;
+                    margin: 1.5%;
+                    background: none;
+                    border: none;
+                    position: relative;
+                    width: 30%;
+                }
+                button:after{
+                    content: "";
+                    display: block;
+                    padding-bottom: 100%;
+                }
+                img{
+                    z-index: 1;
+                    position: absolute;
+                    top: 0%;
+                    right: 0;
+                    bottom: 0%;
+                    left: 0%;
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    object-position: center;
+                }
+            }
+        }
+
+
+    }
+
+}
+
+//loading
+.loading{
+    display:flex;
+    flex-direction: column;
+    min-height: 100vh;
+    font-size: large;
+    font-weight: bold;
+    justify-content: center;
+    align-items: center;
+    background-color: $lightSecColor;
+    a{
+        text-decoration: underline;
+        color: darkgray;
+    }
+}

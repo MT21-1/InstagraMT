@@ -1,0 +1,53 @@
+
+
+type Query {
+  users: [User!]!
+}
+
+type User{
+  id: String!
+  email: String!
+  full_name: String!
+  username: String!
+  password: String!
+  picture: String!
+  is_verified: Boolean!
+  is_google_account: Boolean!
+}
+
+input InputUser{
+  email: String!
+  full_name: String!
+  username: String!
+  password: String!
+}
+
+input LoginUser{
+  email: String!
+  password: String!
+}
+
+input VerifyEmail{
+  email: String!
+  token: String!
+}
+
+input updatePassword{
+  token: String!
+  password: String!
+}
+
+type Mutation{
+  createUser(input: InputUser!): String!
+  loginUser(input: LoginUser!): String!
+  usernameExist(input: String!): Boolean!
+  emailExist(input: String!):Boolean!
+  gmailLogin(access_token: String!): String!
+  isVerified(input: String!): Boolean!
+  resendVerificationCode(input: String!): String!
+  verifyUser(input: VerifyEmail!): String!
+  sendResetPassword(input: String!): String!
+  verifyResetPassword(input: updatePassword!): String!
+  getUserBasedOnUsername(input: String!): User!
+  getUserBasedOnEmail(input: String!): User!
+}

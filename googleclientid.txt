@@ -1,0 +1,3 @@
+client id : 405713718682-dsel4dkdolmtl4crcl2itvgm4lvhp8nh.apps.googleusercontent.com
+
+secret : iHpJHyTdA9JW1z4Nao3SjIlh

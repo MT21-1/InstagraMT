@@ -1,0 +1,1611 @@
+.body, html::-webkit-scrollbar {
+  width: 8px;
+}
+
+.body, html::-webkit-scrollbar-track {
+  background-color: #f0f6fa;
+  border-radius: 100px;
+}
+
+.body, html::-webkit-scrollbar-thumb {
+  background-color: #072AC8;
+  border-radius: 100px;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  width: 100vw;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  font-family: Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+html p, body p {
+  margin: 5px 0 5px 0;
+  padding: 0%;
+}
+
+.pembungkus {
+  z-index: 10;
+  position: fixed;
+  height: 60px;
+  width: 100%;
+  min-width: 320px;
+  border-bottom: 2px solid #e7e7e7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+}
+.pembungkus .header {
+  margin: 0%;
+  padding: 4px;
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 70%;
+  height: 55px;
+}
+.pembungkus .header .logo {
+  font-family: "Style Script", cursive;
+  font-size: 1rem;
+  width: fit-content;
+}
+.pembungkus .header .searchBar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+}
+.pembungkus .header .searchBar input {
+  background-color: #f0f0f0;
+  border-radius: 8px;
+  padding: 0.4rem 1.4rem 0.4rem 1.4rem;
+  font-size: 0.8rem;
+  border: 2px solid gainsboro;
+}
+.pembungkus .header .iconDiv {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 200px;
+}
+.pembungkus .header .iconDiv svg {
+  height: 2rem;
+  color: black;
+  object-fit: contain;
+}
+.pembungkus .header .iconDiv img {
+  height: 2rem;
+  width: 2rem;
+  object-fit: contain;
+  border-radius: 50%;
+}
+.pembungkus .header .iconDiv #msgMobile {
+  display: none;
+}
+.pembungkus .header .navDiv {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 160px;
+}
+.pembungkus .header .navDiv a {
+  overflow: hidden;
+  text-decoration: none;
+  color: white;
+  background-color: #00A6FB;
+  padding: 0.7rem;
+  border-radius: 7px;
+  transition-duration: 0.6s;
+  font-family: Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+}
+.pembungkus .header .navDiv a:hover {
+  background-color: #072AC8;
+  color: white;
+}
+@media screen and (max-width: 1024px) {
+  .pembungkus .header {
+    margin: 0%;
+    padding: 0 1rem 0 1rem;
+    width: 100%;
+    height: 50px;
+  }
+  .pembungkus .header .logo {
+    font-size: 1rem;
+    width: fit-content;
+  }
+  .pembungkus .header .searchBar {
+    width: fit-content;
+  }
+  .pembungkus .header .searchBar input {
+    padding: 0.4rem 1.4rem 0.4rem 1.4rem;
+    font-size: 0.8rem;
+    width: 130px;
+    margin: 0 1rem 0 1rem;
+  }
+  .pembungkus .header .iconDiv {
+    width: fit-content;
+  }
+  .pembungkus .header .iconDiv svg {
+    height: 2rem;
+    padding: 0 0.2rem 0 0.2rem;
+  }
+  .pembungkus .header .iconDiv img {
+    height: 2rem;
+    width: 2rem;
+  }
+}
+@media screen and (max-width: 480px) {
+  .pembungkus .header {
+    width: 100%;
+    height: 40px;
+  }
+  .pembungkus .header .logo {
+    font-size: 1rem;
+    width: fit-content;
+  }
+  .pembungkus .header .searchBar {
+    display: none;
+    width: fit-content;
+  }
+  .pembungkus .header .searchBar input {
+    padding: 0.1rem 1.1rem 0.1rem 1.1rem;
+    font-size: 0.8rem;
+    width: 90px;
+  }
+  .pembungkus .header .iconDiv {
+    width: fit-content;
+  }
+  .pembungkus .header .iconDiv svg {
+    height: 2.5rem;
+    padding: 0 0.5rem 0 0.5rem;
+  }
+  .pembungkus .header .iconDiv img {
+    height: 2rem;
+    width: 2rem;
+  }
+  .pembungkus .header .iconDiv #home {
+    display: none;
+  }
+  .pembungkus .header .iconDiv #explore {
+    display: none;
+  }
+  .pembungkus .header .iconDiv #profile {
+    display: none;
+  }
+  .pembungkus .header .iconDiv #msg {
+    display: none;
+  }
+  .pembungkus .header .iconDiv #msgMobile {
+    display: block;
+  }
+}
+
+#loginOuterDiv {
+  display: flex;
+  width: 100%;
+  height: 800px;
+  align-items: center;
+  justify-content: center;
+  background-color: #f0f6fa;
+}
+#loginOuterDiv #loginMainDiv {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #f0f6fa;
+  width: 700px;
+  min-height: 600px;
+  height: 600px;
+}
+#loginOuterDiv #loginMainDiv #loginImageDiv img {
+  object-fit: contain;
+  height: 650px;
+}
+#loginOuterDiv #loginMainDiv #loginFormDiv {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 600px;
+  background-color: #f0f6fa;
+}
+#loginOuterDiv #loginMainDiv #loginFormDiv #loginForm {
+  padding: 3rem 2.5rem 3rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  background-color: white;
+  border: 1px solid #e7e7e7;
+  height: 330px;
+}
+#loginOuterDiv #loginMainDiv #loginFormDiv #loginForm #title {
+  font-family: "Style Script", cursive;
+  font-size: 3rem;
+  width: fit-content;
+  margin: 0;
+}
+#loginOuterDiv #loginMainDiv #loginFormDiv #loginForm form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+#loginOuterDiv #loginMainDiv #loginFormDiv #loginForm form input {
+  padding: 0.4rem 1rem 0.4rem 1rem;
+  border: 1px solid #e7e7e7;
+  border-radius: 2px;
+  margin-top: 0.4rem;
+  width: 200px;
+  font-size: 12px;
+  background-color: #f0f0f0;
+  color: black;
+}
+#loginOuterDiv #loginMainDiv #loginFormDiv #loginForm form #loginButton {
+  margin-top: 1rem;
+  overflow: hidden;
+  text-decoration: none;
+  color: white;
+  background-color: #00A6FB;
+  padding: 0.4rem 1rem 0.4rem 1rem;
+  border-radius: 3px;
+  transition-duration: 0.6s;
+  font-size: 0.8rem;
+  font-weight: 600;
+  width: 100%;
+}
+#loginOuterDiv #loginMainDiv #loginFormDiv #loginForm form #loginButton:hover {
+  cursor: pointer;
+}
+#loginOuterDiv #loginMainDiv #loginFormDiv #loginForm #orDiv {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  color: darkgray;
+}
+#loginOuterDiv #loginMainDiv #loginFormDiv #loginForm #orDiv p {
+  margin: 0px 8px 0px 8px;
+}
+#loginOuterDiv #loginMainDiv #loginFormDiv #loginForm #orDiv hr {
+  background-color: darkgray;
+  height: 0.1px;
+  width: 100%;
+}
+#loginOuterDiv #loginMainDiv #loginFormDiv #loginForm #altLogin {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  border: none;
+  width: 100%;
+}
+#loginOuterDiv #loginMainDiv #loginFormDiv #loginForm #altLogin span {
+  color: #072AC8;
+  font-size: 1rem;
+  font-weight: 600;
+}
+#loginOuterDiv #loginMainDiv #loginFormDiv #loginForm #altLogin img {
+  object-fit: contain;
+  height: 20px;
+  margin-right: 5px;
+}
+#loginOuterDiv #loginMainDiv #loginFormDiv #loginForm #altLogin:hover {
+  cursor: pointer;
+}
+#loginOuterDiv #loginMainDiv #loginFormDiv #loginForm a {
+  text-align: center;
+  width: 100%;
+  text-decoration: none;
+  font-size: 0.8rem;
+}
+#loginOuterDiv #loginMainDiv #loginFormDiv #signUpDiv {
+  padding: 1rem 2.5rem 1rem 2.5rem;
+  background-color: white;
+  border: 1px solid #e7e7e7;
+}
+#loginOuterDiv #loginMainDiv #loginFormDiv #signUpDiv a {
+  text-decoration: none;
+  margin-left: 5px;
+  color: #00A6FB;
+  font-weight: 500;
+}
+#loginOuterDiv #loginMainDiv #loginFormDiv #downloadDiv {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+}
+#loginOuterDiv #loginMainDiv #loginFormDiv #downloadDiv p {
+  font-size: 14px;
+  font-weight: 300;
+}
+#loginOuterDiv #loginMainDiv #loginFormDiv #downloadDiv span {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+  padding: 0 1rem 0 1rem;
+}
+#loginOuterDiv #loginMainDiv #loginFormDiv #downloadDiv span img {
+  object-fit: contain;
+  height: 45px;
+}
+@media screen and (max-width: 1024px) {
+  #loginOuterDiv #loginImageDiv {
+    display: none;
+  }
+}
+@media screen and (max-width: 480px) {
+  #loginOuterDiv #loginMainDiv {
+    min-width: 320px;
+    height: 100%;
+    background-color: white;
+  }
+  #loginOuterDiv #loginMainDiv #loginImageDiv {
+    display: none;
+  }
+  #loginOuterDiv #loginMainDiv #loginFormDiv {
+    width: 100%;
+    min-width: 260px;
+    background: white;
+  }
+  #loginOuterDiv #loginMainDiv #loginFormDiv #loginForm {
+    border: none;
+  }
+  #loginOuterDiv #loginMainDiv #loginFormDiv #loginForm form input {
+    width: 100%;
+    padding: 0.7rem 0rem 0.7rem 0rem;
+  }
+  #loginOuterDiv #loginMainDiv #loginFormDiv #signUpDiv {
+    display: flex;
+    justify-content: center;
+    border: none;
+    height: fit-content;
+  }
+}
+
+.footer {
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  background-color: #f0f6fa;
+  justify-content: center;
+  align-items: center;
+}
+.footer .links {
+  display: flex;
+  flex-wrap: wrap;
+  width: 600px;
+  justify-content: space-evenly;
+}
+.footer .links a {
+  text-decoration: none;
+  font-size: 11px;
+  color: black;
+  margin: 0 4px 0 4px;
+}
+.footer span {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 400px;
+  font-size: 12px;
+}
+.footer span select {
+  font-size: 12px;
+  background-color: #f0f6fa;
+  border: none;
+}
+@media screen and (max-width: 1024px) {
+  .footer .links {
+    width: 500px;
+  }
+}
+@media screen and (max-width: 480px) {
+  .footer .links {
+    width: 300px;
+  }
+}
+
+#registerOuterDiv {
+  display: flex;
+  width: 100%;
+  height: 900px;
+  align-items: flex-start;
+  justify-content: center;
+  background-color: #f0f6fa;
+}
+#registerOuterDiv #registerMainDiv {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #f0f6fa;
+  width: 100%;
+  height: 100%;
+}
+#registerOuterDiv #registerMainDiv #registerFormDiv {
+  display: flex;
+  margin-top: 4rem;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 820px;
+  width: 360px;
+  background-color: #f0f6fa;
+}
+#registerOuterDiv #registerMainDiv #registerFormDiv .signUp {
+  color: darkgray;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 500;
+}
+#registerOuterDiv #registerMainDiv #registerFormDiv .terms {
+  color: darkgray;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 300;
+}
+#registerOuterDiv #registerMainDiv #registerFormDiv .terms a {
+  font-weight: 500;
+  color: darkgray;
+}
+#registerOuterDiv #registerMainDiv #registerFormDiv #registerForm {
+  padding: 2rem 2.5rem 2rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  background-color: white;
+  border: 1px solid #e7e7e7;
+  height: 550px;
+}
+#registerOuterDiv #registerMainDiv #registerFormDiv #registerForm #title {
+  font-family: "Style Script", cursive;
+  font-size: 3rem;
+  width: fit-content;
+  margin: 0;
+}
+#registerOuterDiv #registerMainDiv #registerFormDiv #registerForm form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+#registerOuterDiv #registerMainDiv #registerFormDiv #registerForm form input {
+  padding: 0.7rem 1rem 0.7rem 1rem;
+  border: 1px solid #e7e7e7;
+  border-radius: 2px;
+  margin-top: 0.4rem;
+  width: 240px;
+  font-size: 12px;
+  background-color: #f0f0f0;
+  color: black;
+}
+#registerOuterDiv #registerMainDiv #registerFormDiv #registerForm form #registerButton {
+  margin-top: 1rem;
+  overflow: hidden;
+  text-decoration: none;
+  color: white;
+  background-color: #00A6FB;
+  padding: 0.4rem 1rem 0.4rem 1rem;
+  border-radius: 3px;
+  transition-duration: 0.6s;
+  font-size: 0.8rem;
+  font-weight: 600;
+  width: 100%;
+}
+#registerOuterDiv #registerMainDiv #registerFormDiv #registerForm form #registerButton:hover {
+  cursor: pointer;
+}
+#registerOuterDiv #registerMainDiv #registerFormDiv #registerForm #orDiv {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  color: darkgray;
+}
+#registerOuterDiv #registerMainDiv #registerFormDiv #registerForm #orDiv p {
+  margin: 0px 8px 0px 8px;
+}
+#registerOuterDiv #registerMainDiv #registerFormDiv #registerForm #orDiv hr {
+  background-color: darkgray;
+  height: 0.1px;
+  width: 100%;
+}
+#registerOuterDiv #registerMainDiv #registerFormDiv #registerForm #altLogin {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #00A6FB;
+  padding: 0.5rem 1rem 0.5rem 1rem;
+  border-radius: 5px;
+  border: none;
+  width: 100%;
+}
+#registerOuterDiv #registerMainDiv #registerFormDiv #registerForm #altLogin span {
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+}
+#registerOuterDiv #registerMainDiv #registerFormDiv #registerForm #altLogin img {
+  object-fit: contain;
+  height: 20px;
+  margin-right: 5px;
+}
+#registerOuterDiv #registerMainDiv #registerFormDiv #registerForm #altLogin:hover {
+  cursor: pointer;
+}
+#registerOuterDiv #registerMainDiv #registerFormDiv #registerForm a {
+  text-align: center;
+  width: 100%;
+  text-decoration: none;
+  font-size: 0.8rem;
+}
+#registerOuterDiv #registerMainDiv #registerFormDiv #signUpDiv {
+  padding: 1.5rem 2.5rem 1.5rem 2.5rem;
+  font-size: 14px;
+  background-color: white;
+  border: 1px solid #e7e7e7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#registerOuterDiv #registerMainDiv #registerFormDiv #signUpDiv a {
+  text-decoration: none;
+  margin-left: 5px;
+  color: #00A6FB;
+  font-weight: 500;
+}
+#registerOuterDiv #registerMainDiv #registerFormDiv #downloadDiv {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+}
+#registerOuterDiv #registerMainDiv #registerFormDiv #downloadDiv p {
+  font-size: 14px;
+  font-weight: 300;
+}
+#registerOuterDiv #registerMainDiv #registerFormDiv #downloadDiv span {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+  padding: 0 1rem 0 1rem;
+}
+#registerOuterDiv #registerMainDiv #registerFormDiv #downloadDiv span img {
+  object-fit: contain;
+  height: 45px;
+}
+@media screen and (max-width: 480px) {
+  #registerOuterDiv #registerMainDiv {
+    min-width: 320px;
+    height: 100%;
+    background-color: white;
+  }
+  #registerOuterDiv #registerMainDiv #registerFormDiv {
+    width: 100%;
+    min-width: 260px;
+    background: white;
+  }
+  #registerOuterDiv #registerMainDiv #registerFormDiv #registerForm {
+    border: none;
+  }
+  #registerOuterDiv #registerMainDiv #registerFormDiv #registerForm form input {
+    width: 100%;
+    padding: 0.7rem 0rem 0.7rem 0rem;
+  }
+  #registerOuterDiv #registerMainDiv #registerFormDiv #signUpDiv {
+    display: flex;
+    justify-content: center;
+    border: none;
+    height: fit-content;
+    padding: 0;
+  }
+}
+
+#verifyOuterDiv {
+  display: flex;
+  width: 100%;
+  height: 700px;
+  align-items: flex-start;
+  justify-content: center;
+  background-color: #f0f6fa;
+}
+#verifyOuterDiv #verifyMainDiv {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #f0f6fa;
+  width: 100%;
+  height: 700px;
+}
+#verifyOuterDiv #verifyMainDiv #verifyFormDiv {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: fit-content;
+  width: 360px;
+  background-color: #f0f6fa;
+}
+#verifyOuterDiv #verifyMainDiv #verifyFormDiv #verifyForm {
+  padding: 2rem 2.5rem 2rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  background-color: white;
+  border: 1px solid #e7e7e7;
+  height: 550px;
+}
+#verifyOuterDiv #verifyMainDiv #verifyFormDiv #verifyForm #title {
+  font-family: "Style Script", cursive;
+  font-size: 3rem;
+  width: fit-content;
+  margin: 0;
+}
+#verifyOuterDiv #verifyMainDiv #verifyFormDiv #verifyForm .verifyText {
+  color: darkgray;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 500;
+}
+#verifyOuterDiv #verifyMainDiv #verifyFormDiv #verifyForm form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+#verifyOuterDiv #verifyMainDiv #verifyFormDiv #verifyForm form input {
+  padding: 0.7rem 1rem 0.7rem 1rem;
+  border: 1px solid #e7e7e7;
+  border-radius: 2px;
+  margin-top: 0.4rem;
+  width: 240px;
+  font-size: 12px;
+  background-color: #f0f0f0;
+  color: black;
+}
+#verifyOuterDiv #verifyMainDiv #verifyFormDiv #verifyForm form #verifyButton {
+  margin-top: 0;
+  overflow: hidden;
+  text-decoration: none;
+  color: white;
+  background-color: #00A6FB;
+  padding: 0.4rem 1rem 0.4rem 1rem;
+  border-radius: 3px;
+  transition-duration: 0.6s;
+  font-size: 0.8rem;
+  font-weight: 600;
+  width: 100%;
+}
+#verifyOuterDiv #verifyMainDiv #verifyFormDiv #verifyForm form #verifyButton:hover {
+  cursor: pointer;
+}
+#verifyOuterDiv #verifyMainDiv #verifyFormDiv #signUpDiv {
+  padding: 1.5rem 2.5rem 1.5rem 2.5rem;
+  font-size: 14px;
+  background-color: white;
+  border: 1px solid #e7e7e7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#verifyOuterDiv #verifyMainDiv #verifyFormDiv #signUpDiv a {
+  text-decoration: none;
+  margin-left: 5px;
+  color: #00A6FB;
+  font-weight: 500;
+}
+@media screen and (max-width: 480px) {
+  #verifyOuterDiv #verifyMainDiv {
+    min-width: 320px;
+    height: 100%;
+    background-color: white;
+  }
+  #verifyOuterDiv #verifyMainDiv #verifyFormDiv {
+    width: 100%;
+    min-width: 260px;
+    background: white;
+  }
+  #verifyOuterDiv #verifyMainDiv #verifyFormDiv #verifyForm {
+    border: none;
+  }
+  #verifyOuterDiv #verifyMainDiv #verifyFormDiv #verifyForm form input {
+    width: 100%;
+    padding: 0.7rem 0rem 0.7rem 0rem;
+  }
+}
+
+.resend {
+  color: darkgray;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 300;
+}
+.resend p {
+  margin: 0%;
+  padding: 0%;
+  display: inline;
+  font-size: 12px;
+}
+.resend #resendTimer a {
+  margin: 0%;
+  padding: 0%;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+#forgotOuterDiv {
+  display: flex;
+  width: 100%;
+  height: 700px;
+  align-items: flex-start;
+  justify-content: center;
+  background-color: #f0f6fa;
+}
+#forgotOuterDiv #forgotMainDiv {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #f0f6fa;
+  width: 100%;
+  height: 750px;
+}
+#forgotOuterDiv #forgotMainDiv #forgotFormDiv {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: fit-content;
+  width: 360px;
+  background-color: #f0f6fa;
+}
+#forgotOuterDiv #forgotMainDiv #forgotFormDiv #forgotForm {
+  padding: 2rem 2.5rem 2rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  background-color: white;
+  border: 1px solid #e7e7e7;
+  height: 450px;
+}
+#forgotOuterDiv #forgotMainDiv #forgotFormDiv #forgotForm img {
+  object-fit: contain;
+  width: 150px;
+}
+#forgotOuterDiv #forgotMainDiv #forgotFormDiv #forgotForm h1 {
+  font-size: 1.5rem;
+  width: fit-content;
+  margin: 0;
+}
+#forgotOuterDiv #forgotMainDiv #forgotFormDiv #forgotForm .forgotText {
+  color: darkgray;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+}
+#forgotOuterDiv #forgotMainDiv #forgotFormDiv #forgotForm form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+#forgotOuterDiv #forgotMainDiv #forgotFormDiv #forgotForm form input {
+  padding: 0.7rem 1rem 0.7rem 1rem;
+  border: 1px solid #e7e7e7;
+  border-radius: 2px;
+  margin-top: 0.4rem;
+  width: 240px;
+  font-size: 12px;
+  background-color: #f0f0f0;
+  color: black;
+}
+#forgotOuterDiv #forgotMainDiv #forgotFormDiv #forgotForm form #sendButton {
+  margin-top: 0;
+  overflow: hidden;
+  text-decoration: none;
+  color: white;
+  background-color: #00A6FB;
+  padding: 0.4rem 1rem 0.4rem 1rem;
+  border-radius: 3px;
+  transition-duration: 0.6s;
+  font-size: 0.8rem;
+  font-weight: 600;
+  width: 100%;
+}
+#forgotOuterDiv #forgotMainDiv #forgotFormDiv #forgotForm form #sendButton:hover {
+  cursor: pointer;
+}
+#forgotOuterDiv #forgotMainDiv #forgotFormDiv #forgotForm #orDiv {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  color: darkgray;
+}
+#forgotOuterDiv #forgotMainDiv #forgotFormDiv #forgotForm #orDiv p {
+  margin: 0px 8px 0px 8px;
+}
+#forgotOuterDiv #forgotMainDiv #forgotFormDiv #forgotForm #orDiv hr {
+  background-color: darkgray;
+  height: 0.1px;
+  width: 100%;
+}
+#forgotOuterDiv #forgotMainDiv #forgotFormDiv #forgotForm a {
+  text-decoration: none;
+  color: #00A6FB;
+  font-weight: 500;
+  font-size: 16px;
+}
+#forgotOuterDiv #forgotMainDiv #forgotFormDiv .backButton {
+  padding: 1rem 1.5rem 1rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  background-color: white;
+  border: 1px solid #e7e7e7;
+}
+#forgotOuterDiv #forgotMainDiv #forgotFormDiv .backButton a {
+  text-decoration: none;
+  font-weight: 500;
+}
+@media screen and (max-width: 480px) {
+  #forgotOuterDiv #forgotMainDiv {
+    min-width: 320px;
+    height: 100%;
+    background-color: white;
+  }
+  #forgotOuterDiv #forgotMainDiv #forgotFormDiv {
+    width: 100%;
+    min-width: 260px;
+    background: white;
+  }
+  #forgotOuterDiv #forgotMainDiv #forgotFormDiv #forgotForm {
+    border: none;
+  }
+  #forgotOuterDiv #forgotMainDiv #forgotFormDiv #forgotForm form input {
+    width: 100%;
+    padding: 0.7rem 0rem 0.7rem 0rem;
+  }
+}
+
+#resetOuterDiv {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+  background-color: #f0f6fa;
+}
+#resetOuterDiv #resetMainDiv {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #f0f6fa;
+  width: 100%;
+  height: 500px;
+}
+#resetOuterDiv #resetMainDiv #resetFormDiv {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: fit-content;
+  width: 360px;
+  background-color: #f0f6fa;
+}
+#resetOuterDiv #resetMainDiv #resetFormDiv #resetForm {
+  padding: 2rem 2.5rem 2rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  background-color: white;
+  border: 1px solid #e7e7e7;
+  height: 180px;
+}
+#resetOuterDiv #resetMainDiv #resetFormDiv #resetForm h1 {
+  font-size: 1.5rem;
+  width: fit-content;
+  margin: 0;
+}
+#resetOuterDiv #resetMainDiv #resetFormDiv #resetForm .resetText {
+  color: darkgray;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+}
+#resetOuterDiv #resetMainDiv #resetFormDiv #resetForm form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+#resetOuterDiv #resetMainDiv #resetFormDiv #resetForm form input {
+  padding: 0.7rem 1rem 0.7rem 1rem;
+  border: 1px solid #e7e7e7;
+  border-radius: 2px;
+  margin-top: 0.4rem;
+  width: 240px;
+  font-size: 12px;
+  background-color: #f0f0f0;
+  color: black;
+}
+#resetOuterDiv #resetMainDiv #resetFormDiv #resetForm form #sendButton {
+  margin-top: 0;
+  overflow: hidden;
+  text-decoration: none;
+  color: white;
+  background-color: #00A6FB;
+  padding: 0.4rem 1rem 0.4rem 1rem;
+  border-radius: 3px;
+  transition-duration: 0.6s;
+  font-size: 0.8rem;
+  font-weight: 600;
+  width: 100%;
+}
+#resetOuterDiv #resetMainDiv #resetFormDiv #resetForm form #sendButton:hover {
+  cursor: pointer;
+}
+#resetOuterDiv #resetMainDiv #resetFormDiv #resetForm a {
+  text-decoration: none;
+  color: #00A6FB;
+  font-weight: 500;
+  font-size: 16px;
+}
+#resetOuterDiv #resetMainDiv #resetFormDiv .backButton {
+  padding: 1rem 1.5rem 1rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  background-color: white;
+  border: 1px solid #e7e7e7;
+}
+#resetOuterDiv #resetMainDiv #resetFormDiv .backButton a {
+  text-decoration: none;
+  font-weight: 500;
+}
+@media screen and (max-width: 480px) {
+  #resetOuterDiv #resetMainDiv {
+    min-width: 320px;
+    height: 100%;
+    background-color: white;
+  }
+  #resetOuterDiv #resetMainDiv #resetFormDiv {
+    width: 100%;
+    min-width: 260px;
+    background: white;
+  }
+  #resetOuterDiv #resetMainDiv #resetFormDiv #resetForm {
+    border: none;
+  }
+  #resetOuterDiv #resetMainDiv #resetFormDiv #resetForm form input {
+    width: 100%;
+    padding: 0.7rem 0rem 0.7rem 0rem;
+  }
+}
+
+.popUp {
+  position: relative;
+  width: 200px;
+  padding: 0.5rem 1rem 1rem 1rem;
+  background-color: white;
+  border: 1px solid #e7e7e7;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+.popUp a {
+  font-size: 16px;
+  text-decoration: none;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 0.3rem 0rem 0.3rem 0rem;
+  color: black;
+}
+.popUp a svg {
+  width: 24px;
+  padding: 0.2rem 0.5rem 0.2rem 0rem;
+  object-fit: contain;
+}
+.popUp a button {
+  font-size: 16px;
+  font-weight: 500;
+  padding: 0.5rem 0.5rem 0rem 0.5rem;
+  width: 100%;
+  background-color: white;
+  border: none;
+  border-top: 2px solid #e7e7e7;
+  cursor: pointer;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.popUp:after {
+  content: "";
+  width: 15px;
+  height: 15px;
+  transform: rotate(-45deg);
+  background-color: white;
+  border: 1px solid #e7e7e7;
+  position: absolute;
+  z-index: -1;
+  top: -8px;
+  left: 200px;
+  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.5);
+}
+
+.outerDiv {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background-color: #f0f6fa;
+}
+.outerDiv .innerDiv {
+  display: flex;
+  background-color: #f0f6fa;
+  width: 70%;
+  min-height: 100vh;
+  padding-top: 2rem;
+}
+.outerDiv .innerDiv .leftHomeDiv {
+  padding: 4rem 0rem 0rem 0rem;
+  width: 66%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.outerDiv .innerDiv .leftHomeDiv .storyDiv::-webkit-scrollbar {
+  display: none;
+}
+.outerDiv .innerDiv .leftHomeDiv .storyDiv {
+  overflow-x: scroll;
+  overflow-y: hidden;
+  background-color: white;
+  border: 1px solid #e7e7e7;
+  width: 100%;
+  height: 4rem;
+  display: flex;
+  padding: 0.8rem;
+}
+.outerDiv .innerDiv .leftHomeDiv .storyDiv img {
+  width: 3.5rem;
+  height: 3.5rem;
+  object-fit: contain;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  background: linear-gradient(to bottom left, #fd1892, #b8fd33);
+  padding: 0.5px;
+  margin: 0 0.5rem 0 0.5rem;
+}
+.outerDiv .innerDiv .rightHomeDiv {
+  position: fixed;
+  top: 60px;
+  left: 62.4%;
+  min-height: 100vh;
+  width: 22.5%;
+  background-color: #f0f6fa;
+  padding: 2rem 0rem 2rem 1rem;
+}
+.outerDiv .innerDiv .rightHomeDiv .profileSuggestion {
+  margin: 0.8rem 0rem 0.8rem 0rem;
+  display: flex;
+  justify-content: space-between;
+}
+.outerDiv .innerDiv .rightHomeDiv .profileSuggestion img {
+  object-fit: contain;
+  height: 4rem;
+  width: 4rem;
+  border-radius: 50%;
+  border: 1px solid #e7e7e7;
+}
+.outerDiv .innerDiv .rightHomeDiv .profileSuggestion .profileDetail {
+  display: flex;
+}
+.outerDiv .innerDiv .rightHomeDiv .profileSuggestion .profileDetail div {
+  margin-left: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+.outerDiv .innerDiv .rightHomeDiv .profileSuggestion .profileDetail div p {
+  margin: 0%;
+  padding: 0%;
+}
+.outerDiv .innerDiv .rightHomeDiv .profileSuggestion .profileDetail div .username {
+  font-weight: bold;
+}
+.outerDiv .innerDiv .rightHomeDiv .profileSuggestion .profileDetail div .subname {
+  font-weight: 400;
+  color: darkgray;
+}
+.outerDiv .innerDiv .rightHomeDiv .profileSuggestion a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  color: #00A6FB;
+  font-weight: bold;
+  font-size: 14px;
+}
+.outerDiv .innerDiv .rightHomeDiv span {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: darkgray;
+  font-weight: bold;
+}
+.outerDiv .innerDiv .rightHomeDiv span a {
+  text-decoration: none;
+  color: #202020;
+  font-weight: 500;
+}
+.outerDiv .innerDiv .rightHomeDiv .friendSuggestion {
+  margin: 0.8rem 0rem 0.8rem 0rem;
+  display: flex;
+  justify-content: space-between;
+}
+.outerDiv .innerDiv .rightHomeDiv .friendSuggestion img {
+  object-fit: contain;
+  height: 3rem;
+  width: 3rem;
+  border-radius: 50%;
+  border: 1px solid #e7e7e7;
+}
+.outerDiv .innerDiv .rightHomeDiv .friendSuggestion .profileDetail {
+  display: flex;
+}
+.outerDiv .innerDiv .rightHomeDiv .friendSuggestion .profileDetail div {
+  margin-left: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+.outerDiv .innerDiv .rightHomeDiv .friendSuggestion .profileDetail div p {
+  margin: 0%;
+  padding: 0%;
+}
+.outerDiv .innerDiv .rightHomeDiv .friendSuggestion .profileDetail div .username {
+  font-weight: bold;
+}
+.outerDiv .innerDiv .rightHomeDiv .friendSuggestion .profileDetail div .subname {
+  font-size: 13px;
+  font-weight: 400;
+  color: darkgray;
+}
+.outerDiv .innerDiv .rightHomeDiv .friendSuggestion a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  color: #00A6FB;
+  font-weight: bold;
+  font-size: 14px;
+}
+.outerDiv .innerDiv .rightHomeDiv .footer {
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  background-color: #f0f6fa;
+  justify-content: center;
+  align-items: center;
+}
+.outerDiv .innerDiv .rightHomeDiv .footer .links {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: space-evenly;
+}
+.outerDiv .innerDiv .rightHomeDiv .footer .links a {
+  text-decoration: none;
+  font-size: 11px;
+  color: black;
+  margin: 0 4px 0 4px;
+}
+.outerDiv .innerDiv .rightHomeDiv .footer span {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 100%;
+  font-size: 12px;
+}
+.outerDiv .innerDiv .rightHomeDiv .footer span select {
+  font-size: 12px;
+  background-color: #f0f6fa;
+  border: none;
+}
+@media screen and (max-width: 1024px) {
+  .outerDiv .innerDiv .rightHomeDiv {
+    display: none;
+  }
+  .outerDiv .innerDiv .leftHomeDiv {
+    width: 100%;
+  }
+}
+@media screen and (max-width: 480px) {
+  .outerDiv .innerDiv {
+    width: 100%;
+    background-color: white;
+    margin: 0;
+    padding: 0;
+  }
+  .outerDiv .leftHomeDiv {
+    width: 100%;
+  }
+}
+
+.postDiv {
+  margin: 1rem 0 1rem 0;
+  background-color: white;
+  border: 1px solid #e7e7e7;
+  width: 100%;
+  display: flex;
+  padding: 0.8rem;
+  flex-direction: column;
+}
+.postDiv .postProfileDiv {
+  padding: 0.5rem 0rem 0.5rem 0rem;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+.postDiv .postProfileDiv a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  color: black;
+  font-weight: 600;
+}
+.postDiv .postProfileDiv a span {
+  margin-left: 1rem;
+}
+.postDiv .postProfileDiv a span:hover {
+  text-decoration: underline;
+}
+.postDiv .postProfileDiv a img {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+}
+.postDiv .postProfileDiv button {
+  width: 40px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+.postDiv .pictureDiv {
+  width: 100%;
+}
+.postDiv .pictureDiv img {
+  object-fit: contain;
+  width: 100%;
+}
+.postDiv .interactDiv {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem 0 1rem 0;
+}
+.postDiv .interactDiv .interactInnerDiv {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+.postDiv .interactDiv .interactInnerDiv .leftInnerDiv {
+  display: flex;
+  width: 145px;
+  justify-content: space-between;
+}
+.postDiv .interactDiv .interactInnerDiv button {
+  width: 45px;
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+}
+.postDiv #likes {
+  margin: 0.1rem 0 0.1rem 0;
+  padding: 0%;
+  width: 100%;
+  font-weight: 600;
+}
+.postDiv .captionDiv {
+  display: flex;
+  width: 100%;
+}
+.postDiv .captionDiv #username {
+  font-weight: 600;
+}
+.postDiv .captionDiv #caption {
+  margin-left: 0.4rem;
+}
+.postDiv .viewMoreComments {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 0%;
+  margin: 0%;
+  text-decoration: none;
+  color: darkgray;
+  font-weight: 400;
+  width: 100%;
+}
+.postDiv .commentSection {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.postDiv #time {
+  display: flex;
+  width: 100%;
+  color: darkgray;
+  font-size: 12px;
+}
+.postDiv .inputCommentSection {
+  border-top: 1px solid #e7e7e7;
+  padding: 12px 0 0 0;
+  margin: 12px 0 12px 0;
+  display: flex;
+  width: 100%;
+}
+.postDiv .inputCommentSection button {
+  width: 45px;
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+}
+.postDiv .inputCommentSection input {
+  font-weight: 400;
+  width: 100%;
+  border: none;
+}
+.postDiv .inputCommentSection #postButton {
+  color: #00A6FB;
+  font-weight: 700;
+}
+
+@media screen and (max-width: 480px) {
+  .postDiv {
+    border: none;
+    margin: 0%;
+    margin-top: 1rem;
+  }
+  .postDiv .inputCommentSection {
+    display: none;
+  }
+}
+.comment {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+.comment #usernameComment {
+  font-weight: 600;
+}
+.comment #comment {
+  margin-left: 0.4rem;
+}
+.comment .commentValue {
+  display: flex;
+}
+.comment .interactComment button {
+  width: 30px;
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+}
+
+.errorText {
+  color: red;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.homeOuterDiv {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background-color: #f0f6fa;
+}
+.homeOuterDiv .homeInnerDiv {
+  display: flex;
+  flex-direction: column;
+  background-color: #f0f6fa;
+  width: 70%;
+  min-height: 100vh;
+  padding-top: 60px;
+}
+.homeOuterDiv .homeInnerDiv .profileUpperDiv {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  min-height: 300px;
+  max-height: fit-content;
+  width: 100%;
+}
+.homeOuterDiv .homeInnerDiv .profileUpperDiv .profileImageDiv {
+  min-height: 200px;
+  height: 100%;
+  width: 30%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+.homeOuterDiv .homeInnerDiv .profileUpperDiv .profileImageDiv img {
+  object-fit: contain;
+  border-radius: 50%;
+  width: 180px;
+  height: 180px;
+}
+.homeOuterDiv .homeInnerDiv .profileUpperDiv .profileDetailDiv {
+  min-width: 400px;
+  min-height: 300px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+.homeOuterDiv .homeInnerDiv .profileUpperDiv .profileDetailDiv .profileUsernameDiv {
+  display: flex;
+  min-width: 450px;
+  max-width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  height: fit-content;
+}
+.homeOuterDiv .homeInnerDiv .profileUpperDiv .profileDetailDiv .profileUsernameDiv h1 {
+  margin: 0%;
+  font-weight: 300;
+}
+.homeOuterDiv .homeInnerDiv .profileUpperDiv .profileDetailDiv .profileUsernameDiv #follow {
+  background-color: #00A6FB;
+  color: white;
+  border: none;
+  font-weight: bold;
+  padding: 0rem 1.5rem 0rem 1.5rem;
+  border-radius: 5px;
+  min-height: 30px;
+}
+.homeOuterDiv .homeInnerDiv .profileUpperDiv .profileDetailDiv .profileUsernameDiv #dropDown {
+  background-color: #00A6FB;
+  color: white;
+  border: none;
+  padding: 0rem 1rem 0rem 1rem;
+  min-height: 30px;
+  border-radius: 5px;
+}
+.homeOuterDiv .homeInnerDiv .profileUpperDiv .profileDetailDiv .profileUsernameDiv #dropDown svg {
+  height: 1.5rem;
+  width: 1.5rem;
+}
+.homeOuterDiv .homeInnerDiv .profileUpperDiv .profileDetailDiv .profileUsernameDiv #settings {
+  background: none;
+  border: none;
+  padding: 0rem 1rem 0rem 1rem;
+  min-height: 30px;
+}
+.homeOuterDiv .homeInnerDiv .profileUpperDiv .profileDetailDiv .profileUsernameDiv #settings svg {
+  height: 1.5rem;
+  width: 1.5rem;
+}
+.homeOuterDiv .homeInnerDiv .profileUpperDiv .profileDetailDiv .profileStatsDiv {
+  margin: 0.7rem 0rem 0.7rem 0rem;
+  display: flex;
+  width: 330px;
+  justify-content: space-between;
+  align-items: center;
+}
+.homeOuterDiv .homeInnerDiv .profileUpperDiv .profileDetailDiv .subProfileDiv {
+  margin: 0rem 0rem 0.7rem 0rem;
+}
+.homeOuterDiv .homeInnerDiv .profileUpperDiv .profileDetailDiv .subProfileDiv .profileDescription {
+  max-width: 450px;
+}
+.homeOuterDiv .homeInnerDiv .profileUpperDiv .profileDetailDiv #followedBy {
+  color: darkgray;
+  font-size: 12px;
+  font-weight: 600;
+}
+.homeOuterDiv .homeInnerDiv .profileUpperDiv .profileDetailDiv #followedBy b {
+  color: black;
+}
+.homeOuterDiv .homeInnerDiv .profileBottomDiv {
+  width: 100%;
+  border-top: 2px solid #e7e7e7;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.homeOuterDiv .homeInnerDiv .profileBottomDiv .postNavbar {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+.homeOuterDiv .homeInnerDiv .profileBottomDiv .postNavbar button {
+  background: none;
+  border: none;
+  padding: 1rem 2rem 0rem 2rem;
+  font-size: 12px;
+  color: darkgray;
+  cursor: pointer;
+}
+.homeOuterDiv .homeInnerDiv .profileBottomDiv .postDiv {
+  height: fit-content;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: flex-start;
+  background: #f0f6fa;
+  border: none;
+}
+.homeOuterDiv .homeInnerDiv .profileBottomDiv .postDiv button {
+  cursor: pointer;
+  margin: 1.5%;
+  background: none;
+  border: none;
+  position: relative;
+  width: 30%;
+}
+.homeOuterDiv .homeInnerDiv .profileBottomDiv .postDiv button:after {
+  content: "";
+  display: block;
+  padding-bottom: 100%;
+}
+.homeOuterDiv .homeInnerDiv .profileBottomDiv .postDiv img {
+  z-index: 1;
+  position: absolute;
+  top: 0%;
+  right: 0;
+  bottom: 0%;
+  left: 0%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.loading {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-size: large;
+  font-weight: bold;
+  justify-content: center;
+  align-items: center;
+  background-color: #f0f6fa;
+}
+.loading a {
+  text-decoration: underline;
+  color: darkgray;
+}
+
+/*# sourceMappingURL=/tpaweb.f69400ca.css.map */
