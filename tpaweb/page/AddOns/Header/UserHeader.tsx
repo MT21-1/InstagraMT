@@ -50,7 +50,7 @@ export default function UserHeader(){
                                             <img src={user.profile} alt="" />
                                         </a>
                                          } 
-                                         position="bottom right">
+                        position="bottom right">
                             <div className="popUp">
                                 <a href={`/profile/${user.username}`}>
 

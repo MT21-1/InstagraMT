@@ -69859,10 +69859,12 @@ Object.defineProperty(exports, "__esModule", {
 var react_1 = __importDefault(require("react"));
 
 function Story() {
-  return react_1.default.createElement("img", {
+  return react_1.default.createElement("div", {
+    className: "storyDiv"
+  }, react_1.default.createElement("img", {
     src: "/profile.jpg",
     alt: ""
-  });
+  }));
 }
 
 exports.default = Story;
@@ -70431,6 +70433,61 @@ function Profile() {
     }, react_1.default.createElement("div", {
       className: "profileUpperDiv"
     }, react_1.default.createElement("div", {
+      className: "mobileProfileDiv"
+    }, react_1.default.createElement("div", {
+      className: "marginDiv"
+    }, react_1.default.createElement("div", {
+      className: "mobileUpperDiv"
+    }, react_1.default.createElement("img", {
+      src: "/profile.jpg",
+      alt: "profile"
+    }), react_1.default.createElement("div", {
+      className: "mobileUpperRightDiv"
+    }, react_1.default.createElement("span", null, react_1.default.createElement("h1", null, user.username), react_1.default.createElement("button", {
+      id: "settingButton"
+    }, react_1.default.createElement("svg", {
+      xmlns: "http://www.w3.org/2000/svg",
+      fill: "none",
+      viewBox: "0 0 24 24",
+      stroke: "currentColor"
+    }, react_1.default.createElement("path", {
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round",
+      "stroke-width": "2",
+      d: "M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"
+    })))), react_1.default.createElement("span", null, react_1.default.createElement("button", {
+      id: "follow"
+    }, "Follow"), react_1.default.createElement("button", {
+      id: "dropDown"
+    }, react_1.default.createElement("svg", {
+      xmlns: "http://www.w3.org/2000/svg",
+      fill: "none",
+      viewBox: "0 0 24 24",
+      stroke: "currentColor"
+    }, react_1.default.createElement("path", {
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round",
+      "stroke-width": "2",
+      d: "M19 9l-7 7-7-7"
+    })))))), react_1.default.createElement("div", {
+      className: "subProfileDiv"
+    }, react_1.default.createElement("span", {
+      className: "userFullName"
+    }, react_1.default.createElement("b", null, user.full_name)), react_1.default.createElement("p", {
+      className: "profileDescription"
+    }, "hiyahiyahiya Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolores, culpa! Lorem ipsum dolor sit amet consectetur, adipisicing elit. Maiores, natus!")), react_1.default.createElement("p", {
+      id: "followedBy"
+    }, "Followed by ", react_1.default.createElement("b", null, "bambang"), ",", react_1.default.createElement("b", null, " bimbing"), ", ", react_1.default.createElement("b", null, "jono"), " +129 more")), react_1.default.createElement("div", {
+      className: "profileStatsDiv"
+    }, react_1.default.createElement("div", null, react_1.default.createElement("p", null, "1,722"), react_1.default.createElement("a", {
+      href: "#"
+    }, "posts")), react_1.default.createElement("div", null, react_1.default.createElement("p", null, "1.3m"), react_1.default.createElement("a", {
+      href: "#"
+    }, "followers")), react_1.default.createElement("div", null, react_1.default.createElement("p", null, "2,842"), react_1.default.createElement("a", {
+      href: "#"
+    }, "following")))), react_1.default.createElement("div", {
+      className: "desktopProfileDiv"
+    }, react_1.default.createElement("div", {
       className: "profileImageDiv"
     }, react_1.default.createElement("img", {
       src: "/profile.jpg",
@@ -70483,7 +70540,7 @@ function Profile() {
       className: "profileDescription"
     }, "hiyahiyahiya Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolores, culpa! Lorem ipsum dolor sit amet consectetur, adipisicing elit. Maiores, natus!")), react_1.default.createElement("p", {
       id: "followedBy"
-    }, "Followed by ", react_1.default.createElement("b", null, "bambang"), ",", react_1.default.createElement("b", null, " bimbing"), ", ", react_1.default.createElement("b", null, "jono"), " +129 more"))), react_1.default.createElement("div", {
+    }, "Followed by ", react_1.default.createElement("b", null, "bambang"), ",", react_1.default.createElement("b", null, " bimbing"), ", ", react_1.default.createElement("b", null, "jono"), " +129 more")))), react_1.default.createElement("div", {
       className: "profileBottomDiv"
     }, react_1.default.createElement("div", {
       className: "postNavbar"
@@ -71323,7 +71380,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57867" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49995" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
