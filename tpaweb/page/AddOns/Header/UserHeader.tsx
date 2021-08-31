@@ -9,7 +9,7 @@ export default function UserHeader(){
     function logOut(){
         setJWT("")    
     }
-    
+    console.log(jwt);
     return(
         // klo udah login panggil ini
         <div className="pembungkus">
@@ -26,6 +26,11 @@ export default function UserHeader(){
                     <a href="/" id="home">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                        </svg>
+                    </a>
+                    <a href="/upload" id="upload">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
                     </a>
                     <a href="#" id="msg">
@@ -47,7 +52,7 @@ export default function UserHeader(){
                     
                         
                         <Popup trigger={<a href="#" id="profile">
-                                            <img src={user.profile} alt="" />
+                                            <img src={user.picture} alt="" />
                                         </a>
                                          } 
                         position="bottom right">

@@ -8,6 +8,7 @@ import LoginPage from './page/LoginPage/LoginPage'
 import Profile from './page/Profile/Profile'
 import RegisterPage from './page/RegisterPage/RegisterPage'
 import ResetPasswordPage from './page/ResetPasswordPage/ResetPasswordPage'
+import UploadPage from './page/UploadPage/UploadPage'
 import VerifyEmailPage from './page/VerifyEmailPage/VerifyEmailPage'
 
 export const JWTContext = createContext<[string, React.Dispatch<React.SetStateAction<string>>]>(["", () => { }]);
@@ -47,6 +48,11 @@ export default function App(){
                             jwt === ""? <Redirect to="/login"/> : <HomePage/>
                         }
                     </Route>
+                    <Route exact path="/upload">
+                        {
+                            <UploadPage/>
+                        }
+                    </Route>
                     <Route path="/verify/:userEmail">
                         
                         {
@@ -60,11 +66,14 @@ export default function App(){
                             jwt === ""? <ForgotPasswordPage/> : <HomePage/>
                         }
                     </Route>
+                   
                     <Route path="/reset/:token">
                         <ResetPasswordPage/>
                     </Route>
                     <Route path="/profile/:username">
-                        <Profile/>
+                        {
+                            <Profile/>
+                        }
                     </Route>
                 </Switch>
             </div>

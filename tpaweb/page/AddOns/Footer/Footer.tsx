@@ -5,16 +5,16 @@ export default function Footer(){
     return(
         <div className="footer">
             <div className="links">
-                <a href="">About</a>
-                <a href="">Blog</a>
-                <a href="">Jobs</a>
-                <a href="">Help</a>
-                <a href="">API</a>
-                <a href="">Privacy</a>
-                <a href="">Terms</a>
-                <a href="">Top accounts</a>
-                <a href="">Hashtags</a>
-                <a href="">Locations</a>
+                <a href="https://about.instagram.com/">About</a>
+                <a href="https://about.instagram.com/en_US/blog">Blog</a>
+                <a href="https://about.instagram.com/about-us/careers">Jobs</a>
+                <a href="https://help.instagram.com/">Help</a>
+                <a href="https://developers.facebook.com/docs/instagram">API</a>
+                <a href="https://www.instagram.com/legal/privacy/">Privacy</a>
+                <a href="https://www.instagram.com/legal/terms/">Terms</a>
+                <a href="https://www.instagram.com/directory/profiles/">Top accounts</a>
+                <a href="https://www.instagram.com/directory/hashtags/">Hashtags</a>
+                <a href="https://www.instagram.com/explore/locations/">Locations</a>
             </div>
             
             <span>

@@ -101,6 +101,7 @@ export default function LoginPage(){
                 pass: password
             }
         })
+        event.preventDefault();
     }
     return (
         <React.Fragment>

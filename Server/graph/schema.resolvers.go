@@ -56,10 +56,15 @@ func (r *mutationResolver) LoginUser(ctx context.Context, input model.LoginUser)
 		// artinya emailnya ga ada.
 		return "", errors.New("invalid email")
 	}
+	err := r.Db.Model(&u).Where("email = ?", input.Email).First()
+
+	if err != nil {
+		return "", errors.New("invalid Email")
+	}
 
 	checkPassword := authentication.CheckPasswordHash(input.Password, u.Password)
 
-	if checkPassword {
+	if !checkPassword {
 		//kalo passwordnya ga cocok
 		return "", errors.New("invalid password")
 	}

@@ -64,7 +64,7 @@ export default function Profile(){
                                 
                                 <div className="marginDiv">
                                     <div className="mobileUpperDiv">
-                                        <img src="/profile.jpg" alt="profile"
+                                        <img src={user.picture} alt="profile"
                                         />
                                         <div className="mobileUpperRightDiv">
                                             <span>
@@ -110,7 +110,7 @@ export default function Profile(){
                             <div className="desktopProfileDiv">
 
                                 <div className="profileImageDiv">
-                                        <img src="/profile.jpg" alt="profile" />
+                                        <img src={user.picture} alt="profile" />
                                 </div>
                                 
                                 <div className="profileDetailDiv">

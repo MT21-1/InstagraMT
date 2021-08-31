@@ -67891,25 +67891,25 @@ function Footer() {
   }, react_1.default.createElement("div", {
     className: "links"
   }, react_1.default.createElement("a", {
-    href: ""
+    href: "https://about.instagram.com/"
   }, "About"), react_1.default.createElement("a", {
-    href: ""
+    href: "https://about.instagram.com/en_US/blog"
   }, "Blog"), react_1.default.createElement("a", {
-    href: ""
+    href: "https://about.instagram.com/about-us/careers"
   }, "Jobs"), react_1.default.createElement("a", {
-    href: ""
+    href: "https://help.instagram.com/"
   }, "Help"), react_1.default.createElement("a", {
-    href: ""
+    href: "https://developers.facebook.com/docs/instagram"
   }, "API"), react_1.default.createElement("a", {
-    href: ""
+    href: "https://www.instagram.com/legal/privacy/"
   }, "Privacy"), react_1.default.createElement("a", {
-    href: ""
+    href: "https://www.instagram.com/legal/terms/"
   }, "Terms"), react_1.default.createElement("a", {
-    href: ""
+    href: "https://www.instagram.com/directory/profiles/"
   }, "Top accounts"), react_1.default.createElement("a", {
-    href: ""
+    href: "https://www.instagram.com/directory/hashtags/"
   }, "Hashtags"), react_1.default.createElement("a", {
-    href: ""
+    href: "https://www.instagram.com/explore/locations/"
   }, "Locations")), react_1.default.createElement("span", null, react_1.default.createElement("select", {
     name: "language",
     id: "language"
@@ -69469,6 +69469,7 @@ function UserHeader() {
     setJWT("");
   }
 
+  console.log(jwt);
   return (// klo udah login panggil ini
     react_1.default.createElement("div", {
       className: "pembungkus"
@@ -69500,6 +69501,19 @@ function UserHeader() {
       "stroke-linejoin": "round",
       "stroke-width": "2",
       d: "M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+    }))), react_1.default.createElement("a", {
+      href: "/upload",
+      id: "upload"
+    }, react_1.default.createElement("svg", {
+      xmlns: "http://www.w3.org/2000/svg",
+      fill: "none",
+      viewBox: "0 0 24 24",
+      stroke: "currentColor"
+    }, react_1.default.createElement("path", {
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round",
+      "stroke-width": "2",
+      d: "M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
     }))), react_1.default.createElement("a", {
       href: "#",
       id: "msg"
@@ -69544,7 +69558,7 @@ function UserHeader() {
         href: "#",
         id: "profile"
       }, react_1.default.createElement("img", {
-        src: user.profile,
+        src: user.picture,
         alt: ""
       })),
       position: "bottom right"
@@ -69928,6 +69942,7 @@ var suggestion_1 = __importDefault(require("../Components/suggestion"));
 
 function HomePage() {
   var user = JSON.parse(localStorage.getItem("user"));
+  console.log(user);
   return react_1.default.createElement(react_1.default.Fragment, null, react_1.default.createElement(UserHeader_1.default, null), react_1.default.createElement("div", {
     className: "outerDiv"
   }, react_1.default.createElement("div", {
@@ -69943,7 +69958,7 @@ function HomePage() {
   }, react_1.default.createElement("div", {
     className: "profileDetail"
   }, react_1.default.createElement("img", {
-    src: user.profile,
+    src: user.picture,
     alt: "profilepic"
   }), react_1.default.createElement("div", null, react_1.default.createElement("p", {
     className: "username"
@@ -70250,6 +70265,7 @@ function LoginPage() {
         pass: password
       }
     });
+    event.preventDefault();
   }
 
   return react_1.default.createElement(react_1.default.Fragment, null, react_1.default.createElement(GuestHeader_1.default, null), react_1.default.createElement("div", {
@@ -70439,7 +70455,7 @@ function Profile() {
     }, react_1.default.createElement("div", {
       className: "mobileUpperDiv"
     }, react_1.default.createElement("img", {
-      src: "/profile.jpg",
+      src: user.picture,
       alt: "profile"
     }), react_1.default.createElement("div", {
       className: "mobileUpperRightDiv"
@@ -70490,7 +70506,7 @@ function Profile() {
     }, react_1.default.createElement("div", {
       className: "profileImageDiv"
     }, react_1.default.createElement("img", {
-      src: "/profile.jpg",
+      src: user.picture,
       alt: "profile"
     })), react_1.default.createElement("div", {
       className: "profileDetailDiv"
@@ -70928,7 +70944,68 @@ function ResetPasswordPage() {
 
 exports.default = ResetPasswordPage;
 var templateObject_1;
-},{"@apollo/client":"node_modules/@apollo/client/index.js","react":"node_modules/react/index.js","react-router-dom":"node_modules/react-router-dom/esm/react-router-dom.js","../AddOns/Footer/Footer":"page/AddOns/Footer/Footer.tsx","../AddOns/Header/GuestHeader":"page/AddOns/Header/GuestHeader.tsx"}],"page/VerifyEmailPage/VerifyEmailPage.tsx":[function(require,module,exports) {
+},{"@apollo/client":"node_modules/@apollo/client/index.js","react":"node_modules/react/index.js","react-router-dom":"node_modules/react-router-dom/esm/react-router-dom.js","../AddOns/Footer/Footer":"page/AddOns/Footer/Footer.tsx","../AddOns/Header/GuestHeader":"page/AddOns/Header/GuestHeader.tsx"}],"page/UploadPage/UploadPage.tsx":[function(require,module,exports) {
+"use strict";
+
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var react_1 = __importDefault(require("react"));
+
+var Footer_1 = __importDefault(require("../AddOns/Footer/Footer"));
+
+var UserHeader_1 = __importDefault(require("../AddOns/Header/UserHeader"));
+
+function UploadPage() {
+  return react_1.default.createElement(react_1.default.Fragment, null, react_1.default.createElement(UserHeader_1.default, null), react_1.default.createElement("div", {
+    id: "uploadOuterDiv"
+  }, react_1.default.createElement("div", {
+    id: "uploadMainDiv"
+  }, react_1.default.createElement("div", {
+    id: "uploadFormDiv"
+  }, react_1.default.createElement("div", {
+    id: "uploadForm"
+  }, react_1.default.createElement("h1", null, "Upload"), react_1.default.createElement("div", {
+    id: "uploadArea"
+  }, react_1.default.createElement("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    fill: "none",
+    viewBox: "0 0 24 24",
+    stroke: "currentColor"
+  }, react_1.default.createElement("path", {
+    "stroke-linecap": "round",
+    "stroke-linejoin": "round",
+    "stroke-width": "2",
+    d: "M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"
+  })), react_1.default.createElement("input", {
+    type: "file",
+    name: "upload",
+    id: "upload",
+    accept: "image/*, video/*",
+    multiple: true
+  })), react_1.default.createElement("div", {
+    id: "textAreaDiv"
+  }, "Caption", react_1.default.createElement("textarea", {
+    name: "caption",
+    id: "caption",
+    cols: "30",
+    rows: "10"
+  })), react_1.default.createElement("div", {
+    id: "buttonDiv"
+  }, react_1.default.createElement("button", {
+    id: "uploadButton"
+  }, "Upload")))))), react_1.default.createElement(Footer_1.default, null));
+}
+
+exports.default = UploadPage;
+},{"react":"node_modules/react/index.js","../AddOns/Footer/Footer":"page/AddOns/Footer/Footer.tsx","../AddOns/Header/UserHeader":"page/AddOns/Header/UserHeader.tsx"}],"page/VerifyEmailPage/VerifyEmailPage.tsx":[function(require,module,exports) {
 "use strict";
 
 var __makeTemplateObject = this && this.__makeTemplateObject || function (cooked, raw) {
@@ -71202,6 +71279,8 @@ var RegisterPage_1 = __importDefault(require("./page/RegisterPage/RegisterPage")
 
 var ResetPasswordPage_1 = __importDefault(require("./page/ResetPasswordPage/ResetPasswordPage"));
 
+var UploadPage_1 = __importDefault(require("./page/UploadPage/UploadPage"));
+
 var VerifyEmailPage_1 = __importDefault(require("./page/VerifyEmailPage/VerifyEmailPage"));
 
 exports.JWTContext = react_1.createContext(["", function () {}]);
@@ -71237,6 +71316,9 @@ function App() {
   }, jwt === "" ? react_1.default.createElement(react_router_dom_1.Redirect, {
     to: "/login"
   }) : react_1.default.createElement(HomePage_1.default, null)), react_1.default.createElement(react_router_dom_1.Route, {
+    exact: true,
+    path: "/upload"
+  }, react_1.default.createElement(UploadPage_1.default, null)), react_1.default.createElement(react_router_dom_1.Route, {
     path: "/verify/:userEmail"
   }, jwt === "" ? react_1.default.createElement(VerifyEmailPage_1.default, null) : react_1.default.createElement(react_router_dom_1.Redirect, {
     to: "/login"
@@ -71250,7 +71332,7 @@ function App() {
 }
 
 exports.default = App;
-},{"react":"node_modules/react/index.js","react-router-dom":"node_modules/react-router-dom/esm/react-router-dom.js","./page/ForgotPasswordPage/ForgotPasswordPage":"page/ForgotPasswordPage/ForgotPasswordPage.tsx","./page/HomePage/HomePage":"page/HomePage/HomePage.tsx","./page/LoginPage/LoginPage":"page/LoginPage/LoginPage.tsx","./page/Profile/Profile":"page/Profile/Profile.tsx","./page/RegisterPage/RegisterPage":"page/RegisterPage/RegisterPage.tsx","./page/ResetPasswordPage/ResetPasswordPage":"page/ResetPasswordPage/ResetPasswordPage.tsx","./page/VerifyEmailPage/VerifyEmailPage":"page/VerifyEmailPage/VerifyEmailPage.tsx"}],"node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","react-router-dom":"node_modules/react-router-dom/esm/react-router-dom.js","./page/ForgotPasswordPage/ForgotPasswordPage":"page/ForgotPasswordPage/ForgotPasswordPage.tsx","./page/HomePage/HomePage":"page/HomePage/HomePage.tsx","./page/LoginPage/LoginPage":"page/LoginPage/LoginPage.tsx","./page/Profile/Profile":"page/Profile/Profile.tsx","./page/RegisterPage/RegisterPage":"page/RegisterPage/RegisterPage.tsx","./page/ResetPasswordPage/ResetPasswordPage":"page/ResetPasswordPage/ResetPasswordPage.tsx","./page/UploadPage/UploadPage":"page/UploadPage/UploadPage.tsx","./page/VerifyEmailPage/VerifyEmailPage":"page/VerifyEmailPage/VerifyEmailPage.tsx"}],"node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
 var bundleURL = null;
 
 function getBundleURLCached() {
@@ -71380,7 +71462,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49995" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61825" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

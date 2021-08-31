@@ -190,7 +190,7 @@ html p, body p {
 #loginOuterDiv {
   display: flex;
   width: 100%;
-  height: 800px;
+  min-height: 100vh;
   align-items: center;
   justify-content: center;
   background-color: #f0f6fa;
@@ -418,7 +418,7 @@ html p, body p {
 #registerOuterDiv {
   display: flex;
   width: 100%;
-  height: 900px;
+  min-height: 100vh;
   align-items: flex-start;
   justify-content: center;
   background-color: #f0f6fa;
@@ -615,8 +615,8 @@ html p, body p {
 #verifyOuterDiv {
   display: flex;
   width: 100%;
-  height: 700px;
-  align-items: flex-start;
+  min-height: 100vh;
+  align-items: center;
   justify-content: center;
   background-color: #f0f6fa;
 }
@@ -748,8 +748,8 @@ html p, body p {
 #forgotOuterDiv {
   display: flex;
   width: 100%;
-  height: 700px;
-  align-items: flex-start;
+  min-height: 100vh;
+  align-items: center;
   justify-content: center;
   background-color: #f0f6fa;
 }
@@ -1795,6 +1795,171 @@ html p, body p {
 .loading a {
   text-decoration: underline;
   color: darkgray;
+}
+
+#uploadOuterDiv {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+  background-color: #f0f6fa;
+}
+#uploadOuterDiv #uploadMainDiv {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #f0f6fa;
+  width: 100%;
+  height: 500px;
+}
+#uploadOuterDiv #uploadMainDiv #uploadFormDiv {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: fit-content;
+  width: 480px;
+  background-color: #f0f6fa;
+}
+#uploadOuterDiv #uploadMainDiv #uploadFormDiv #uploadForm {
+  padding: 2rem 4rem 4rem 4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  background-color: white;
+  border: 1px solid #e7e7e7;
+  height: 600px;
+}
+#uploadOuterDiv #uploadMainDiv #uploadFormDiv #uploadForm h1 {
+  margin: 0%;
+  padding: 0%;
+  font-weight: 400;
+  width: 100%;
+  display: flex;
+}
+#uploadOuterDiv #uploadMainDiv #uploadFormDiv #uploadForm #uploadArea {
+  width: 100%;
+  height: 350px;
+  border: 2px solid black;
+  border-radius: 10px;
+  position: relative;
+}
+#uploadOuterDiv #uploadMainDiv #uploadFormDiv #uploadForm #uploadArea svg {
+  position: absolute;
+}
+#uploadOuterDiv #uploadMainDiv #uploadFormDiv #uploadForm #uploadArea #upload {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+#uploadOuterDiv #uploadMainDiv #uploadFormDiv #uploadForm #textAreaDiv {
+  width: 100%;
+  font-weight: bold;
+}
+#uploadOuterDiv #uploadMainDiv #uploadFormDiv #uploadForm #textAreaDiv #caption {
+  width: 100%;
+  height: 150px;
+  border-radius: 10px;
+  resize: none;
+  font-family: Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-weight: 500;
+  font-size: 18px;
+}
+#uploadOuterDiv #uploadMainDiv #uploadFormDiv #uploadForm #buttonDiv {
+  width: 100%;
+}
+#uploadOuterDiv #uploadMainDiv #uploadFormDiv #uploadForm #buttonDiv #uploadButton {
+  margin-top: 1rem;
+  overflow: hidden;
+  text-decoration: none;
+  color: white;
+  background-color: #00A6FB;
+  padding: 0.4rem 1rem 0.4rem 1rem;
+  border-radius: 3px;
+  transition-duration: 0.6s;
+  font-size: 0.8rem;
+  font-weight: 600;
+  width: 100%;
+}
+#uploadOuterDiv #uploadMainDiv #uploadFormDiv #uploadForm #buttonDiv #uploadButton:hover {
+  cursor: pointer;
+}
+@media screen and (max-width: 480px) {
+  #uploadOuterDiv #uploadMainDiv {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #f0f6fa;
+    width: 100%;
+    height: 500px;
+  }
+  #uploadOuterDiv #uploadMainDiv #uploadFormDiv {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: fit-content;
+    width: 480px;
+    background-color: #f0f6fa;
+  }
+  #uploadOuterDiv #uploadMainDiv #uploadFormDiv #uploadForm {
+    padding: 2rem 2rem 2rem 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    background-color: white;
+    border: 1px solid #e7e7e7;
+    height: 600px;
+  }
+  #uploadOuterDiv #uploadMainDiv #uploadFormDiv #uploadForm h1 {
+    margin: 0%;
+    padding: 0%;
+    font-weight: 400;
+    width: 100%;
+    display: flex;
+  }
+  #uploadOuterDiv #uploadMainDiv #uploadFormDiv #uploadForm #uploadArea {
+    width: 100%;
+    height: 300px;
+    border: 2px solid black;
+    border-radius: 10px;
+  }
+  #uploadOuterDiv #uploadMainDiv #uploadFormDiv #uploadForm #uploadArea #upload {
+    width: 100%;
+    height: 200px;
+    padding-top: 7rem;
+  }
+  #uploadOuterDiv #uploadMainDiv #uploadFormDiv #uploadForm #textAreaDiv {
+    width: 100%;
+    font-weight: bold;
+  }
+  #uploadOuterDiv #uploadMainDiv #uploadFormDiv #uploadForm #textAreaDiv #caption {
+    width: 100%;
+    border-radius: 10px;
+    resize: none;
+  }
+  #uploadOuterDiv #uploadMainDiv #uploadFormDiv #uploadForm #buttonDiv {
+    width: 100%;
+  }
+  #uploadOuterDiv #uploadMainDiv #uploadFormDiv #uploadForm #buttonDiv #uploadButton {
+    margin-top: 1rem;
+    overflow: hidden;
+    text-decoration: none;
+    color: white;
+    background-color: #00A6FB;
+    padding: 1rem 1rem 1rem 1rem;
+    border-radius: 8px;
+    transition-duration: 0.6s;
+    font-size: 0.8rem;
+    font-weight: 600;
+    width: 100%;
+  }
+  #uploadOuterDiv #uploadMainDiv #uploadFormDiv #uploadForm #buttonDiv #uploadButton:hover {
+    cursor: pointer;
+  }
 }
 
 /*# sourceMappingURL=/tpaweb.f69400ca.css.map */

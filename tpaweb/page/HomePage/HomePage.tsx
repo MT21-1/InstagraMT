@@ -8,7 +8,7 @@ import Suggestion from '../Components/suggestion'
 export default function HomePage(){
 
     const user = JSON.parse(localStorage.getItem("user"))
-
+    console.log(user)
     return(
         <React.Fragment>
             <UserHeader/>
@@ -58,7 +58,7 @@ export default function HomePage(){
                         {/* profile snediri */}
                         <div className="profileSuggestion">
                             <div className="profileDetail">
-                                <img src={user.profile} alt="profilepic" />
+                                <img src={user.picture} alt="profilepic" />
                                 <div>
                                     <p className="username">{user.username}</p>
                                     <p className="subname">{user.full_name}</p>    
