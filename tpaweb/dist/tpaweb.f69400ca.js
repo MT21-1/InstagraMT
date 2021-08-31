@@ -33667,7 +33667,1036 @@ if ("development" !== "production") {
     style: _propTypes.default.object
   });
 }
-},{"react-router":"node_modules/react-router/esm/react-router.js","@babel/runtime/helpers/esm/inheritsLoose":"node_modules/@babel/runtime/helpers/esm/inheritsLoose.js","react":"node_modules/react/index.js","history":"node_modules/history/esm/history.js","prop-types":"node_modules/prop-types/index.js","tiny-warning":"node_modules/tiny-warning/dist/tiny-warning.esm.js","@babel/runtime/helpers/esm/extends":"node_modules/@babel/runtime/helpers/esm/extends.js","@babel/runtime/helpers/esm/objectWithoutPropertiesLoose":"node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js","tiny-invariant":"node_modules/tiny-invariant/dist/tiny-invariant.esm.js"}],"node_modules/tslib/tslib.es6.js":[function(require,module,exports) {
+},{"react-router":"node_modules/react-router/esm/react-router.js","@babel/runtime/helpers/esm/inheritsLoose":"node_modules/@babel/runtime/helpers/esm/inheritsLoose.js","react":"node_modules/react/index.js","history":"node_modules/history/esm/history.js","prop-types":"node_modules/prop-types/index.js","tiny-warning":"node_modules/tiny-warning/dist/tiny-warning.esm.js","@babel/runtime/helpers/esm/extends":"node_modules/@babel/runtime/helpers/esm/extends.js","@babel/runtime/helpers/esm/objectWithoutPropertiesLoose":"node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js","tiny-invariant":"node_modules/tiny-invariant/dist/tiny-invariant.esm.js"}],"page/ExplorePage/videoStrip.tsx":[function(require,module,exports) {
+"use strict";
+
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var react_1 = __importDefault(require("react"));
+
+function VideoStrip() {
+  return react_1.default.createElement("div", {
+    className: "videoGlobalStrip"
+  }, react_1.default.createElement("div", {
+    className: "videoLeft"
+  }, react_1.default.createElement("img", {
+    src: "wp.jpg",
+    alt: ""
+  }), react_1.default.createElement("img", {
+    src: "wp.jpg",
+    alt: ""
+  })), react_1.default.createElement("div", {
+    className: "videoRight"
+  }, react_1.default.createElement("img", {
+    src: "wp.jpg",
+    alt: ""
+  })));
+}
+
+exports.default = VideoStrip;
+},{"react":"node_modules/react/index.js"}],"page/ExplorePage/imageStrip.tsx":[function(require,module,exports) {
+"use strict";
+
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var react_1 = __importDefault(require("react"));
+
+function ImageStrip() {
+  return (// grid 2 x 3
+    react_1.default.createElement("div", {
+      className: "imageStrip"
+    }, react_1.default.createElement("img", {
+      src: "wp.jpg",
+      alt: ""
+    }), react_1.default.createElement("img", {
+      src: "wp.jpg",
+      alt: ""
+    }), react_1.default.createElement("img", {
+      src: "wp.jpg",
+      alt: ""
+    }), react_1.default.createElement("img", {
+      src: "wp.jpg",
+      alt: ""
+    }), react_1.default.createElement("img", {
+      src: "wp.jpg",
+      alt: ""
+    }), react_1.default.createElement("img", {
+      src: "wp.jpg",
+      alt: ""
+    }))
+  );
+}
+
+exports.default = ImageStrip;
+},{"react":"node_modules/react/index.js"}],"node_modules/reactjs-popup/dist/reactjs-popup.esm.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Popup = exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _reactDom = _interopRequireDefault(require("react-dom"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function _extends() {
+  _extends = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+
+  return _extends.apply(this, arguments);
+}
+
+var useOnEscape = function useOnEscape(handler, active) {
+  if (active === void 0) {
+    active = true;
+  }
+
+  (0, _react.useEffect)(function () {
+    if (!active) return;
+
+    var listener = function listener(event) {
+      // check if key is an Escape
+      if (event.key === 'Escape') handler(event);
+    };
+
+    document.addEventListener('keyup', listener);
+    return function () {
+      if (!active) return;
+      document.removeEventListener('keyup', listener);
+    };
+  }, [handler, active]);
+};
+
+var useRepositionOnResize = function useRepositionOnResize(handler, active) {
+  if (active === void 0) {
+    active = true;
+  }
+
+  (0, _react.useEffect)(function () {
+    if (!active) return;
+
+    var listener = function listener() {
+      handler();
+    };
+
+    window.addEventListener('resize', listener);
+    return function () {
+      if (!active) return;
+      window.removeEventListener('resize', listener);
+    };
+  }, [handler, active]);
+};
+
+var useOnClickOutside = function useOnClickOutside(ref, handler, active) {
+  if (active === void 0) {
+    active = true;
+  }
+
+  (0, _react.useEffect)(function () {
+    if (!active) return;
+
+    var listener = function listener(event) {
+      // Do nothing if clicking ref's element or descendent elements
+      var refs = Array.isArray(ref) ? ref : [ref];
+      var contains = false;
+      refs.forEach(function (r) {
+        if (!r.current || r.current.contains(event.target)) {
+          contains = true;
+          return;
+        }
+      });
+      event.stopPropagation();
+      if (!contains) handler(event);
+    };
+
+    document.addEventListener('mousedown', listener);
+    document.addEventListener('touchstart', listener);
+    return function () {
+      if (!active) return;
+      document.removeEventListener('mousedown', listener);
+      document.removeEventListener('touchstart', listener);
+    };
+  }, [ref, handler, active]);
+}; // Make sure that user is not able TAB out of the Modal content on Open
+
+
+var useTabbing = function useTabbing(contentRef, active) {
+  if (active === void 0) {
+    active = true;
+  }
+
+  (0, _react.useEffect)(function () {
+    if (!active) return;
+
+    var listener = function listener(event) {
+      // check if key is an Tab
+      if (event.keyCode === 9) {
+        var _contentRef$current;
+
+        var els = contentRef === null || contentRef === void 0 ? void 0 : (_contentRef$current = contentRef.current) === null || _contentRef$current === void 0 ? void 0 : _contentRef$current.querySelectorAll('a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex="0"]');
+        var focusableEls = Array.prototype.slice.call(els);
+
+        if (focusableEls.length === 1) {
+          event.preventDefault();
+          return;
+        }
+
+        var firstFocusableEl = focusableEls[0];
+        var lastFocusableEl = focusableEls[focusableEls.length - 1];
+
+        if (event.shiftKey && document.activeElement === firstFocusableEl) {
+          event.preventDefault();
+          lastFocusableEl.focus();
+        } else if (document.activeElement === lastFocusableEl) {
+          event.preventDefault();
+          firstFocusableEl.focus();
+        }
+      }
+    };
+
+    document.addEventListener('keydown', listener);
+    return function () {
+      if (!active) return;
+      document.removeEventListener('keydown', listener);
+    };
+  }, [contentRef, active]);
+};
+
+var useIsomorphicLayoutEffect = typeof window !== 'undefined' ? _react.useLayoutEffect : _react.useEffect;
+var Style = {
+  popupContent: {
+    tooltip: {
+      position: 'absolute',
+      zIndex: 999
+    },
+    modal: {
+      position: 'relative',
+      margin: 'auto'
+    }
+  },
+  popupArrow: {
+    height: '8px',
+    width: '16px',
+    position: 'absolute',
+    background: 'transparent',
+    color: '#FFF',
+    zIndex: -1
+  },
+  overlay: {
+    tooltip: {
+      position: 'fixed',
+      top: '0',
+      bottom: '0',
+      left: '0',
+      right: '0',
+      zIndex: 999
+    },
+    modal: {
+      position: 'fixed',
+      top: '0',
+      bottom: '0',
+      left: '0',
+      right: '0',
+      display: 'flex',
+      zIndex: 999
+    }
+  }
+};
+var POSITION_TYPES = ['top left', 'top center', 'top right', 'right top', 'right center', 'right bottom', 'bottom left', 'bottom center', 'bottom right', 'left top', 'left center', 'left bottom'];
+
+var getCoordinatesForPosition = function getCoordinatesForPosition(triggerBounding, ContentBounding, position, //PopupPosition | PopupPosition[],
+arrow, _ref) {
+  var offsetX = _ref.offsetX,
+      offsetY = _ref.offsetY;
+  var margin = arrow ? 8 : 0;
+  var args = position.split(' '); // the step N 1 : center the popup content => ok
+
+  var CenterTop = triggerBounding.top + triggerBounding.height / 2;
+  var CenterLeft = triggerBounding.left + triggerBounding.width / 2;
+  var height = ContentBounding.height,
+      width = ContentBounding.width;
+  var top = CenterTop - height / 2;
+  var left = CenterLeft - width / 2;
+  var transform = '';
+  var arrowTop = '0%';
+  var arrowLeft = '0%'; // the  step N 2 : => ok
+
+  switch (args[0]) {
+    case 'top':
+      top -= height / 2 + triggerBounding.height / 2 + margin;
+      transform = "rotate(180deg)  translateX(50%)";
+      arrowTop = '100%';
+      arrowLeft = '50%';
+      break;
+
+    case 'bottom':
+      top += height / 2 + triggerBounding.height / 2 + margin;
+      transform = "rotate(0deg) translateY(-100%) translateX(-50%)";
+      arrowLeft = '50%';
+      break;
+
+    case 'left':
+      left -= width / 2 + triggerBounding.width / 2 + margin;
+      transform = " rotate(90deg)  translateY(50%) translateX(-25%)";
+      arrowLeft = '100%';
+      arrowTop = '50%';
+      break;
+
+    case 'right':
+      left += width / 2 + triggerBounding.width / 2 + margin;
+      transform = "rotate(-90deg)  translateY(-150%) translateX(25%)";
+      arrowTop = '50%';
+      break;
+  }
+
+  switch (args[1]) {
+    case 'top':
+      top = triggerBounding.top;
+      arrowTop = triggerBounding.height / 2 + "px";
+      break;
+
+    case 'bottom':
+      top = triggerBounding.top - height + triggerBounding.height;
+      arrowTop = height - triggerBounding.height / 2 + "px";
+      break;
+
+    case 'left':
+      left = triggerBounding.left;
+      arrowLeft = triggerBounding.width / 2 + "px";
+      break;
+
+    case 'right':
+      left = triggerBounding.left - width + triggerBounding.width;
+      arrowLeft = width - triggerBounding.width / 2 + "px";
+      break;
+  }
+
+  top = args[0] === 'top' ? top - offsetY : top + offsetY;
+  left = args[0] === 'left' ? left - offsetX : left + offsetX;
+  return {
+    top: top,
+    left: left,
+    transform: transform,
+    arrowLeft: arrowLeft,
+    arrowTop: arrowTop
+  };
+};
+
+var getTooltipBoundary = function getTooltipBoundary(keepTooltipInside) {
+  // add viewport
+  var boundingBox = {
+    top: 0,
+    left: 0,
+
+    /* eslint-disable-next-line no-undef */
+    width: window.innerWidth,
+
+    /* eslint-disable-next-line no-undef */
+    height: window.innerHeight
+  };
+
+  if (typeof keepTooltipInside === 'string') {
+    /* eslint-disable-next-line no-undef */
+    var selector = document.querySelector(keepTooltipInside);
+
+    if ("development" !== 'production') {
+      if (selector === null) throw new Error(keepTooltipInside + " selector does not exist : keepTooltipInside must be a valid html selector 'class' or 'Id'  or a boolean value");
+    }
+
+    if (selector !== null) boundingBox = selector.getBoundingClientRect();
+  }
+
+  return boundingBox;
+};
+
+var calculatePosition = function calculatePosition(triggerBounding, ContentBounding, position, arrow, _ref2, keepTooltipInside) {
+  var offsetX = _ref2.offsetX,
+      offsetY = _ref2.offsetY;
+  var bestCoords = {
+    arrowLeft: '0%',
+    arrowTop: '0%',
+    left: 0,
+    top: 0,
+    transform: 'rotate(135deg)'
+  };
+  var i = 0;
+  var wrapperBox = getTooltipBoundary(keepTooltipInside);
+  var positions = Array.isArray(position) ? position : [position]; // keepTooltipInside would be activated if the  keepTooltipInside exist or the position is Array
+
+  if (keepTooltipInside || Array.isArray(position)) positions = [].concat(positions, POSITION_TYPES); // add viewPort for WarpperBox
+  // wrapperBox.top = wrapperBox.top + window.scrollY;
+  // wrapperBox.left = wrapperBox.left + window.scrollX;
+
+  while (i < positions.length) {
+    bestCoords = getCoordinatesForPosition(triggerBounding, ContentBounding, positions[i], arrow, {
+      offsetX: offsetX,
+      offsetY: offsetY
+    });
+    var contentBox = {
+      top: bestCoords.top,
+      left: bestCoords.left,
+      width: ContentBounding.width,
+      height: ContentBounding.height
+    };
+
+    if (contentBox.top <= wrapperBox.top || contentBox.left <= wrapperBox.left || contentBox.top + contentBox.height >= wrapperBox.top + wrapperBox.height || contentBox.left + contentBox.width >= wrapperBox.left + wrapperBox.width) {
+      i++;
+    } else {
+      break;
+    }
+  }
+
+  return bestCoords;
+};
+
+var popupIdCounter = 0;
+
+var getRootPopup = function getRootPopup() {
+  var PopupRoot = document.getElementById('popup-root');
+
+  if (PopupRoot === null) {
+    PopupRoot = document.createElement('div');
+    PopupRoot.setAttribute('id', 'popup-root');
+    document.body.appendChild(PopupRoot);
+  }
+
+  return PopupRoot;
+};
+
+var Popup = /*#__PURE__*/(0, _react.forwardRef)(function (_ref, ref) {
+  var _ref$trigger = _ref.trigger,
+      trigger = _ref$trigger === void 0 ? null : _ref$trigger,
+      _ref$onOpen = _ref.onOpen,
+      onOpen = _ref$onOpen === void 0 ? function () {} : _ref$onOpen,
+      _ref$onClose = _ref.onClose,
+      onClose = _ref$onClose === void 0 ? function () {} : _ref$onClose,
+      _ref$defaultOpen = _ref.defaultOpen,
+      defaultOpen = _ref$defaultOpen === void 0 ? false : _ref$defaultOpen,
+      _ref$open = _ref.open,
+      open = _ref$open === void 0 ? undefined : _ref$open,
+      _ref$disabled = _ref.disabled,
+      disabled = _ref$disabled === void 0 ? false : _ref$disabled,
+      _ref$nested = _ref.nested,
+      nested = _ref$nested === void 0 ? false : _ref$nested,
+      _ref$closeOnDocumentC = _ref.closeOnDocumentClick,
+      closeOnDocumentClick = _ref$closeOnDocumentC === void 0 ? true : _ref$closeOnDocumentC,
+      _ref$repositionOnResi = _ref.repositionOnResize,
+      repositionOnResize = _ref$repositionOnResi === void 0 ? true : _ref$repositionOnResi,
+      _ref$closeOnEscape = _ref.closeOnEscape,
+      closeOnEscape = _ref$closeOnEscape === void 0 ? true : _ref$closeOnEscape,
+      _ref$on = _ref.on,
+      on = _ref$on === void 0 ? ['click'] : _ref$on,
+      _ref$contentStyle = _ref.contentStyle,
+      contentStyle = _ref$contentStyle === void 0 ? {} : _ref$contentStyle,
+      _ref$arrowStyle = _ref.arrowStyle,
+      arrowStyle = _ref$arrowStyle === void 0 ? {} : _ref$arrowStyle,
+      _ref$overlayStyle = _ref.overlayStyle,
+      overlayStyle = _ref$overlayStyle === void 0 ? {} : _ref$overlayStyle,
+      _ref$className = _ref.className,
+      className = _ref$className === void 0 ? '' : _ref$className,
+      _ref$position = _ref.position,
+      position = _ref$position === void 0 ? 'bottom center' : _ref$position,
+      _ref$modal = _ref.modal,
+      modal = _ref$modal === void 0 ? false : _ref$modal,
+      _ref$lockScroll = _ref.lockScroll,
+      lockScroll = _ref$lockScroll === void 0 ? false : _ref$lockScroll,
+      _ref$arrow = _ref.arrow,
+      arrow = _ref$arrow === void 0 ? true : _ref$arrow,
+      _ref$offsetX = _ref.offsetX,
+      offsetX = _ref$offsetX === void 0 ? 0 : _ref$offsetX,
+      _ref$offsetY = _ref.offsetY,
+      offsetY = _ref$offsetY === void 0 ? 0 : _ref$offsetY,
+      _ref$mouseEnterDelay = _ref.mouseEnterDelay,
+      mouseEnterDelay = _ref$mouseEnterDelay === void 0 ? 100 : _ref$mouseEnterDelay,
+      _ref$mouseLeaveDelay = _ref.mouseLeaveDelay,
+      mouseLeaveDelay = _ref$mouseLeaveDelay === void 0 ? 100 : _ref$mouseLeaveDelay,
+      _ref$keepTooltipInsid = _ref.keepTooltipInside,
+      keepTooltipInside = _ref$keepTooltipInsid === void 0 ? false : _ref$keepTooltipInsid,
+      children = _ref.children;
+
+  var _useState = (0, _react.useState)(open || defaultOpen),
+      isOpen = _useState[0],
+      setIsOpen = _useState[1];
+
+  var triggerRef = (0, _react.useRef)(null);
+  var contentRef = (0, _react.useRef)(null);
+  var arrowRef = (0, _react.useRef)(null);
+  var focusedElBeforeOpen = (0, _react.useRef)(null);
+  var popupId = (0, _react.useRef)("popup-" + ++popupIdCounter);
+  var isModal = modal ? true : !trigger;
+  var timeOut = (0, _react.useRef)(0);
+  useIsomorphicLayoutEffect(function () {
+    if (isOpen) {
+      focusedElBeforeOpen.current = document.activeElement;
+      setPosition();
+      focusContentOnOpen(); // for accessibility
+
+      lockScrolll();
+    } else {
+      resetScroll();
+    }
+
+    return function () {
+      clearTimeout(timeOut.current);
+    };
+  }, [isOpen]); // for uncontrolled popup we need to sync isOpen with open prop
+
+  (0, _react.useEffect)(function () {
+    if (typeof open === 'boolean') {
+      if (open) openPopup();else closePopup();
+    }
+  }, [open, disabled]);
+
+  var openPopup = function openPopup(event) {
+    if (isOpen || disabled) return;
+    setIsOpen(true);
+    setTimeout(function () {
+      return onOpen(event);
+    }, 0);
+  };
+
+  var closePopup = function closePopup(event) {
+    var _focusedElBeforeOpen$;
+
+    if (!isOpen || disabled) return;
+    setIsOpen(false);
+    if (isModal) (_focusedElBeforeOpen$ = focusedElBeforeOpen.current) === null || _focusedElBeforeOpen$ === void 0 ? void 0 : _focusedElBeforeOpen$.focus();
+    setTimeout(function () {
+      return onClose(event);
+    }, 0);
+  };
+
+  var togglePopup = function togglePopup(event) {
+    event === null || event === void 0 ? void 0 : event.stopPropagation();
+    if (!isOpen) openPopup(event);else closePopup(event);
+  };
+
+  var onMouseEnter = function onMouseEnter(event) {
+    clearTimeout(timeOut.current);
+    timeOut.current = setTimeout(function () {
+      return openPopup(event);
+    }, mouseEnterDelay);
+  };
+
+  var onContextMenu = function onContextMenu(event) {
+    event === null || event === void 0 ? void 0 : event.preventDefault();
+    togglePopup();
+  };
+
+  var onMouseLeave = function onMouseLeave(event) {
+    clearTimeout(timeOut.current);
+    timeOut.current = setTimeout(function () {
+      return closePopup(event);
+    }, mouseLeaveDelay);
+  };
+
+  var lockScrolll = function lockScrolll() {
+    if (isModal && lockScroll) document.getElementsByTagName('body')[0].style.overflow = 'hidden'; // migrate to document.body
+  };
+
+  var resetScroll = function resetScroll() {
+    if (isModal && lockScroll) document.getElementsByTagName('body')[0].style.overflow = 'auto';
+  };
+
+  var focusContentOnOpen = function focusContentOnOpen() {
+    var _contentRef$current;
+
+    var focusableEls = contentRef === null || contentRef === void 0 ? void 0 : (_contentRef$current = contentRef.current) === null || _contentRef$current === void 0 ? void 0 : _contentRef$current.querySelectorAll('a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex="0"]');
+    var firstEl = Array.prototype.slice.call(focusableEls)[0];
+    firstEl === null || firstEl === void 0 ? void 0 : firstEl.focus();
+  };
+
+  (0, _react.useImperativeHandle)(ref, function () {
+    return {
+      open: function open() {
+        openPopup();
+      },
+      close: function close() {
+        closePopup();
+      },
+      toggle: function toggle() {
+        togglePopup();
+      }
+    };
+  }); // set Position
+
+  var setPosition = function setPosition() {
+    if (isModal || !isOpen) return;
+    if (!(triggerRef === null || triggerRef === void 0 ? void 0 : triggerRef.current) || !(triggerRef === null || triggerRef === void 0 ? void 0 : triggerRef.current) || !(contentRef === null || contentRef === void 0 ? void 0 : contentRef.current)) return; /// show error as one of ref is undefined
+
+    var trigger = triggerRef.current.getBoundingClientRect();
+    var content = contentRef.current.getBoundingClientRect();
+    var cords = calculatePosition(trigger, content, position, arrow, {
+      offsetX: offsetX,
+      offsetY: offsetY
+    }, keepTooltipInside);
+    contentRef.current.style.top = cords.top + window.scrollY + "px";
+    contentRef.current.style.left = cords.left + window.scrollX + "px";
+
+    if (arrow && !!arrowRef.current) {
+      var _arrowStyle$top, _arrowStyle$left;
+
+      arrowRef.current.style.transform = cords.transform;
+      arrowRef.current.style.setProperty('-ms-transform', cords.transform);
+      arrowRef.current.style.setProperty('-webkit-transform', cords.transform);
+      arrowRef.current.style.top = ((_arrowStyle$top = arrowStyle.top) === null || _arrowStyle$top === void 0 ? void 0 : _arrowStyle$top.toString()) || cords.arrowTop;
+      arrowRef.current.style.left = ((_arrowStyle$left = arrowStyle.left) === null || _arrowStyle$left === void 0 ? void 0 : _arrowStyle$left.toString()) || cords.arrowLeft;
+    }
+  }; // hooks
+
+
+  useOnEscape(closePopup, closeOnEscape); // can be optimized if we disabled for hover
+
+  useTabbing(contentRef, isOpen && isModal);
+  useRepositionOnResize(setPosition, repositionOnResize);
+  useOnClickOutside(!!trigger ? [contentRef, triggerRef] : [contentRef], closePopup, closeOnDocumentClick && !nested); // we need to add a ne
+  // render the trigger element and add events
+
+  var renderTrigger = function renderTrigger() {
+    var triggerProps = {
+      key: 'T',
+      ref: triggerRef,
+      'aria-describedby': popupId.current
+    };
+    var onAsArray = Array.isArray(on) ? on : [on];
+
+    for (var i = 0, len = onAsArray.length; i < len; i++) {
+      switch (onAsArray[i]) {
+        case 'click':
+          triggerProps.onClick = togglePopup;
+          break;
+
+        case 'right-click':
+          triggerProps.onContextMenu = onContextMenu;
+          break;
+
+        case 'hover':
+          triggerProps.onMouseEnter = onMouseEnter;
+          triggerProps.onMouseLeave = onMouseLeave;
+          break;
+
+        case 'focus':
+          triggerProps.onFocus = onMouseEnter;
+          triggerProps.onBlur = onMouseLeave;
+          break;
+      }
+    }
+
+    if (typeof trigger === 'function') {
+      var comp = trigger(isOpen);
+      return !!trigger && _react.default.cloneElement(comp, triggerProps);
+    }
+
+    return !!trigger && _react.default.cloneElement(trigger, triggerProps);
+  };
+
+  var addWarperAction = function addWarperAction() {
+    var popupContentStyle = isModal ? Style.popupContent.modal : Style.popupContent.tooltip;
+    var childrenElementProps = {
+      className: "popup-content " + (className !== '' ? className.split(' ').map(function (c) {
+        return c + "-content";
+      }).join(' ') : ''),
+      style: _extends({}, popupContentStyle, contentStyle, {
+        pointerEvents: 'auto'
+      }),
+      ref: contentRef,
+      onClick: function onClick(e) {
+        e.stopPropagation();
+      }
+    };
+
+    if (!modal && on.indexOf('hover') >= 0) {
+      childrenElementProps.onMouseEnter = onMouseEnter;
+      childrenElementProps.onMouseLeave = onMouseLeave;
+    }
+
+    return childrenElementProps;
+  };
+
+  var renderContent = function renderContent() {
+    return _react.default.createElement("div", Object.assign({}, addWarperAction(), {
+      key: "C",
+      role: isModal ? 'dialog' : 'tooltip',
+      id: popupId.current
+    }), arrow && !isModal && _react.default.createElement("div", {
+      ref: arrowRef,
+      style: Style.popupArrow
+    }, _react.default.createElement("svg", {
+      "data-testid": "arrow",
+      className: "popup-arrow " + (className !== '' ? className.split(' ').map(function (c) {
+        return c + "-arrow";
+      }).join(' ') : ''),
+      viewBox: "0 0 32 16",
+      style: _extends({
+        position: 'absolute'
+      }, arrowStyle)
+    }, _react.default.createElement("path", {
+      d: "M16 0l16 16H0z",
+      fill: "currentcolor"
+    }))), children && typeof children === 'function' ? children(closePopup, isOpen) : children);
+  };
+
+  var overlay = !(on.indexOf('hover') >= 0);
+  var ovStyle = isModal ? Style.overlay.modal : Style.overlay.tooltip;
+  var content = [overlay && _react.default.createElement("div", {
+    key: "O",
+    "data-testid": "overlay",
+    "data-popup": isModal ? 'modal' : 'tooltip',
+    className: "popup-overlay " + (className !== '' ? className.split(' ').map(function (c) {
+      return c + "-overlay";
+    }).join(' ') : ''),
+    style: _extends({}, ovStyle, overlayStyle, {
+      pointerEvents: closeOnDocumentClick && nested || isModal ? 'auto' : 'none'
+    }),
+    onClick: closeOnDocumentClick && nested ? closePopup : undefined,
+    tabIndex: -1
+  }, isModal && renderContent()), !isModal && renderContent()];
+  return _react.default.createElement(_react.default.Fragment, null, renderTrigger(), isOpen && _reactDom.default.createPortal(content, getRootPopup()));
+});
+exports.Popup = Popup;
+var _default = Popup;
+exports.default = _default;
+},{"react":"node_modules/react/index.js","react-dom":"node_modules/react-dom/index.js"}],"page/AddOns/Header/UserHeader.tsx":[function(require,module,exports) {
+"use strict";
+
+var __createBinding = this && this.__createBinding || (Object.create ? function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  Object.defineProperty(o, k2, {
+    enumerable: true,
+    get: function get() {
+      return m[k];
+    }
+  });
+} : function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  o[k2] = m[k];
+});
+
+var __setModuleDefault = this && this.__setModuleDefault || (Object.create ? function (o, v) {
+  Object.defineProperty(o, "default", {
+    enumerable: true,
+    value: v
+  });
+} : function (o, v) {
+  o["default"] = v;
+});
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+  }
+
+  __setModuleDefault(result, mod);
+
+  return result;
+};
+
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var react_1 = __importStar(require("react"));
+
+var reactjs_popup_1 = __importDefault(require("reactjs-popup"));
+
+var App_1 = require("../../../App");
+
+function UserHeader() {
+  var _a = react_1.useContext(App_1.JWTContext),
+      _ = _a[0],
+      setJWT = _a[1];
+
+  var jwt = localStorage.getItem("jwt");
+  var user = JSON.parse(localStorage.getItem("user"));
+
+  function logOut() {
+    setJWT("");
+  }
+
+  console.log(jwt);
+  return (// klo udah login panggil ini
+    react_1.default.createElement("div", {
+      className: "pembungkus"
+    }, react_1.default.createElement("div", {
+      className: "header"
+    }, react_1.default.createElement("div", {
+      className: "logo"
+    }, react_1.default.createElement("h1", null, "InstagraMT")), react_1.default.createElement("div", {
+      className: "searchBar"
+    }, react_1.default.createElement("form", {
+      action: ""
+    }, react_1.default.createElement("input", {
+      type: "text",
+      placeholder: "Search",
+      name: "searchQuery",
+      id: ""
+    }))), react_1.default.createElement("div", {
+      className: "iconDiv"
+    }, react_1.default.createElement("a", {
+      href: "/",
+      id: "home"
+    }, react_1.default.createElement("svg", {
+      xmlns: "http://www.w3.org/2000/svg",
+      fill: "none",
+      viewBox: "0 0 24 24",
+      stroke: "currentColor"
+    }, react_1.default.createElement("path", {
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round",
+      "stroke-width": "2",
+      d: "M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+    }))), react_1.default.createElement("a", {
+      href: "/upload",
+      id: "upload"
+    }, react_1.default.createElement("svg", {
+      xmlns: "http://www.w3.org/2000/svg",
+      fill: "none",
+      viewBox: "0 0 24 24",
+      stroke: "currentColor"
+    }, react_1.default.createElement("path", {
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round",
+      "stroke-width": "2",
+      d: "M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+    }))), react_1.default.createElement("a", {
+      href: "#",
+      id: "msg"
+    }, react_1.default.createElement("svg", {
+      xmlns: "http://www.w3.org/2000/svg",
+      fill: "none",
+      viewBox: "0 0 24 24",
+      stroke: "currentColor"
+    }, react_1.default.createElement("path", {
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round",
+      "stroke-width": "2",
+      d: "M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+    }))), react_1.default.createElement("a", {
+      href: "/explore",
+      id: "explore"
+    }, react_1.default.createElement("svg", {
+      xmlns: "http://www.w3.org/2000/svg",
+      fill: "none",
+      viewBox: "0 0 24 24",
+      stroke: "currentColor"
+    }, react_1.default.createElement("path", {
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round",
+      "stroke-width": "2",
+      d: "M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"
+    }))), react_1.default.createElement("a", {
+      href: "#",
+      id: "like"
+    }, react_1.default.createElement("svg", {
+      xmlns: "http://www.w3.org/2000/svg",
+      fill: "none",
+      viewBox: "0 0 24 24",
+      stroke: "currentColor"
+    }, react_1.default.createElement("path", {
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round",
+      "stroke-width": "2",
+      d: "M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+    }))), react_1.default.createElement(reactjs_popup_1.default, {
+      trigger: react_1.default.createElement("a", {
+        href: "#",
+        id: "profile"
+      }, react_1.default.createElement("img", {
+        src: user.picture,
+        alt: ""
+      })),
+      position: "bottom right"
+    }, react_1.default.createElement("div", {
+      className: "popUp"
+    }, react_1.default.createElement("a", {
+      href: "/profile/" + user.username
+    }, react_1.default.createElement("svg", {
+      xmlns: "http://www.w3.org/2000/svg",
+      fill: "none",
+      viewBox: "0 0 24 24",
+      stroke: "currentColor"
+    }, react_1.default.createElement("path", {
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round",
+      "stroke-width": "2",
+      d: "M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+    })), "Profile"), react_1.default.createElement("a", {
+      href: "#"
+    }, react_1.default.createElement("svg", {
+      xmlns: "http://www.w3.org/2000/svg",
+      fill: "none",
+      viewBox: "0 0 24 24",
+      stroke: "currentColor"
+    }, react_1.default.createElement("path", {
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round",
+      "stroke-width": "2",
+      d: "M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"
+    })), "Saved"), react_1.default.createElement("a", {
+      href: "#"
+    }, react_1.default.createElement("svg", {
+      xmlns: "http://www.w3.org/2000/svg",
+      fill: "none",
+      viewBox: "0 0 24 24",
+      stroke: "currentColor"
+    }, react_1.default.createElement("path", {
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round",
+      "stroke-width": "2",
+      d: "M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
+    }), react_1.default.createElement("path", {
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round",
+      "stroke-width": "2",
+      d: "M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+    })), "Settings"), react_1.default.createElement("a", null, react_1.default.createElement("button", {
+      onClick: logOut
+    }, "Log Out")))), react_1.default.createElement("a", {
+      href: "#",
+      id: "msgMobile"
+    }, react_1.default.createElement("svg", {
+      xmlns: "http://www.w3.org/2000/svg",
+      fill: "none",
+      viewBox: "0 0 24 24",
+      stroke: "currentColor"
+    }, react_1.default.createElement("path", {
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round",
+      "stroke-width": "2",
+      d: "M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+    }))))))
+  );
+}
+
+exports.default = UserHeader;
+},{"react":"node_modules/react/index.js","reactjs-popup":"node_modules/reactjs-popup/dist/reactjs-popup.esm.js","../../../App":"App.tsx"}],"page/AddOns/Footer/Footer.tsx":[function(require,module,exports) {
+"use strict";
+
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var react_1 = __importDefault(require("react"));
+
+function Footer() {
+  return react_1.default.createElement("div", {
+    className: "footer"
+  }, react_1.default.createElement("div", {
+    className: "links"
+  }, react_1.default.createElement("a", {
+    href: "https://about.instagram.com/"
+  }, "About"), react_1.default.createElement("a", {
+    href: "https://about.instagram.com/en_US/blog"
+  }, "Blog"), react_1.default.createElement("a", {
+    href: "https://about.instagram.com/about-us/careers"
+  }, "Jobs"), react_1.default.createElement("a", {
+    href: "https://help.instagram.com/"
+  }, "Help"), react_1.default.createElement("a", {
+    href: "https://developers.facebook.com/docs/instagram"
+  }, "API"), react_1.default.createElement("a", {
+    href: "https://www.instagram.com/legal/privacy/"
+  }, "Privacy"), react_1.default.createElement("a", {
+    href: "https://www.instagram.com/legal/terms/"
+  }, "Terms"), react_1.default.createElement("a", {
+    href: "https://www.instagram.com/directory/profiles/"
+  }, "Top accounts"), react_1.default.createElement("a", {
+    href: "https://www.instagram.com/directory/hashtags/"
+  }, "Hashtags"), react_1.default.createElement("a", {
+    href: "https://www.instagram.com/explore/locations/"
+  }, "Locations")), react_1.default.createElement("span", null, react_1.default.createElement("select", {
+    name: "language",
+    id: "language"
+  }, react_1.default.createElement("option", {
+    value: "english"
+  }, "English"), react_1.default.createElement("option", {
+    value: "indonesian"
+  }, "Indonesian"), react_1.default.createElement("option", {
+    value: "japanese"
+  }, "Japanese")), react_1.default.createElement("p", null, "\xA92021 InstagraMT from MT21-1")));
+}
+
+exports.default = Footer;
+},{"react":"node_modules/react/index.js"}],"page/ExplorePage/ExplorePage.tsx":[function(require,module,exports) {
+"use strict";
+
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var react_1 = __importDefault(require("react"));
+
+var videoStrip_1 = __importDefault(require("./videoStrip"));
+
+var imageStrip_1 = __importDefault(require("./imageStrip"));
+
+var UserHeader_1 = __importDefault(require("../AddOns/Header/UserHeader"));
+
+var Footer_1 = __importDefault(require("../AddOns/Footer/Footer"));
+
+function ExplorePage() {
+  return react_1.default.createElement(react_1.default.Fragment, null, react_1.default.createElement(UserHeader_1.default, null), react_1.default.createElement("div", {
+    className: "exploreOuterDiv"
+  }, react_1.default.createElement("div", {
+    className: "exploreInnerDiv"
+  }, react_1.default.createElement(videoStrip_1.default, null), react_1.default.createElement(imageStrip_1.default, null), react_1.default.createElement(videoStrip_1.default, null), react_1.default.createElement(imageStrip_1.default, null), react_1.default.createElement(videoStrip_1.default, null), react_1.default.createElement(imageStrip_1.default, null))), react_1.default.createElement(Footer_1.default, null));
+}
+
+exports.default = ExplorePage;
+},{"react":"node_modules/react/index.js","./videoStrip":"page/ExplorePage/videoStrip.tsx","./imageStrip":"page/ExplorePage/imageStrip.tsx","../AddOns/Header/UserHeader":"page/AddOns/Header/UserHeader.tsx","../AddOns/Footer/Footer":"page/AddOns/Footer/Footer.tsx"}],"node_modules/tslib/tslib.es6.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -67870,60 +68899,7 @@ function GuestHeader() {
 }
 
 exports.default = GuestHeader;
-},{"react":"node_modules/react/index.js","../../../App":"App.tsx"}],"page/AddOns/Footer/Footer.tsx":[function(require,module,exports) {
-"use strict";
-
-var __importDefault = this && this.__importDefault || function (mod) {
-  return mod && mod.__esModule ? mod : {
-    "default": mod
-  };
-};
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var react_1 = __importDefault(require("react"));
-
-function Footer() {
-  return react_1.default.createElement("div", {
-    className: "footer"
-  }, react_1.default.createElement("div", {
-    className: "links"
-  }, react_1.default.createElement("a", {
-    href: "https://about.instagram.com/"
-  }, "About"), react_1.default.createElement("a", {
-    href: "https://about.instagram.com/en_US/blog"
-  }, "Blog"), react_1.default.createElement("a", {
-    href: "https://about.instagram.com/about-us/careers"
-  }, "Jobs"), react_1.default.createElement("a", {
-    href: "https://help.instagram.com/"
-  }, "Help"), react_1.default.createElement("a", {
-    href: "https://developers.facebook.com/docs/instagram"
-  }, "API"), react_1.default.createElement("a", {
-    href: "https://www.instagram.com/legal/privacy/"
-  }, "Privacy"), react_1.default.createElement("a", {
-    href: "https://www.instagram.com/legal/terms/"
-  }, "Terms"), react_1.default.createElement("a", {
-    href: "https://www.instagram.com/directory/profiles/"
-  }, "Top accounts"), react_1.default.createElement("a", {
-    href: "https://www.instagram.com/directory/hashtags/"
-  }, "Hashtags"), react_1.default.createElement("a", {
-    href: "https://www.instagram.com/explore/locations/"
-  }, "Locations")), react_1.default.createElement("span", null, react_1.default.createElement("select", {
-    name: "language",
-    id: "language"
-  }, react_1.default.createElement("option", {
-    value: "english"
-  }, "English"), react_1.default.createElement("option", {
-    value: "indonesian"
-  }, "Indonesian"), react_1.default.createElement("option", {
-    value: "japanese"
-  }, "Japanese")), react_1.default.createElement("p", null, "\xA92021 InstagraMT from MT21-1")));
-}
-
-exports.default = Footer;
-},{"react":"node_modules/react/index.js"}],"node_modules/react-countdown/dist/index.es.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","../../../App":"App.tsx"}],"node_modules/react-countdown/dist/index.es.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -68758,874 +69734,7 @@ function ForgotPasswordPage() {
 
 exports.default = ForgotPasswordPage;
 var templateObject_1, templateObject_2;
-},{"react":"node_modules/react/index.js","@apollo/client":"node_modules/@apollo/client/index.js","../../App":"App.tsx","../AddOns/Header/GuestHeader":"page/AddOns/Header/GuestHeader.tsx","../AddOns/Footer/Footer":"page/AddOns/Footer/Footer.tsx","react-countdown":"node_modules/react-countdown/dist/index.es.js"}],"node_modules/reactjs-popup/dist/reactjs-popup.esm.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.Popup = exports.default = void 0;
-
-var _react = _interopRequireWildcard(require("react"));
-
-var _reactDom = _interopRequireDefault(require("react-dom"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _extends() {
-  _extends = Object.assign || function (target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i];
-
-      for (var key in source) {
-        if (Object.prototype.hasOwnProperty.call(source, key)) {
-          target[key] = source[key];
-        }
-      }
-    }
-
-    return target;
-  };
-
-  return _extends.apply(this, arguments);
-}
-
-var useOnEscape = function useOnEscape(handler, active) {
-  if (active === void 0) {
-    active = true;
-  }
-
-  (0, _react.useEffect)(function () {
-    if (!active) return;
-
-    var listener = function listener(event) {
-      // check if key is an Escape
-      if (event.key === 'Escape') handler(event);
-    };
-
-    document.addEventListener('keyup', listener);
-    return function () {
-      if (!active) return;
-      document.removeEventListener('keyup', listener);
-    };
-  }, [handler, active]);
-};
-
-var useRepositionOnResize = function useRepositionOnResize(handler, active) {
-  if (active === void 0) {
-    active = true;
-  }
-
-  (0, _react.useEffect)(function () {
-    if (!active) return;
-
-    var listener = function listener() {
-      handler();
-    };
-
-    window.addEventListener('resize', listener);
-    return function () {
-      if (!active) return;
-      window.removeEventListener('resize', listener);
-    };
-  }, [handler, active]);
-};
-
-var useOnClickOutside = function useOnClickOutside(ref, handler, active) {
-  if (active === void 0) {
-    active = true;
-  }
-
-  (0, _react.useEffect)(function () {
-    if (!active) return;
-
-    var listener = function listener(event) {
-      // Do nothing if clicking ref's element or descendent elements
-      var refs = Array.isArray(ref) ? ref : [ref];
-      var contains = false;
-      refs.forEach(function (r) {
-        if (!r.current || r.current.contains(event.target)) {
-          contains = true;
-          return;
-        }
-      });
-      event.stopPropagation();
-      if (!contains) handler(event);
-    };
-
-    document.addEventListener('mousedown', listener);
-    document.addEventListener('touchstart', listener);
-    return function () {
-      if (!active) return;
-      document.removeEventListener('mousedown', listener);
-      document.removeEventListener('touchstart', listener);
-    };
-  }, [ref, handler, active]);
-}; // Make sure that user is not able TAB out of the Modal content on Open
-
-
-var useTabbing = function useTabbing(contentRef, active) {
-  if (active === void 0) {
-    active = true;
-  }
-
-  (0, _react.useEffect)(function () {
-    if (!active) return;
-
-    var listener = function listener(event) {
-      // check if key is an Tab
-      if (event.keyCode === 9) {
-        var _contentRef$current;
-
-        var els = contentRef === null || contentRef === void 0 ? void 0 : (_contentRef$current = contentRef.current) === null || _contentRef$current === void 0 ? void 0 : _contentRef$current.querySelectorAll('a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex="0"]');
-        var focusableEls = Array.prototype.slice.call(els);
-
-        if (focusableEls.length === 1) {
-          event.preventDefault();
-          return;
-        }
-
-        var firstFocusableEl = focusableEls[0];
-        var lastFocusableEl = focusableEls[focusableEls.length - 1];
-
-        if (event.shiftKey && document.activeElement === firstFocusableEl) {
-          event.preventDefault();
-          lastFocusableEl.focus();
-        } else if (document.activeElement === lastFocusableEl) {
-          event.preventDefault();
-          firstFocusableEl.focus();
-        }
-      }
-    };
-
-    document.addEventListener('keydown', listener);
-    return function () {
-      if (!active) return;
-      document.removeEventListener('keydown', listener);
-    };
-  }, [contentRef, active]);
-};
-
-var useIsomorphicLayoutEffect = typeof window !== 'undefined' ? _react.useLayoutEffect : _react.useEffect;
-var Style = {
-  popupContent: {
-    tooltip: {
-      position: 'absolute',
-      zIndex: 999
-    },
-    modal: {
-      position: 'relative',
-      margin: 'auto'
-    }
-  },
-  popupArrow: {
-    height: '8px',
-    width: '16px',
-    position: 'absolute',
-    background: 'transparent',
-    color: '#FFF',
-    zIndex: -1
-  },
-  overlay: {
-    tooltip: {
-      position: 'fixed',
-      top: '0',
-      bottom: '0',
-      left: '0',
-      right: '0',
-      zIndex: 999
-    },
-    modal: {
-      position: 'fixed',
-      top: '0',
-      bottom: '0',
-      left: '0',
-      right: '0',
-      display: 'flex',
-      zIndex: 999
-    }
-  }
-};
-var POSITION_TYPES = ['top left', 'top center', 'top right', 'right top', 'right center', 'right bottom', 'bottom left', 'bottom center', 'bottom right', 'left top', 'left center', 'left bottom'];
-
-var getCoordinatesForPosition = function getCoordinatesForPosition(triggerBounding, ContentBounding, position, //PopupPosition | PopupPosition[],
-arrow, _ref) {
-  var offsetX = _ref.offsetX,
-      offsetY = _ref.offsetY;
-  var margin = arrow ? 8 : 0;
-  var args = position.split(' '); // the step N 1 : center the popup content => ok
-
-  var CenterTop = triggerBounding.top + triggerBounding.height / 2;
-  var CenterLeft = triggerBounding.left + triggerBounding.width / 2;
-  var height = ContentBounding.height,
-      width = ContentBounding.width;
-  var top = CenterTop - height / 2;
-  var left = CenterLeft - width / 2;
-  var transform = '';
-  var arrowTop = '0%';
-  var arrowLeft = '0%'; // the  step N 2 : => ok
-
-  switch (args[0]) {
-    case 'top':
-      top -= height / 2 + triggerBounding.height / 2 + margin;
-      transform = "rotate(180deg)  translateX(50%)";
-      arrowTop = '100%';
-      arrowLeft = '50%';
-      break;
-
-    case 'bottom':
-      top += height / 2 + triggerBounding.height / 2 + margin;
-      transform = "rotate(0deg) translateY(-100%) translateX(-50%)";
-      arrowLeft = '50%';
-      break;
-
-    case 'left':
-      left -= width / 2 + triggerBounding.width / 2 + margin;
-      transform = " rotate(90deg)  translateY(50%) translateX(-25%)";
-      arrowLeft = '100%';
-      arrowTop = '50%';
-      break;
-
-    case 'right':
-      left += width / 2 + triggerBounding.width / 2 + margin;
-      transform = "rotate(-90deg)  translateY(-150%) translateX(25%)";
-      arrowTop = '50%';
-      break;
-  }
-
-  switch (args[1]) {
-    case 'top':
-      top = triggerBounding.top;
-      arrowTop = triggerBounding.height / 2 + "px";
-      break;
-
-    case 'bottom':
-      top = triggerBounding.top - height + triggerBounding.height;
-      arrowTop = height - triggerBounding.height / 2 + "px";
-      break;
-
-    case 'left':
-      left = triggerBounding.left;
-      arrowLeft = triggerBounding.width / 2 + "px";
-      break;
-
-    case 'right':
-      left = triggerBounding.left - width + triggerBounding.width;
-      arrowLeft = width - triggerBounding.width / 2 + "px";
-      break;
-  }
-
-  top = args[0] === 'top' ? top - offsetY : top + offsetY;
-  left = args[0] === 'left' ? left - offsetX : left + offsetX;
-  return {
-    top: top,
-    left: left,
-    transform: transform,
-    arrowLeft: arrowLeft,
-    arrowTop: arrowTop
-  };
-};
-
-var getTooltipBoundary = function getTooltipBoundary(keepTooltipInside) {
-  // add viewport
-  var boundingBox = {
-    top: 0,
-    left: 0,
-
-    /* eslint-disable-next-line no-undef */
-    width: window.innerWidth,
-
-    /* eslint-disable-next-line no-undef */
-    height: window.innerHeight
-  };
-
-  if (typeof keepTooltipInside === 'string') {
-    /* eslint-disable-next-line no-undef */
-    var selector = document.querySelector(keepTooltipInside);
-
-    if ("development" !== 'production') {
-      if (selector === null) throw new Error(keepTooltipInside + " selector does not exist : keepTooltipInside must be a valid html selector 'class' or 'Id'  or a boolean value");
-    }
-
-    if (selector !== null) boundingBox = selector.getBoundingClientRect();
-  }
-
-  return boundingBox;
-};
-
-var calculatePosition = function calculatePosition(triggerBounding, ContentBounding, position, arrow, _ref2, keepTooltipInside) {
-  var offsetX = _ref2.offsetX,
-      offsetY = _ref2.offsetY;
-  var bestCoords = {
-    arrowLeft: '0%',
-    arrowTop: '0%',
-    left: 0,
-    top: 0,
-    transform: 'rotate(135deg)'
-  };
-  var i = 0;
-  var wrapperBox = getTooltipBoundary(keepTooltipInside);
-  var positions = Array.isArray(position) ? position : [position]; // keepTooltipInside would be activated if the  keepTooltipInside exist or the position is Array
-
-  if (keepTooltipInside || Array.isArray(position)) positions = [].concat(positions, POSITION_TYPES); // add viewPort for WarpperBox
-  // wrapperBox.top = wrapperBox.top + window.scrollY;
-  // wrapperBox.left = wrapperBox.left + window.scrollX;
-
-  while (i < positions.length) {
-    bestCoords = getCoordinatesForPosition(triggerBounding, ContentBounding, positions[i], arrow, {
-      offsetX: offsetX,
-      offsetY: offsetY
-    });
-    var contentBox = {
-      top: bestCoords.top,
-      left: bestCoords.left,
-      width: ContentBounding.width,
-      height: ContentBounding.height
-    };
-
-    if (contentBox.top <= wrapperBox.top || contentBox.left <= wrapperBox.left || contentBox.top + contentBox.height >= wrapperBox.top + wrapperBox.height || contentBox.left + contentBox.width >= wrapperBox.left + wrapperBox.width) {
-      i++;
-    } else {
-      break;
-    }
-  }
-
-  return bestCoords;
-};
-
-var popupIdCounter = 0;
-
-var getRootPopup = function getRootPopup() {
-  var PopupRoot = document.getElementById('popup-root');
-
-  if (PopupRoot === null) {
-    PopupRoot = document.createElement('div');
-    PopupRoot.setAttribute('id', 'popup-root');
-    document.body.appendChild(PopupRoot);
-  }
-
-  return PopupRoot;
-};
-
-var Popup = /*#__PURE__*/(0, _react.forwardRef)(function (_ref, ref) {
-  var _ref$trigger = _ref.trigger,
-      trigger = _ref$trigger === void 0 ? null : _ref$trigger,
-      _ref$onOpen = _ref.onOpen,
-      onOpen = _ref$onOpen === void 0 ? function () {} : _ref$onOpen,
-      _ref$onClose = _ref.onClose,
-      onClose = _ref$onClose === void 0 ? function () {} : _ref$onClose,
-      _ref$defaultOpen = _ref.defaultOpen,
-      defaultOpen = _ref$defaultOpen === void 0 ? false : _ref$defaultOpen,
-      _ref$open = _ref.open,
-      open = _ref$open === void 0 ? undefined : _ref$open,
-      _ref$disabled = _ref.disabled,
-      disabled = _ref$disabled === void 0 ? false : _ref$disabled,
-      _ref$nested = _ref.nested,
-      nested = _ref$nested === void 0 ? false : _ref$nested,
-      _ref$closeOnDocumentC = _ref.closeOnDocumentClick,
-      closeOnDocumentClick = _ref$closeOnDocumentC === void 0 ? true : _ref$closeOnDocumentC,
-      _ref$repositionOnResi = _ref.repositionOnResize,
-      repositionOnResize = _ref$repositionOnResi === void 0 ? true : _ref$repositionOnResi,
-      _ref$closeOnEscape = _ref.closeOnEscape,
-      closeOnEscape = _ref$closeOnEscape === void 0 ? true : _ref$closeOnEscape,
-      _ref$on = _ref.on,
-      on = _ref$on === void 0 ? ['click'] : _ref$on,
-      _ref$contentStyle = _ref.contentStyle,
-      contentStyle = _ref$contentStyle === void 0 ? {} : _ref$contentStyle,
-      _ref$arrowStyle = _ref.arrowStyle,
-      arrowStyle = _ref$arrowStyle === void 0 ? {} : _ref$arrowStyle,
-      _ref$overlayStyle = _ref.overlayStyle,
-      overlayStyle = _ref$overlayStyle === void 0 ? {} : _ref$overlayStyle,
-      _ref$className = _ref.className,
-      className = _ref$className === void 0 ? '' : _ref$className,
-      _ref$position = _ref.position,
-      position = _ref$position === void 0 ? 'bottom center' : _ref$position,
-      _ref$modal = _ref.modal,
-      modal = _ref$modal === void 0 ? false : _ref$modal,
-      _ref$lockScroll = _ref.lockScroll,
-      lockScroll = _ref$lockScroll === void 0 ? false : _ref$lockScroll,
-      _ref$arrow = _ref.arrow,
-      arrow = _ref$arrow === void 0 ? true : _ref$arrow,
-      _ref$offsetX = _ref.offsetX,
-      offsetX = _ref$offsetX === void 0 ? 0 : _ref$offsetX,
-      _ref$offsetY = _ref.offsetY,
-      offsetY = _ref$offsetY === void 0 ? 0 : _ref$offsetY,
-      _ref$mouseEnterDelay = _ref.mouseEnterDelay,
-      mouseEnterDelay = _ref$mouseEnterDelay === void 0 ? 100 : _ref$mouseEnterDelay,
-      _ref$mouseLeaveDelay = _ref.mouseLeaveDelay,
-      mouseLeaveDelay = _ref$mouseLeaveDelay === void 0 ? 100 : _ref$mouseLeaveDelay,
-      _ref$keepTooltipInsid = _ref.keepTooltipInside,
-      keepTooltipInside = _ref$keepTooltipInsid === void 0 ? false : _ref$keepTooltipInsid,
-      children = _ref.children;
-
-  var _useState = (0, _react.useState)(open || defaultOpen),
-      isOpen = _useState[0],
-      setIsOpen = _useState[1];
-
-  var triggerRef = (0, _react.useRef)(null);
-  var contentRef = (0, _react.useRef)(null);
-  var arrowRef = (0, _react.useRef)(null);
-  var focusedElBeforeOpen = (0, _react.useRef)(null);
-  var popupId = (0, _react.useRef)("popup-" + ++popupIdCounter);
-  var isModal = modal ? true : !trigger;
-  var timeOut = (0, _react.useRef)(0);
-  useIsomorphicLayoutEffect(function () {
-    if (isOpen) {
-      focusedElBeforeOpen.current = document.activeElement;
-      setPosition();
-      focusContentOnOpen(); // for accessibility
-
-      lockScrolll();
-    } else {
-      resetScroll();
-    }
-
-    return function () {
-      clearTimeout(timeOut.current);
-    };
-  }, [isOpen]); // for uncontrolled popup we need to sync isOpen with open prop
-
-  (0, _react.useEffect)(function () {
-    if (typeof open === 'boolean') {
-      if (open) openPopup();else closePopup();
-    }
-  }, [open, disabled]);
-
-  var openPopup = function openPopup(event) {
-    if (isOpen || disabled) return;
-    setIsOpen(true);
-    setTimeout(function () {
-      return onOpen(event);
-    }, 0);
-  };
-
-  var closePopup = function closePopup(event) {
-    var _focusedElBeforeOpen$;
-
-    if (!isOpen || disabled) return;
-    setIsOpen(false);
-    if (isModal) (_focusedElBeforeOpen$ = focusedElBeforeOpen.current) === null || _focusedElBeforeOpen$ === void 0 ? void 0 : _focusedElBeforeOpen$.focus();
-    setTimeout(function () {
-      return onClose(event);
-    }, 0);
-  };
-
-  var togglePopup = function togglePopup(event) {
-    event === null || event === void 0 ? void 0 : event.stopPropagation();
-    if (!isOpen) openPopup(event);else closePopup(event);
-  };
-
-  var onMouseEnter = function onMouseEnter(event) {
-    clearTimeout(timeOut.current);
-    timeOut.current = setTimeout(function () {
-      return openPopup(event);
-    }, mouseEnterDelay);
-  };
-
-  var onContextMenu = function onContextMenu(event) {
-    event === null || event === void 0 ? void 0 : event.preventDefault();
-    togglePopup();
-  };
-
-  var onMouseLeave = function onMouseLeave(event) {
-    clearTimeout(timeOut.current);
-    timeOut.current = setTimeout(function () {
-      return closePopup(event);
-    }, mouseLeaveDelay);
-  };
-
-  var lockScrolll = function lockScrolll() {
-    if (isModal && lockScroll) document.getElementsByTagName('body')[0].style.overflow = 'hidden'; // migrate to document.body
-  };
-
-  var resetScroll = function resetScroll() {
-    if (isModal && lockScroll) document.getElementsByTagName('body')[0].style.overflow = 'auto';
-  };
-
-  var focusContentOnOpen = function focusContentOnOpen() {
-    var _contentRef$current;
-
-    var focusableEls = contentRef === null || contentRef === void 0 ? void 0 : (_contentRef$current = contentRef.current) === null || _contentRef$current === void 0 ? void 0 : _contentRef$current.querySelectorAll('a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex="0"]');
-    var firstEl = Array.prototype.slice.call(focusableEls)[0];
-    firstEl === null || firstEl === void 0 ? void 0 : firstEl.focus();
-  };
-
-  (0, _react.useImperativeHandle)(ref, function () {
-    return {
-      open: function open() {
-        openPopup();
-      },
-      close: function close() {
-        closePopup();
-      },
-      toggle: function toggle() {
-        togglePopup();
-      }
-    };
-  }); // set Position
-
-  var setPosition = function setPosition() {
-    if (isModal || !isOpen) return;
-    if (!(triggerRef === null || triggerRef === void 0 ? void 0 : triggerRef.current) || !(triggerRef === null || triggerRef === void 0 ? void 0 : triggerRef.current) || !(contentRef === null || contentRef === void 0 ? void 0 : contentRef.current)) return; /// show error as one of ref is undefined
-
-    var trigger = triggerRef.current.getBoundingClientRect();
-    var content = contentRef.current.getBoundingClientRect();
-    var cords = calculatePosition(trigger, content, position, arrow, {
-      offsetX: offsetX,
-      offsetY: offsetY
-    }, keepTooltipInside);
-    contentRef.current.style.top = cords.top + window.scrollY + "px";
-    contentRef.current.style.left = cords.left + window.scrollX + "px";
-
-    if (arrow && !!arrowRef.current) {
-      var _arrowStyle$top, _arrowStyle$left;
-
-      arrowRef.current.style.transform = cords.transform;
-      arrowRef.current.style.setProperty('-ms-transform', cords.transform);
-      arrowRef.current.style.setProperty('-webkit-transform', cords.transform);
-      arrowRef.current.style.top = ((_arrowStyle$top = arrowStyle.top) === null || _arrowStyle$top === void 0 ? void 0 : _arrowStyle$top.toString()) || cords.arrowTop;
-      arrowRef.current.style.left = ((_arrowStyle$left = arrowStyle.left) === null || _arrowStyle$left === void 0 ? void 0 : _arrowStyle$left.toString()) || cords.arrowLeft;
-    }
-  }; // hooks
-
-
-  useOnEscape(closePopup, closeOnEscape); // can be optimized if we disabled for hover
-
-  useTabbing(contentRef, isOpen && isModal);
-  useRepositionOnResize(setPosition, repositionOnResize);
-  useOnClickOutside(!!trigger ? [contentRef, triggerRef] : [contentRef], closePopup, closeOnDocumentClick && !nested); // we need to add a ne
-  // render the trigger element and add events
-
-  var renderTrigger = function renderTrigger() {
-    var triggerProps = {
-      key: 'T',
-      ref: triggerRef,
-      'aria-describedby': popupId.current
-    };
-    var onAsArray = Array.isArray(on) ? on : [on];
-
-    for (var i = 0, len = onAsArray.length; i < len; i++) {
-      switch (onAsArray[i]) {
-        case 'click':
-          triggerProps.onClick = togglePopup;
-          break;
-
-        case 'right-click':
-          triggerProps.onContextMenu = onContextMenu;
-          break;
-
-        case 'hover':
-          triggerProps.onMouseEnter = onMouseEnter;
-          triggerProps.onMouseLeave = onMouseLeave;
-          break;
-
-        case 'focus':
-          triggerProps.onFocus = onMouseEnter;
-          triggerProps.onBlur = onMouseLeave;
-          break;
-      }
-    }
-
-    if (typeof trigger === 'function') {
-      var comp = trigger(isOpen);
-      return !!trigger && _react.default.cloneElement(comp, triggerProps);
-    }
-
-    return !!trigger && _react.default.cloneElement(trigger, triggerProps);
-  };
-
-  var addWarperAction = function addWarperAction() {
-    var popupContentStyle = isModal ? Style.popupContent.modal : Style.popupContent.tooltip;
-    var childrenElementProps = {
-      className: "popup-content " + (className !== '' ? className.split(' ').map(function (c) {
-        return c + "-content";
-      }).join(' ') : ''),
-      style: _extends({}, popupContentStyle, contentStyle, {
-        pointerEvents: 'auto'
-      }),
-      ref: contentRef,
-      onClick: function onClick(e) {
-        e.stopPropagation();
-      }
-    };
-
-    if (!modal && on.indexOf('hover') >= 0) {
-      childrenElementProps.onMouseEnter = onMouseEnter;
-      childrenElementProps.onMouseLeave = onMouseLeave;
-    }
-
-    return childrenElementProps;
-  };
-
-  var renderContent = function renderContent() {
-    return _react.default.createElement("div", Object.assign({}, addWarperAction(), {
-      key: "C",
-      role: isModal ? 'dialog' : 'tooltip',
-      id: popupId.current
-    }), arrow && !isModal && _react.default.createElement("div", {
-      ref: arrowRef,
-      style: Style.popupArrow
-    }, _react.default.createElement("svg", {
-      "data-testid": "arrow",
-      className: "popup-arrow " + (className !== '' ? className.split(' ').map(function (c) {
-        return c + "-arrow";
-      }).join(' ') : ''),
-      viewBox: "0 0 32 16",
-      style: _extends({
-        position: 'absolute'
-      }, arrowStyle)
-    }, _react.default.createElement("path", {
-      d: "M16 0l16 16H0z",
-      fill: "currentcolor"
-    }))), children && typeof children === 'function' ? children(closePopup, isOpen) : children);
-  };
-
-  var overlay = !(on.indexOf('hover') >= 0);
-  var ovStyle = isModal ? Style.overlay.modal : Style.overlay.tooltip;
-  var content = [overlay && _react.default.createElement("div", {
-    key: "O",
-    "data-testid": "overlay",
-    "data-popup": isModal ? 'modal' : 'tooltip',
-    className: "popup-overlay " + (className !== '' ? className.split(' ').map(function (c) {
-      return c + "-overlay";
-    }).join(' ') : ''),
-    style: _extends({}, ovStyle, overlayStyle, {
-      pointerEvents: closeOnDocumentClick && nested || isModal ? 'auto' : 'none'
-    }),
-    onClick: closeOnDocumentClick && nested ? closePopup : undefined,
-    tabIndex: -1
-  }, isModal && renderContent()), !isModal && renderContent()];
-  return _react.default.createElement(_react.default.Fragment, null, renderTrigger(), isOpen && _reactDom.default.createPortal(content, getRootPopup()));
-});
-exports.Popup = Popup;
-var _default = Popup;
-exports.default = _default;
-},{"react":"node_modules/react/index.js","react-dom":"node_modules/react-dom/index.js"}],"page/AddOns/Header/UserHeader.tsx":[function(require,module,exports) {
-"use strict";
-
-var __createBinding = this && this.__createBinding || (Object.create ? function (o, m, k, k2) {
-  if (k2 === undefined) k2 = k;
-  Object.defineProperty(o, k2, {
-    enumerable: true,
-    get: function get() {
-      return m[k];
-    }
-  });
-} : function (o, m, k, k2) {
-  if (k2 === undefined) k2 = k;
-  o[k2] = m[k];
-});
-
-var __setModuleDefault = this && this.__setModuleDefault || (Object.create ? function (o, v) {
-  Object.defineProperty(o, "default", {
-    enumerable: true,
-    value: v
-  });
-} : function (o, v) {
-  o["default"] = v;
-});
-
-var __importStar = this && this.__importStar || function (mod) {
-  if (mod && mod.__esModule) return mod;
-  var result = {};
-  if (mod != null) for (var k in mod) {
-    if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-  }
-
-  __setModuleDefault(result, mod);
-
-  return result;
-};
-
-var __importDefault = this && this.__importDefault || function (mod) {
-  return mod && mod.__esModule ? mod : {
-    "default": mod
-  };
-};
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var react_1 = __importStar(require("react"));
-
-var reactjs_popup_1 = __importDefault(require("reactjs-popup"));
-
-var App_1 = require("../../../App");
-
-function UserHeader() {
-  var _a = react_1.useContext(App_1.JWTContext),
-      _ = _a[0],
-      setJWT = _a[1];
-
-  var jwt = localStorage.getItem("jwt");
-  var user = JSON.parse(localStorage.getItem("user"));
-
-  function logOut() {
-    setJWT("");
-  }
-
-  console.log(jwt);
-  return (// klo udah login panggil ini
-    react_1.default.createElement("div", {
-      className: "pembungkus"
-    }, react_1.default.createElement("div", {
-      className: "header"
-    }, react_1.default.createElement("div", {
-      className: "logo"
-    }, react_1.default.createElement("h1", null, "InstagraMT")), react_1.default.createElement("div", {
-      className: "searchBar"
-    }, react_1.default.createElement("form", {
-      action: ""
-    }, react_1.default.createElement("input", {
-      type: "text",
-      placeholder: "Search",
-      name: "searchQuery",
-      id: ""
-    }))), react_1.default.createElement("div", {
-      className: "iconDiv"
-    }, react_1.default.createElement("a", {
-      href: "/",
-      id: "home"
-    }, react_1.default.createElement("svg", {
-      xmlns: "http://www.w3.org/2000/svg",
-      fill: "none",
-      viewBox: "0 0 24 24",
-      stroke: "currentColor"
-    }, react_1.default.createElement("path", {
-      "stroke-linecap": "round",
-      "stroke-linejoin": "round",
-      "stroke-width": "2",
-      d: "M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-    }))), react_1.default.createElement("a", {
-      href: "/upload",
-      id: "upload"
-    }, react_1.default.createElement("svg", {
-      xmlns: "http://www.w3.org/2000/svg",
-      fill: "none",
-      viewBox: "0 0 24 24",
-      stroke: "currentColor"
-    }, react_1.default.createElement("path", {
-      "stroke-linecap": "round",
-      "stroke-linejoin": "round",
-      "stroke-width": "2",
-      d: "M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
-    }))), react_1.default.createElement("a", {
-      href: "#",
-      id: "msg"
-    }, react_1.default.createElement("svg", {
-      xmlns: "http://www.w3.org/2000/svg",
-      fill: "none",
-      viewBox: "0 0 24 24",
-      stroke: "currentColor"
-    }, react_1.default.createElement("path", {
-      "stroke-linecap": "round",
-      "stroke-linejoin": "round",
-      "stroke-width": "2",
-      d: "M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
-    }))), react_1.default.createElement("a", {
-      href: "#",
-      id: "explore"
-    }, react_1.default.createElement("svg", {
-      xmlns: "http://www.w3.org/2000/svg",
-      fill: "none",
-      viewBox: "0 0 24 24",
-      stroke: "currentColor"
-    }, react_1.default.createElement("path", {
-      "stroke-linecap": "round",
-      "stroke-linejoin": "round",
-      "stroke-width": "2",
-      d: "M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"
-    }))), react_1.default.createElement("a", {
-      href: "#",
-      id: "like"
-    }, react_1.default.createElement("svg", {
-      xmlns: "http://www.w3.org/2000/svg",
-      fill: "none",
-      viewBox: "0 0 24 24",
-      stroke: "currentColor"
-    }, react_1.default.createElement("path", {
-      "stroke-linecap": "round",
-      "stroke-linejoin": "round",
-      "stroke-width": "2",
-      d: "M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-    }))), react_1.default.createElement(reactjs_popup_1.default, {
-      trigger: react_1.default.createElement("a", {
-        href: "#",
-        id: "profile"
-      }, react_1.default.createElement("img", {
-        src: user.picture,
-        alt: ""
-      })),
-      position: "bottom right"
-    }, react_1.default.createElement("div", {
-      className: "popUp"
-    }, react_1.default.createElement("a", {
-      href: "/profile/" + user.username
-    }, react_1.default.createElement("svg", {
-      xmlns: "http://www.w3.org/2000/svg",
-      fill: "none",
-      viewBox: "0 0 24 24",
-      stroke: "currentColor"
-    }, react_1.default.createElement("path", {
-      "stroke-linecap": "round",
-      "stroke-linejoin": "round",
-      "stroke-width": "2",
-      d: "M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-    })), "Profile"), react_1.default.createElement("a", {
-      href: "#"
-    }, react_1.default.createElement("svg", {
-      xmlns: "http://www.w3.org/2000/svg",
-      fill: "none",
-      viewBox: "0 0 24 24",
-      stroke: "currentColor"
-    }, react_1.default.createElement("path", {
-      "stroke-linecap": "round",
-      "stroke-linejoin": "round",
-      "stroke-width": "2",
-      d: "M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"
-    })), "Saved"), react_1.default.createElement("a", {
-      href: "#"
-    }, react_1.default.createElement("svg", {
-      xmlns: "http://www.w3.org/2000/svg",
-      fill: "none",
-      viewBox: "0 0 24 24",
-      stroke: "currentColor"
-    }, react_1.default.createElement("path", {
-      "stroke-linecap": "round",
-      "stroke-linejoin": "round",
-      "stroke-width": "2",
-      d: "M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
-    }), react_1.default.createElement("path", {
-      "stroke-linecap": "round",
-      "stroke-linejoin": "round",
-      "stroke-width": "2",
-      d: "M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-    })), "Settings"), react_1.default.createElement("a", null, react_1.default.createElement("button", {
-      onClick: logOut
-    }, "Log Out")))), react_1.default.createElement("a", {
-      href: "#",
-      id: "msgMobile"
-    }, react_1.default.createElement("svg", {
-      xmlns: "http://www.w3.org/2000/svg",
-      fill: "none",
-      viewBox: "0 0 24 24",
-      stroke: "currentColor"
-    }, react_1.default.createElement("path", {
-      "stroke-linecap": "round",
-      "stroke-linejoin": "round",
-      "stroke-width": "2",
-      d: "M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
-    }))))))
-  );
-}
-
-exports.default = UserHeader;
-},{"react":"node_modules/react/index.js","reactjs-popup":"node_modules/reactjs-popup/dist/reactjs-popup.esm.js","../../../App":"App.tsx"}],"page/Components/Comment.tsx":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","@apollo/client":"node_modules/@apollo/client/index.js","../../App":"App.tsx","../AddOns/Header/GuestHeader":"page/AddOns/Header/GuestHeader.tsx","../AddOns/Footer/Footer":"page/AddOns/Footer/Footer.tsx","react-countdown":"node_modules/react-countdown/dist/index.es.js"}],"page/Components/Comment.tsx":[function(require,module,exports) {
 "use strict";
 
 var __importDefault = this && this.__importDefault || function (mod) {
@@ -71267,6 +71376,8 @@ var react_1 = __importStar(require("react"));
 
 var react_router_dom_1 = require("react-router-dom");
 
+var ExplorePage_1 = __importDefault(require("./page/ExplorePage/ExplorePage"));
+
 var ForgotPasswordPage_1 = __importDefault(require("./page/ForgotPasswordPage/ForgotPasswordPage"));
 
 var HomePage_1 = __importDefault(require("./page/HomePage/HomePage"));
@@ -71328,11 +71439,13 @@ function App() {
     path: "/reset/:token"
   }, react_1.default.createElement(ResetPasswordPage_1.default, null)), react_1.default.createElement(react_router_dom_1.Route, {
     path: "/profile/:username"
-  }, react_1.default.createElement(Profile_1.default, null))))));
+  }, react_1.default.createElement(Profile_1.default, null)), react_1.default.createElement(react_router_dom_1.Route, {
+    path: "/explore"
+  }, react_1.default.createElement(ExplorePage_1.default, null))))));
 }
 
 exports.default = App;
-},{"react":"node_modules/react/index.js","react-router-dom":"node_modules/react-router-dom/esm/react-router-dom.js","./page/ForgotPasswordPage/ForgotPasswordPage":"page/ForgotPasswordPage/ForgotPasswordPage.tsx","./page/HomePage/HomePage":"page/HomePage/HomePage.tsx","./page/LoginPage/LoginPage":"page/LoginPage/LoginPage.tsx","./page/Profile/Profile":"page/Profile/Profile.tsx","./page/RegisterPage/RegisterPage":"page/RegisterPage/RegisterPage.tsx","./page/ResetPasswordPage/ResetPasswordPage":"page/ResetPasswordPage/ResetPasswordPage.tsx","./page/UploadPage/UploadPage":"page/UploadPage/UploadPage.tsx","./page/VerifyEmailPage/VerifyEmailPage":"page/VerifyEmailPage/VerifyEmailPage.tsx"}],"node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","react-router-dom":"node_modules/react-router-dom/esm/react-router-dom.js","./page/ExplorePage/ExplorePage":"page/ExplorePage/ExplorePage.tsx","./page/ForgotPasswordPage/ForgotPasswordPage":"page/ForgotPasswordPage/ForgotPasswordPage.tsx","./page/HomePage/HomePage":"page/HomePage/HomePage.tsx","./page/LoginPage/LoginPage":"page/LoginPage/LoginPage.tsx","./page/Profile/Profile":"page/Profile/Profile.tsx","./page/RegisterPage/RegisterPage":"page/RegisterPage/RegisterPage.tsx","./page/ResetPasswordPage/ResetPasswordPage":"page/ResetPasswordPage/ResetPasswordPage.tsx","./page/UploadPage/UploadPage":"page/UploadPage/UploadPage.tsx","./page/VerifyEmailPage/VerifyEmailPage":"page/VerifyEmailPage/VerifyEmailPage.tsx"}],"node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
 var bundleURL = null;
 
 function getBundleURLCached() {
@@ -71462,7 +71575,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61825" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58713" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

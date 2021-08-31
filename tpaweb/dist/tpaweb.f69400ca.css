@@ -1258,6 +1258,9 @@ html p, body p {
   .outerDiv .leftHomeDiv {
     width: 100%;
   }
+  .outerDiv .leftHomeDiv .postDiv {
+    width: 95%;
+  }
 }
 
 .postDiv {
@@ -1959,6 +1962,122 @@ html p, body p {
   }
   #uploadOuterDiv #uploadMainDiv #uploadFormDiv #uploadForm #buttonDiv #uploadButton:hover {
     cursor: pointer;
+  }
+}
+
+.exploreOuterDiv {
+  width: 100%;
+  min-height: 100vh;
+  padding-top: 60px;
+  display: flex;
+  justify-content: center;
+}
+.exploreOuterDiv .exploreInnerDiv {
+  width: 70%;
+}
+.exploreOuterDiv .exploreInnerDiv .videoGlobalStrip {
+  display: flex;
+  height: 650px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem;
+}
+.exploreOuterDiv .exploreInnerDiv .videoGlobalStrip .videoLeft {
+  display: flex;
+  flex-direction: column;
+  width: 34%;
+  height: 600px;
+  justify-content: space-around;
+}
+.exploreOuterDiv .exploreInnerDiv .videoGlobalStrip .videoLeft img {
+  width: 90%;
+  height: 300px;
+  object-fit: cover;
+  padding: 2rem 2rem 0rem 0rem;
+}
+.exploreOuterDiv .exploreInnerDiv .videoGlobalStrip .videoRight {
+  width: 66%;
+  display: flex;
+  height: 600px;
+  justify-content: center;
+  align-items: center;
+}
+.exploreOuterDiv .exploreInnerDiv .videoGlobalStrip .videoRight img {
+  height: 570px;
+  width: 100%;
+  object-fit: cover;
+  padding: 2rem 0rem 0rem 0rem;
+}
+.exploreOuterDiv .exploreInnerDiv .imageStrip {
+  display: flex;
+  height: 650px;
+  width: 100%;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.exploreOuterDiv .exploreInnerDiv .imageStrip img {
+  width: 31%;
+  height: 300px;
+  object-fit: cover;
+  padding: 2rem 0rem 0rem 0rem;
+}
+@media screen and (max-width: 1024px) {
+  .exploreOuterDiv .exploreInnerDiv {
+    width: 90%;
+  }
+  .exploreOuterDiv .exploreInnerDiv .videoGlobalStrip {
+    margin-top: 0rem;
+  }
+}
+@media screen and (max-width: 480px) {
+  .exploreOuterDiv .exploreInnerDiv {
+    width: 100%;
+  }
+  .exploreOuterDiv .exploreInnerDiv .videoGlobalStrip {
+    display: flex;
+    height: 350px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 0rem;
+  }
+  .exploreOuterDiv .exploreInnerDiv .videoGlobalStrip .videoLeft {
+    display: flex;
+    flex-direction: column;
+    width: 34%;
+    height: 350px;
+    justify-content: space-around;
+  }
+  .exploreOuterDiv .exploreInnerDiv .videoGlobalStrip .videoLeft img {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+    padding: 0%;
+  }
+  .exploreOuterDiv .exploreInnerDiv .videoGlobalStrip .videoRight {
+    width: 66%;
+    display: flex;
+    height: 350px;
+    justify-content: center;
+    align-items: center;
+  }
+  .exploreOuterDiv .exploreInnerDiv .videoGlobalStrip .videoRight img {
+    height: 350px;
+    width: 100%;
+    object-fit: cover;
+    padding: 0%;
+  }
+  .exploreOuterDiv .exploreInnerDiv .imageStrip {
+    display: flex;
+    height: 350px;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  .exploreOuterDiv .exploreInnerDiv .imageStrip img {
+    width: 33%;
+    height: 50%;
+    object-fit: cover;
+    padding: 0%;
   }
 }
 

@@ -2,6 +2,7 @@ import React, { useState, useEffect, createContext } from 'react'
 import {BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom'
 import Footer from './page/AddOns/Footer/Footer'
 import Header from './page/AddOns/Header/Header'
+import ExplorePage from './page/ExplorePage/ExplorePage'
 import ForgotPasswordPage from './page/ForgotPasswordPage/ForgotPasswordPage'
 import HomePage from './page/HomePage/HomePage'
 import LoginPage from './page/LoginPage/LoginPage'
@@ -73,6 +74,11 @@ export default function App(){
                     <Route path="/profile/:username">
                         {
                             <Profile/>
+                        }
+                    </Route>
+                    <Route path="/explore">
+                        {
+                            <ExplorePage/>
                         }
                     </Route>
                 </Switch>
