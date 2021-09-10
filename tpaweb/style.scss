@@ -37,7 +37,7 @@ html, body{
 }
 // Header
 .pembungkus{
-    z-index: 10;
+    z-index: 1;
     position: fixed;
     height: 60px;
     width: 100%;
@@ -1112,6 +1112,7 @@ html, body{
     display: flex;
     flex-direction: column;
     box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+    z-index: 10;
     a{
         font-size: 16px;
         text-decoration: none;
@@ -1141,19 +1142,7 @@ html, body{
         }
     }
 }
-.popUp:after{
-    content:"";
-    width: 15px;
-    height: 15px;
-    transform: rotate(-45deg);
-    background-color: $lightMainColor;
-    border: 1px solid $line;    
-    position: absolute;
-    z-index: -1;
-    top:-8px;
-    left:$popUpWidth;
-    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.5);
-}
+
 
 // Home
 .outerDiv{
@@ -1199,7 +1188,7 @@ html, body{
                     margin: 0rem 0.25rem 0rem 0.25rem;
                     padding: 0%;
                     img{
-                        object-fit: contain;
+                        object-fit: cover;
                         border-radius: 50%;
                         height: 3.5rem;
                         width: 3.5rem;
@@ -1452,6 +1441,9 @@ html, body{
                 cursor: pointer;
                 background-color: transparent;
                 border:none;
+                svg{
+                    color: black;
+                }
             }
         }
     }
@@ -1470,6 +1462,15 @@ html, body{
         }
         #caption{
             margin-left: 0.4rem;
+            display: flex;
+        }
+        #showMore{
+            display: flex;
+            color: darkgray;
+            font-size: 14px;
+            justify-content: center;
+            align-items: flex-end;
+            cursor: pointer;
         }
     }
     .viewMoreComments{
@@ -1567,7 +1568,7 @@ html, body{
 .homeOuterDiv{
     display: flex;
     width: 100%;
-    min-height: 80vh;
+    min-height: 100vh;
     flex-direction: row;
     align-items: flex-start;
     justify-content: center;
@@ -2236,6 +2237,391 @@ html, body{
                 
                 justify-content: center;
                 align-items: center;
+                margin-top: 0.3rem;
+                margin-bottom: 0.05rem;
+                .videoLeft{
+                    display: flex;
+                    flex-direction: column;
+                    width: 33%;
+                    height: 350px;
+                    justify-content: space-around;
+                    margin-right: 0.05rem;
+                    
+                    img{
+                        width: 100%;
+                        height: 350px;
+                        object-fit: cover;
+                        padding: 0%;
+                        margin-bottom: 0.05rem;
+                        margin-top: 0.05rem;
+                    }
+                }
+                .videoRight{
+                    width: 67%;
+                    display: flex;
+                    height: 350px;
+                    justify-content: center;
+                    align-items: center;
+                    margin-left: 0.05rem;
+                    img{
+                        height: 350px;
+                        width: 100%;
+                        object-fit: cover;
+                        padding: 0%;
+                    }
+                }
+                
+            }
+            .imageStrip{
+                display: flex;
+                height: 350px;
+                width: 100%;
+                flex-wrap: wrap;
+                justify-content: space-between;
+                img{
+                    width: 33%;
+                    height: 50%;
+                    object-fit: cover;
+                    padding: 0%;
+                    margin: 0.05rem 0rem 0.05rem 0rem;
+                }
+                
+            }
+        }
+
+    }
+}
+
+
+
+.modal{
+
+    font-size: 24px;
+    font-weight: 500;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    #buttonShareModal{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        margin-top:1rem;
+        button{
+            width: 30%;
+            padding: 1rem;
+            width: 90px;
+            height: 90px;
+            cursor:pointer;
+            background: none;
+            border-radius: 10px;
+            margin: 0rem 0.5rem 0rem 0.5rem;
+            box-shadow: 2px 4px 3px rgba(0, 0, 0, 0.5);
+        }
+    }   
+}
+@media screen and (max-width: $phone) {
+    .modal{
+        width: 250px;
+        #buttonShareModal{
+            button{
+                height: 70px;
+                width: 70px;
+            }
+        }
+        
+    }
+}
+.popUpPost{
+    
+    display: flex;
+    flex-direction: column;
+    background-color: $lightMainColor;
+    width: 150px;
+    border-radius: 10px;
+    box-shadow: 2px 4px 3px rgba(0, 0, 0, 0.5);
+    z-index: 1;
+    button{
+        text-align: start;
+        font-size: 18px;
+        font-weight: 500;
+        background: none;
+        border: none;
+        margin: 0rem 1rem 0rem 1rem;
+        padding: 1rem 0rem 1rem 0rem;
+        cursor: pointer;
+    }
+    #editButton{
+        border-bottom: 2px solid rgb(0, 0, 0);
+    }
+    
+}
+
+.deleteModal{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    text-align: center;
+    font-weight: 500;
+    svg{
+        width: 80px;
+        border: 8px solid black;
+        border-radius: 50%;
+    }
+    p{
+        border-top: 2px solid black;
+        text-align: start;
+    }
+    button{
+        margin-top: 0.5rem;
+        border-radius: 10px;
+        box-shadow: 2px 4px 3px rgba(0, 0, 0, 0.5);
+        font-size: 28px;
+        background-color: rgba(255, 0, 0, 0.796);
+        color: white;
+        border: none;
+        padding: 0.5rem 1.2rem 0.5rem 1.2rem;
+        cursor: pointer;
+    }
+}
+
+#dmOuterDiv{
+    width: 100%;
+    height: 100vh;
+    min-height: 100vh;
+    background-color: $lightSecColor;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    #dmMainDiv{
+        width: 70%;
+        height: 80%;
+        background-color: $lightMainColor;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid $line;
+        #dmMainLeft{
+            width: 30%;
+            border-right: 1px solid $line;
+            height: 100%;
+            
+            #dmHeader{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 10%;
+                width: 100%;
+                border-bottom: 1px solid $line;
+                font-size: 20px;
+                font-weight: 500;
+            }
+            #dmPeopleList{
+                height: 90%;
+                overflow-y: scroll;
+                .receiverProfile{
+                    display: flex;
+                    cursor:pointer;
+                    padding: 0.8rem 0rem 0.8rem 0rem;
+                    #receiverImage{
+                        margin-left: 2rem;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        img{
+                            width: 65px;
+                            height: 65px;
+                            object-fit: cover;
+                            border-radius: 50%;
+                        }
+                    }
+                    #receiverDetail{
+                        margin-left: 2rem;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: flex-start;
+                        h1{
+                            font-size: 20px;
+                            margin: 0%;
+                            padding: 0%;
+                            margin-bottom: 0.5rem;
+                            font-weight: 400;
+                        }
+                        p{
+                            font-size: 16px;
+                            color: darkgray;
+                            margin: 0%;
+                            padding: 0%;
+                            font-weight: 400;
+                        }
+                    }
+                    &:hover{
+                        background-color: $lightSecColor;
+                    }
+                    &:active{
+                        background-color: $lightMainColor;
+                    }
+                    
+                }
+            }
+        }
+        #dmMainRight{
+            width: 70%;
+            height: 100%;
+            #dmReceiverHeader{
+                width: 100%;
+                height: 10%;
+                border-bottom: 1px solid $line;
+                display: flex;
+                align-items: center;
+                #dmReceiverImage{
+                    margin-left: 4rem;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    img{
+                        width: 35px;
+                        object-fit: cover;
+                        border-radius: 50%;
+                    }
+                }
+                #dmReceiverDetail{
+                    margin-left: 2rem;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: flex-start;
+                    h1{
+                        font-size: 16px;
+                        margin: 0%;
+                        padding: 0%;
+                        margin-bottom: 4px;
+                        font-weight: 500;
+                    }
+                    p{
+                        font-size: 14px;
+                        color: darkgray;
+                        margin: 0%;
+                        padding: 0%;
+                        font-weight: 400;
+                    }
+                }
+               
+            }
+            #dmMessageDiv{
+                height: 90%;
+                display: flex;
+                flex-direction: column;
+                #dmMessageList{
+                    overflow-y: scroll;
+                    height: 90%;
+                    padding-top:2rem;
+                    .sendDm{
+                        display: flex;
+                        width: 100%;
+                        justify-content: flex-end;
+                        align-items: center;
+                        margin: 1rem 0rem 1rem 0rem;
+                        img{
+                            width: 50px;
+                            height: 50px;
+                            border-radius: 50%;
+                            object-fit: cover;
+                            margin:0rem 2rem 0rem 2rem;
+                        }
+                    }
+                    .receiveDm{
+                        display: flex;
+                        width: 100%;
+                        justify-content: flex-start;
+                        align-items: center;
+                        margin: 1rem 0rem 1rem 0rem;
+                        img{
+                            width: 50px;
+                            height: 50px;
+                            border-radius: 50%;
+                            object-fit: cover;
+                            margin:0rem 2rem 0rem 2rem;
+                        }
+                    }
+                }
+                #chatBox{
+                    display: flex;
+                    justify-content: space-between;
+                    padding: 0rem 2rem 0rem 2rem;
+                    align-items: center;
+                    height: 10%;
+                    border-top: 1px solid $line;
+                    input{
+                        padding: 0.8rem;
+                        border-radius: 20px;
+                        width: 85%;
+                        font-size: 16px;
+                    }
+                    #sendButton{
+                        width: 8%;
+                        padding: 0.5rem;
+                        font-size: 18px;
+                        color: $secColor;
+                        background: none;
+                        border: none;
+                        font-weight: 700;
+                        cursor:pointer;
+                    }
+                }
+            }
+        }
+    }
+    @media screen and (max-width: $tablet) {
+        #dmMainDiv{
+            margin-top: 1rem;
+            width: 100%;
+            height: 90%;
+            #dmMainLeft{
+                width: 30%;
+                border-right: 1px solid $line;
+                height: 100%;
+                #dmHeader{
+                    font-size: 36px;
+                }
+            }
+            #dmMainRight{
+                #dmReceiverHeader{
+                    #dmReceiverImage{
+                        img{
+                            width: 60px;
+                        }
+                    }
+                    #dmReceiverDetail{
+                        h1{
+                            font-size: 32px;
+                        }
+                        p{
+                            font-size: 22px;
+                        }
+                    }
+                   
+                }
+            }
+        }
+
+    }
+    @media screen and (max-width: $phone) {
+        .exploreInnerDiv{
+            width: 100%;
+            
+            .videoGlobalStrip{
+                display: flex;
+                height: 350px;
+                
+                justify-content: center;
+                align-items: center;
                 margin-top: 0rem;
                 .videoLeft{
                     display: flex;
@@ -2281,5 +2667,416 @@ html, body{
             }
         }
 
+    }
+}
+
+#storyOuterDiv{
+    height: 100vh;
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    background-color: $lightMainColor;
+    #storyHeader{
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        padding: 1rem 1rem 1rem 1rem;
+        background-color: $lightMainColor;
+        .logo{
+            margin-left: 1rem;
+            font-family: "Style Script", cursive;
+            font-size: 1rem;
+            width: fit-content;
+            h1{
+                margin: 0%;
+            }
+        }
+        svg{
+            margin-right: 1rem;
+            width: 50px;
+            height: 50px;
+        }
+    }
+    #storyMainDiv{
+        display: flex;
+        width:600px;
+        height: 100%;
+        justify-content: center;
+        align-items: center;
+        #leftSlide{
+            width: 50px;
+            height: 50px;
+            background:none;
+            border: 1px solid black;
+            border-radius: 50%;
+            cursor: pointer;
+            margin-right: 2rem;
+        }
+        #story{
+            position: relative;
+            width: 450px;
+            height: 95%;
+            background-image: url("https://bang-phinf.pstatic.net/a/323cfh/a_d9fUd018bng1bwa2eagd1o1t_xv501d.jpg?type=w660");
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            border-radius: 30px;
+            background-color: rgba(0, 0, 0, 0.707);
+            
+            #profile{
+                background-image:linear-gradient(to bottom, rgb(0, 0, 0),rgba(0, 0, 0, 0));
+                border-radius: 20px;
+                display: flex;
+                flex-direction: column;
+                #progressBar{
+                    margin:2rem 0.5rem 1rem 0.5rem;
+                    padding-top: 8px;
+                    border:1px solid black;
+                    background-color: lightgray;
+                    border-radius: 10px;
+                }
+                #profileDiv{
+                    margin:0rem 0.5rem 0rem 0.5rem;
+                    display: flex;
+                    justify-content: flex-start;
+                    align-items: center;
+                    
+                    #profileImage{
+                        img{
+                            width: 50px;
+                            height: 50px;
+                            object-fit: cover;
+                            border-radius: 50%;
+                        }
+                    }
+                    h1{
+                        font-size: 18px;
+                        font-weight: 500;
+                        margin: 0%;
+                        margin-left: 1rem;
+                        padding: 0%;
+                    }
+                }
+            }
+
+            #interaction{
+                position: absolute;
+                bottom: 0%;
+                width: 100%;
+                height: 10%;
+                background-image:linear-gradient(to top, black, rgba(0, 0, 0, 0));
+                border-radius: 20px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                input{
+                    margin-bottom: 2rem;
+                    margin-left: 1rem;
+                    width: 80%;
+                    padding: 1rem;
+                    font-size: 16px;
+                    background:none;
+                    color: white;
+                    border: none;
+                    border-bottom: 1px solid $line;
+                    &::placeholder{
+                        color: white;
+                    }
+                }
+                svg{
+                    margin-bottom: 2rem;
+                    margin-right: 1rem;
+                    width: 40px;
+                    height: 40px;
+                    color: white;
+                    margin-left: 1rem;
+                    cursor: pointer;
+                }
+            }
+        }
+        #rightSlide{
+            width: 50px;
+            height: 50px;
+            background:none;
+            border: 1px solid black;
+            border-radius: 50%;
+            cursor: pointer;
+            margin-left: 2rem;
+        }
+    }
+    @media screen and (max-width: $phone) {
+        #storyHeader{
+            padding: 1rem 1rem 0rem 1rem;
+        }
+        #storyMainDiv{
+            display: flex;
+            width: 100%;
+            height: 100%;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            #leftSlide{
+                position: absolute;
+                z-index: 10;
+                left: 0%;
+                color: black;
+                border: none;
+            }
+            #story{
+                position: relative;
+                width: 100%;
+                height: 100%;
+                border-radius: 0;
+                #profile{
+                    background-image:linear-gradient(to bottom, rgb(0, 0, 0),rgba(0, 0, 0, 0));
+                    border-radius: 0px;
+                    #progressBar{
+                        margin:1rem 0.5rem 0.5rem 0.5rem;
+                        padding-top: 4px;
+                        background-color: rgb(248, 248, 248);
+                    }
+                    #profileDiv{
+                        margin:0rem 0.5rem 0rem 0.5rem;
+                    }
+                }
+    
+                #interaction{
+                    position: absolute;
+                    bottom: 0%;
+                    width: 100%;
+                    height: 10%;
+                    background-image:linear-gradient(to top, black, rgba(0, 0, 0, 0));
+                    border-radius: 0px;
+                    input{
+                        margin-bottom: 2rem;
+                        margin-left: 1rem;
+                        width: 80%;
+                        padding: 1rem;
+                        font-size: 16px;
+                        background:none;
+                        color: white;
+                        border: none;
+                        border-bottom: 1px solid $line;
+                    }
+                    svg{
+                        margin-bottom: 2rem;
+                        margin-right: 1rem;
+                        width: 40px;
+                        height: 40px;
+                        color: white;
+                        margin-left: 1rem;
+                        cursor: pointer;
+                    }
+                }
+            }
+            #rightSlide{
+                position: absolute;
+                z-index: 10;
+                right: 0%;
+                color: black;
+                border: none;
+            }
+        } 
+
+    }
+}
+
+// Activity Pop Up
+.activityStrip{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+    .detail{
+        display: flex;
+        width: fit-content;
+        max-width: 80%;
+        justify-content: flex-start;
+        align-items: center;
+        img{
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-right: 0.5rem;
+        }
+        h1{
+            margin: 0%;
+            padding: 0%;
+            font-size: 14px;
+            font-weight: 600;
+            margin-right: 0.5rem;
+        }
+        p{
+            width: 200px;
+        }
+    }
+    .right{
+        width: fit-content;
+        max-width: 20%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        img{
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+        }
+        button{
+            overflow: hidden;
+            text-decoration: none;
+            color: white;
+            background-color: $secColor;
+            padding: 0.4rem 1rem 0.4rem 1rem;
+            border-radius: 3px;
+            transition-duration: 0.6s;
+            border: none;
+            font-size: 16px;
+            font-weight: 600;
+            width: 100%;
+            &:hover{
+                cursor: pointer;
+            }
+        }
+        @media screen and (max-width: $phone) {
+            button{
+                font-size: 12px;
+            }
+        }
+    }
+}
+
+.mentionStrip{
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+    border-bottom: 1px solid $line;
+    border-top: 1px solid $line;
+    #storyImg{
+        margin-right: 0.5rem;
+        a{
+            img{
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+                object-fit: cover;
+            }
+        }
+    }
+    #detail{
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        h1{
+            margin: 0%;
+            padding: 0%;
+            font-size: 16px;
+        }
+        p{
+            font-size: 14px;
+            color: darkgray;
+        }
+    }
+}
+
+.activityPopUp{
+    position: relative;
+    width: 450px;
+    padding: 0.5rem 1rem 1rem 1rem;
+    background-color: $lightMainColor;
+    border: 1px solid $line;    
+    display: flex;
+    flex-direction: column;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+    overflow-y: scroll;
+    height: 300px;
+    z-index: 10;
+    #activityPopUpFooter{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        #showMore{
+            font-size: 18px;
+            color: $secColor;
+            font-weight: 600;
+            border-top: 1px solid $line;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0.4rem;
+            padding-top: 1rem;
+            &:hover{
+                color: $mainColor;
+            }
+        }
+    }
+    a{
+        font-size: 16px;
+        text-decoration: none;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        padding: 0.3rem 0rem 0.3rem 0rem;
+        color: black;
+        svg{
+            width: 24px;
+            padding: 0.2rem 0.5rem 0.2rem 0rem;
+            object-fit: contain;
+        }
+        button{
+            
+            font-size: 16px;
+            font-weight: 500;
+            padding: 0.5rem 0.5rem 0rem 0.5rem;
+            width: 100%;
+            background-color: $lightMainColor;
+            border: none;
+            border-top:2px solid $line;
+            cursor: pointer;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+        }
+        
+    }
+}
+
+// activity page
+#activityOuter{
+    height: fit-content;
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $lightSecColor;
+    padding: 60px 0rem 60px 0rem;
+    #activityMain{
+        width: 70%;
+        display: flex;
+        flex-direction: column;
+        padding: 1rem 1rem 1rem 1rem;
+        background-color: $lightMainColor;
+        height: fit-content;
+        min-height: 100%;
+        margin-top: 5rem;
+    }
+    @media screen and (max-width: $phone) {
+        #activityMain{
+            width: 100%;
+            margin-top: 0%;
+        }
     }
 }

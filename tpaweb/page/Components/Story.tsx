@@ -3,7 +3,8 @@ import React from 'react'
 export default function Story(){
     return(
         <div className="storyDiv">
-            <img src="/profile.jpg" alt="" />
+            <a href="/story"><img src="/profile.jpg" alt="" /></a>
+            
         </div>
         
     )

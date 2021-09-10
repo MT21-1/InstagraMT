@@ -28,7 +28,7 @@ html p, body p {
 }
 
 .pembungkus {
-  z-index: 10;
+  z-index: 1;
   position: fixed;
   height: 60px;
   width: 100%;
@@ -1007,6 +1007,7 @@ html p, body p {
   display: flex;
   flex-direction: column;
   box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+  z-index: 10;
 }
 .popUp a {
   font-size: 16px;
@@ -1034,20 +1035,6 @@ html p, body p {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-}
-
-.popUp:after {
-  content: "";
-  width: 15px;
-  height: 15px;
-  transform: rotate(-45deg);
-  background-color: white;
-  border: 1px solid #e7e7e7;
-  position: absolute;
-  z-index: -1;
-  top: -8px;
-  left: 200px;
-  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.5);
 }
 
 .outerDiv {
@@ -1097,7 +1084,7 @@ html p, body p {
   padding: 0%;
 }
 .outerDiv .innerDiv .leftHomeDiv .storyDiv .storyDiv img {
-  object-fit: contain;
+  object-fit: cover;
   border-radius: 50%;
   height: 3.5rem;
   width: 3.5rem;
@@ -1333,6 +1320,9 @@ html p, body p {
   background-color: transparent;
   border: none;
 }
+.postDiv .interactDiv .interactInnerDiv button svg {
+  color: black;
+}
 .postDiv #likes {
   margin: 0.1rem 0 0.1rem 0;
   padding: 0%;
@@ -1348,6 +1338,15 @@ html p, body p {
 }
 .postDiv .captionDiv #caption {
   margin-left: 0.4rem;
+  display: flex;
+}
+.postDiv .captionDiv #showMore {
+  display: flex;
+  color: darkgray;
+  font-size: 14px;
+  justify-content: center;
+  align-items: flex-end;
+  cursor: pointer;
 }
 .postDiv .viewMoreComments {
   display: flex;
@@ -1435,7 +1434,7 @@ html p, body p {
 .homeOuterDiv {
   display: flex;
   width: 100%;
-  min-height: 80vh;
+  min-height: 100vh;
   flex-direction: row;
   align-items: flex-start;
   justify-content: center;
@@ -2038,27 +2037,32 @@ html p, body p {
     height: 350px;
     justify-content: center;
     align-items: center;
-    margin-top: 0rem;
+    margin-top: 0.3rem;
+    margin-bottom: 0.05rem;
   }
   .exploreOuterDiv .exploreInnerDiv .videoGlobalStrip .videoLeft {
     display: flex;
     flex-direction: column;
-    width: 34%;
+    width: 33%;
     height: 350px;
     justify-content: space-around;
+    margin-right: 0.05rem;
   }
   .exploreOuterDiv .exploreInnerDiv .videoGlobalStrip .videoLeft img {
     width: 100%;
     height: 350px;
     object-fit: cover;
     padding: 0%;
+    margin-bottom: 0.05rem;
+    margin-top: 0.05rem;
   }
   .exploreOuterDiv .exploreInnerDiv .videoGlobalStrip .videoRight {
-    width: 66%;
+    width: 67%;
     display: flex;
     height: 350px;
     justify-content: center;
     align-items: center;
+    margin-left: 0.05rem;
   }
   .exploreOuterDiv .exploreInnerDiv .videoGlobalStrip .videoRight img {
     height: 350px;
@@ -2078,6 +2082,758 @@ html p, body p {
     height: 50%;
     object-fit: cover;
     padding: 0%;
+    margin: 0.05rem 0rem 0.05rem 0rem;
+  }
+}
+
+.modal {
+  font-size: 24px;
+  font-weight: 500;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+.modal #buttonShareModal {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  margin-top: 1rem;
+}
+.modal #buttonShareModal button {
+  width: 30%;
+  padding: 1rem;
+  width: 90px;
+  height: 90px;
+  cursor: pointer;
+  background: none;
+  border-radius: 10px;
+  margin: 0rem 0.5rem 0rem 0.5rem;
+  box-shadow: 2px 4px 3px rgba(0, 0, 0, 0.5);
+}
+
+@media screen and (max-width: 480px) {
+  .modal {
+    width: 250px;
+  }
+  .modal #buttonShareModal button {
+    height: 70px;
+    width: 70px;
+  }
+}
+.popUpPost {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  width: 150px;
+  border-radius: 10px;
+  box-shadow: 2px 4px 3px rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+.popUpPost button {
+  text-align: start;
+  font-size: 18px;
+  font-weight: 500;
+  background: none;
+  border: none;
+  margin: 0rem 1rem 0rem 1rem;
+  padding: 1rem 0rem 1rem 0rem;
+  cursor: pointer;
+}
+.popUpPost #editButton {
+  border-bottom: 2px solid black;
+}
+
+.deleteModal {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  text-align: center;
+  font-weight: 500;
+}
+.deleteModal svg {
+  width: 80px;
+  border: 8px solid black;
+  border-radius: 50%;
+}
+.deleteModal p {
+  border-top: 2px solid black;
+  text-align: start;
+}
+.deleteModal button {
+  margin-top: 0.5rem;
+  border-radius: 10px;
+  box-shadow: 2px 4px 3px rgba(0, 0, 0, 0.5);
+  font-size: 28px;
+  background-color: rgba(255, 0, 0, 0.796);
+  color: white;
+  border: none;
+  padding: 0.5rem 1.2rem 0.5rem 1.2rem;
+  cursor: pointer;
+}
+
+#dmOuterDiv {
+  width: 100%;
+  height: 100vh;
+  min-height: 100vh;
+  background-color: #f0f6fa;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#dmOuterDiv #dmMainDiv {
+  width: 70%;
+  height: 80%;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #e7e7e7;
+}
+#dmOuterDiv #dmMainDiv #dmMainLeft {
+  width: 30%;
+  border-right: 1px solid #e7e7e7;
+  height: 100%;
+}
+#dmOuterDiv #dmMainDiv #dmMainLeft #dmHeader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 10%;
+  width: 100%;
+  border-bottom: 1px solid #e7e7e7;
+  font-size: 20px;
+  font-weight: 500;
+}
+#dmOuterDiv #dmMainDiv #dmMainLeft #dmPeopleList {
+  height: 90%;
+  overflow-y: scroll;
+}
+#dmOuterDiv #dmMainDiv #dmMainLeft #dmPeopleList .receiverProfile {
+  display: flex;
+  cursor: pointer;
+  padding: 0.8rem 0rem 0.8rem 0rem;
+}
+#dmOuterDiv #dmMainDiv #dmMainLeft #dmPeopleList .receiverProfile #receiverImage {
+  margin-left: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#dmOuterDiv #dmMainDiv #dmMainLeft #dmPeopleList .receiverProfile #receiverImage img {
+  width: 65px;
+  height: 65px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+#dmOuterDiv #dmMainDiv #dmMainLeft #dmPeopleList .receiverProfile #receiverDetail {
+  margin-left: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+#dmOuterDiv #dmMainDiv #dmMainLeft #dmPeopleList .receiverProfile #receiverDetail h1 {
+  font-size: 20px;
+  margin: 0%;
+  padding: 0%;
+  margin-bottom: 0.5rem;
+  font-weight: 400;
+}
+#dmOuterDiv #dmMainDiv #dmMainLeft #dmPeopleList .receiverProfile #receiverDetail p {
+  font-size: 16px;
+  color: darkgray;
+  margin: 0%;
+  padding: 0%;
+  font-weight: 400;
+}
+#dmOuterDiv #dmMainDiv #dmMainLeft #dmPeopleList .receiverProfile:hover {
+  background-color: #f0f6fa;
+}
+#dmOuterDiv #dmMainDiv #dmMainLeft #dmPeopleList .receiverProfile:active {
+  background-color: white;
+}
+#dmOuterDiv #dmMainDiv #dmMainRight {
+  width: 70%;
+  height: 100%;
+}
+#dmOuterDiv #dmMainDiv #dmMainRight #dmReceiverHeader {
+  width: 100%;
+  height: 10%;
+  border-bottom: 1px solid #e7e7e7;
+  display: flex;
+  align-items: center;
+}
+#dmOuterDiv #dmMainDiv #dmMainRight #dmReceiverHeader #dmReceiverImage {
+  margin-left: 4rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#dmOuterDiv #dmMainDiv #dmMainRight #dmReceiverHeader #dmReceiverImage img {
+  width: 35px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+#dmOuterDiv #dmMainDiv #dmMainRight #dmReceiverHeader #dmReceiverDetail {
+  margin-left: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+#dmOuterDiv #dmMainDiv #dmMainRight #dmReceiverHeader #dmReceiverDetail h1 {
+  font-size: 16px;
+  margin: 0%;
+  padding: 0%;
+  margin-bottom: 4px;
+  font-weight: 500;
+}
+#dmOuterDiv #dmMainDiv #dmMainRight #dmReceiverHeader #dmReceiverDetail p {
+  font-size: 14px;
+  color: darkgray;
+  margin: 0%;
+  padding: 0%;
+  font-weight: 400;
+}
+#dmOuterDiv #dmMainDiv #dmMainRight #dmMessageDiv {
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+}
+#dmOuterDiv #dmMainDiv #dmMainRight #dmMessageDiv #dmMessageList {
+  overflow-y: scroll;
+  height: 90%;
+  padding-top: 2rem;
+}
+#dmOuterDiv #dmMainDiv #dmMainRight #dmMessageDiv #dmMessageList .sendDm {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+  align-items: center;
+  margin: 1rem 0rem 1rem 0rem;
+}
+#dmOuterDiv #dmMainDiv #dmMainRight #dmMessageDiv #dmMessageList .sendDm img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0rem 2rem 0rem 2rem;
+}
+#dmOuterDiv #dmMainDiv #dmMainRight #dmMessageDiv #dmMessageList .receiveDm {
+  display: flex;
+  width: 100%;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 1rem 0rem 1rem 0rem;
+}
+#dmOuterDiv #dmMainDiv #dmMainRight #dmMessageDiv #dmMessageList .receiveDm img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0rem 2rem 0rem 2rem;
+}
+#dmOuterDiv #dmMainDiv #dmMainRight #dmMessageDiv #chatBox {
+  display: flex;
+  justify-content: space-between;
+  padding: 0rem 2rem 0rem 2rem;
+  align-items: center;
+  height: 10%;
+  border-top: 1px solid #e7e7e7;
+}
+#dmOuterDiv #dmMainDiv #dmMainRight #dmMessageDiv #chatBox input {
+  padding: 0.8rem;
+  border-radius: 20px;
+  width: 85%;
+  font-size: 16px;
+}
+#dmOuterDiv #dmMainDiv #dmMainRight #dmMessageDiv #chatBox #sendButton {
+  width: 8%;
+  padding: 0.5rem;
+  font-size: 18px;
+  color: #00A6FB;
+  background: none;
+  border: none;
+  font-weight: 700;
+  cursor: pointer;
+}
+@media screen and (max-width: 1024px) {
+  #dmOuterDiv #dmMainDiv {
+    margin-top: 1rem;
+    width: 100%;
+    height: 90%;
+  }
+  #dmOuterDiv #dmMainDiv #dmMainLeft {
+    width: 30%;
+    border-right: 1px solid #e7e7e7;
+    height: 100%;
+  }
+  #dmOuterDiv #dmMainDiv #dmMainLeft #dmHeader {
+    font-size: 36px;
+  }
+  #dmOuterDiv #dmMainDiv #dmMainRight #dmReceiverHeader #dmReceiverImage img {
+    width: 60px;
+  }
+  #dmOuterDiv #dmMainDiv #dmMainRight #dmReceiverHeader #dmReceiverDetail h1 {
+    font-size: 32px;
+  }
+  #dmOuterDiv #dmMainDiv #dmMainRight #dmReceiverHeader #dmReceiverDetail p {
+    font-size: 22px;
+  }
+}
+@media screen and (max-width: 480px) {
+  #dmOuterDiv .exploreInnerDiv {
+    width: 100%;
+  }
+  #dmOuterDiv .exploreInnerDiv .videoGlobalStrip {
+    display: flex;
+    height: 350px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 0rem;
+  }
+  #dmOuterDiv .exploreInnerDiv .videoGlobalStrip .videoLeft {
+    display: flex;
+    flex-direction: column;
+    width: 34%;
+    height: 350px;
+    justify-content: space-around;
+  }
+  #dmOuterDiv .exploreInnerDiv .videoGlobalStrip .videoLeft img {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+    padding: 0%;
+  }
+  #dmOuterDiv .exploreInnerDiv .videoGlobalStrip .videoRight {
+    width: 66%;
+    display: flex;
+    height: 350px;
+    justify-content: center;
+    align-items: center;
+  }
+  #dmOuterDiv .exploreInnerDiv .videoGlobalStrip .videoRight img {
+    height: 350px;
+    width: 100%;
+    object-fit: cover;
+    padding: 0%;
+  }
+  #dmOuterDiv .exploreInnerDiv .imageStrip {
+    display: flex;
+    height: 350px;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  #dmOuterDiv .exploreInnerDiv .imageStrip img {
+    width: 33%;
+    height: 50%;
+    object-fit: cover;
+    padding: 0%;
+  }
+}
+
+#storyOuterDiv {
+  height: 100vh;
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  background-color: white;
+}
+#storyOuterDiv #storyHeader {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 1rem 1rem 1rem;
+  background-color: white;
+}
+#storyOuterDiv #storyHeader .logo {
+  margin-left: 1rem;
+  font-family: "Style Script", cursive;
+  font-size: 1rem;
+  width: fit-content;
+}
+#storyOuterDiv #storyHeader .logo h1 {
+  margin: 0%;
+}
+#storyOuterDiv #storyHeader svg {
+  margin-right: 1rem;
+  width: 50px;
+  height: 50px;
+}
+#storyOuterDiv #storyMainDiv {
+  display: flex;
+  width: 600px;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+}
+#storyOuterDiv #storyMainDiv #leftSlide {
+  width: 50px;
+  height: 50px;
+  background: none;
+  border: 1px solid black;
+  border-radius: 50%;
+  cursor: pointer;
+  margin-right: 2rem;
+}
+#storyOuterDiv #storyMainDiv #story {
+  position: relative;
+  width: 450px;
+  height: 95%;
+  background-image: url("https://bang-phinf.pstatic.net/a/323cfh/a_d9fUd018bng1bwa2eagd1o1t_xv501d.jpg?type=w660");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  border-radius: 30px;
+  background-color: rgba(0, 0, 0, 0.707);
+}
+#storyOuterDiv #storyMainDiv #story #profile {
+  background-image: linear-gradient(to bottom, black, rgba(0, 0, 0, 0));
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+}
+#storyOuterDiv #storyMainDiv #story #profile #progressBar {
+  margin: 2rem 0.5rem 1rem 0.5rem;
+  padding-top: 8px;
+  border: 1px solid black;
+  background-color: lightgray;
+  border-radius: 10px;
+}
+#storyOuterDiv #storyMainDiv #story #profile #profileDiv {
+  margin: 0rem 0.5rem 0rem 0.5rem;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+#storyOuterDiv #storyMainDiv #story #profile #profileDiv #profileImage img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+#storyOuterDiv #storyMainDiv #story #profile #profileDiv h1 {
+  font-size: 18px;
+  font-weight: 500;
+  margin: 0%;
+  margin-left: 1rem;
+  padding: 0%;
+}
+#storyOuterDiv #storyMainDiv #story #interaction {
+  position: absolute;
+  bottom: 0%;
+  width: 100%;
+  height: 10%;
+  background-image: linear-gradient(to top, black, rgba(0, 0, 0, 0));
+  border-radius: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#storyOuterDiv #storyMainDiv #story #interaction input {
+  margin-bottom: 2rem;
+  margin-left: 1rem;
+  width: 80%;
+  padding: 1rem;
+  font-size: 16px;
+  background: none;
+  color: white;
+  border: none;
+  border-bottom: 1px solid #e7e7e7;
+}
+#storyOuterDiv #storyMainDiv #story #interaction input::placeholder {
+  color: white;
+}
+#storyOuterDiv #storyMainDiv #story #interaction svg {
+  margin-bottom: 2rem;
+  margin-right: 1rem;
+  width: 40px;
+  height: 40px;
+  color: white;
+  margin-left: 1rem;
+  cursor: pointer;
+}
+#storyOuterDiv #storyMainDiv #rightSlide {
+  width: 50px;
+  height: 50px;
+  background: none;
+  border: 1px solid black;
+  border-radius: 50%;
+  cursor: pointer;
+  margin-left: 2rem;
+}
+@media screen and (max-width: 480px) {
+  #storyOuterDiv #storyHeader {
+    padding: 1rem 1rem 0rem 1rem;
+  }
+  #storyOuterDiv #storyMainDiv {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+  #storyOuterDiv #storyMainDiv #leftSlide {
+    position: absolute;
+    z-index: 10;
+    left: 0%;
+    color: black;
+    border: none;
+  }
+  #storyOuterDiv #storyMainDiv #story {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+  }
+  #storyOuterDiv #storyMainDiv #story #profile {
+    background-image: linear-gradient(to bottom, black, rgba(0, 0, 0, 0));
+    border-radius: 0px;
+  }
+  #storyOuterDiv #storyMainDiv #story #profile #progressBar {
+    margin: 1rem 0.5rem 0.5rem 0.5rem;
+    padding-top: 4px;
+    background-color: #f8f8f8;
+  }
+  #storyOuterDiv #storyMainDiv #story #profile #profileDiv {
+    margin: 0rem 0.5rem 0rem 0.5rem;
+  }
+  #storyOuterDiv #storyMainDiv #story #interaction {
+    position: absolute;
+    bottom: 0%;
+    width: 100%;
+    height: 10%;
+    background-image: linear-gradient(to top, black, rgba(0, 0, 0, 0));
+    border-radius: 0px;
+  }
+  #storyOuterDiv #storyMainDiv #story #interaction input {
+    margin-bottom: 2rem;
+    margin-left: 1rem;
+    width: 80%;
+    padding: 1rem;
+    font-size: 16px;
+    background: none;
+    color: white;
+    border: none;
+    border-bottom: 1px solid #e7e7e7;
+  }
+  #storyOuterDiv #storyMainDiv #story #interaction svg {
+    margin-bottom: 2rem;
+    margin-right: 1rem;
+    width: 40px;
+    height: 40px;
+    color: white;
+    margin-left: 1rem;
+    cursor: pointer;
+  }
+  #storyOuterDiv #storyMainDiv #rightSlide {
+    position: absolute;
+    z-index: 10;
+    right: 0%;
+    color: black;
+    border: none;
+  }
+}
+
+.activityStrip {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+}
+.activityStrip .detail {
+  display: flex;
+  width: fit-content;
+  max-width: 80%;
+  justify-content: flex-start;
+  align-items: center;
+}
+.activityStrip .detail img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-right: 0.5rem;
+}
+.activityStrip .detail h1 {
+  margin: 0%;
+  padding: 0%;
+  font-size: 14px;
+  font-weight: 600;
+  margin-right: 0.5rem;
+}
+.activityStrip .detail p {
+  width: 200px;
+}
+.activityStrip .right {
+  width: fit-content;
+  max-width: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+.activityStrip .right img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+}
+.activityStrip .right button {
+  overflow: hidden;
+  text-decoration: none;
+  color: white;
+  background-color: #00A6FB;
+  padding: 0.4rem 1rem 0.4rem 1rem;
+  border-radius: 3px;
+  transition-duration: 0.6s;
+  border: none;
+  font-size: 16px;
+  font-weight: 600;
+  width: 100%;
+}
+.activityStrip .right button:hover {
+  cursor: pointer;
+}
+@media screen and (max-width: 480px) {
+  .activityStrip .right button {
+    font-size: 12px;
+  }
+}
+
+.mentionStrip {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+  border-bottom: 1px solid #e7e7e7;
+  border-top: 1px solid #e7e7e7;
+}
+.mentionStrip #storyImg {
+  margin-right: 0.5rem;
+}
+.mentionStrip #storyImg a img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.mentionStrip #detail {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.mentionStrip #detail h1 {
+  margin: 0%;
+  padding: 0%;
+  font-size: 16px;
+}
+.mentionStrip #detail p {
+  font-size: 14px;
+  color: darkgray;
+}
+
+.activityPopUp {
+  position: relative;
+  width: 450px;
+  padding: 0.5rem 1rem 1rem 1rem;
+  background-color: white;
+  border: 1px solid #e7e7e7;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+  overflow-y: scroll;
+  height: 300px;
+  z-index: 10;
+}
+.activityPopUp #activityPopUpFooter {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.activityPopUp #activityPopUpFooter #showMore {
+  font-size: 18px;
+  color: #00A6FB;
+  font-weight: 600;
+  border-top: 1px solid #e7e7e7;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.4rem;
+  padding-top: 1rem;
+}
+.activityPopUp #activityPopUpFooter #showMore:hover {
+  color: #072AC8;
+}
+.activityPopUp a {
+  font-size: 16px;
+  text-decoration: none;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 0.3rem 0rem 0.3rem 0rem;
+  color: black;
+}
+.activityPopUp a svg {
+  width: 24px;
+  padding: 0.2rem 0.5rem 0.2rem 0rem;
+  object-fit: contain;
+}
+.activityPopUp a button {
+  font-size: 16px;
+  font-weight: 500;
+  padding: 0.5rem 0.5rem 0rem 0.5rem;
+  width: 100%;
+  background-color: white;
+  border: none;
+  border-top: 2px solid #e7e7e7;
+  cursor: pointer;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+#activityOuter {
+  height: fit-content;
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f0f6fa;
+  padding: 60px 0rem 60px 0rem;
+}
+#activityOuter #activityMain {
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 1rem 1rem 1rem;
+  background-color: white;
+  height: fit-content;
+  min-height: 100%;
+  margin-top: 5rem;
+}
+@media screen and (max-width: 480px) {
+  #activityOuter #activityMain {
+    width: 100%;
+    margin-top: 0%;
   }
 }
 

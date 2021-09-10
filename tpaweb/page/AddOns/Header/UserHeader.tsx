@@ -1,6 +1,11 @@
 import React, { useContext } from "react";
 import Popup from "reactjs-popup";
+import MentionStrip from '../../ActivityPage/MentionStrip'
 import { JWTContext } from "../../../App";
+import TaggedStrip from "../../ActivityPage/TaggedStrip";
+import CommentStrip from "../../ActivityPage/commentStrip";
+import LikeStrip from "../../ActivityPage/likeStrip";
+import FollowStrip from "../../ActivityPage/followStrip";
 
 export default function UserHeader(){
     const [_, setJWT] = useContext(JWTContext)
@@ -33,7 +38,7 @@ export default function UserHeader(){
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
                     </a>
-                    <a href="#" id="msg">
+                    <a href="/dm" id="msg">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                     </svg>
@@ -43,11 +48,34 @@ export default function UserHeader(){
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
                     </svg>
                     </a>
-                    <a href="#" id="like">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                    </svg>
-                    </a>
+                    <Popup trigger={
+                                <a href="#" id="like">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                                     </svg>
+                                </a>
+                                } 
+                    position="bottom right">
+                        <div className="activityPopUp">
+                            
+                            <div id="activityPopUpFooter">
+                                <MentionStrip></MentionStrip>
+                                <FollowStrip></FollowStrip>
+                                <FollowStrip></FollowStrip>
+                                <FollowStrip></FollowStrip>
+                                <FollowStrip></FollowStrip>
+                                <FollowStrip></FollowStrip>
+                                <LikeStrip></LikeStrip>
+                                <CommentStrip></CommentStrip>
+                                <CommentStrip></CommentStrip>
+                                <CommentStrip></CommentStrip>
+                                <CommentStrip></CommentStrip>
+                                <TaggedStrip></TaggedStrip>
+                                <a href="/activity" id="showMore">Show More</a>
+                            </div>
+                        </div>
+                    </Popup>
+                    
 
                     
                         
