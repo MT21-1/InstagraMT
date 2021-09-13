@@ -26,6 +26,29 @@ html p, body p {
   margin: 5px 0 5px 0;
   padding: 0%;
 }
+html .loadingButton, body .loadingButton {
+  margin-top: 1rem;
+  text-decoration: none;
+  color: white;
+  background-color: #00A6FB;
+  padding: -0.5rem 1rem 0rem 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 30px;
+}
+html .loadingAnimation, body .loadingAnimation {
+  width: 20px;
+  height: 20px;
+  margin: 0%;
+  padding: 0%;
+}
+html .countdown, body .countdown {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 .pembungkus {
   z-index: 1;
@@ -257,6 +280,9 @@ html p, body p {
   padding: 0.4rem 1rem 0.4rem 1rem;
   border-radius: 3px;
   transition-duration: 0.6s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-size: 0.8rem;
   font-weight: 600;
   width: 100%;
@@ -1246,6 +1272,7 @@ html p, body p {
     width: 100%;
   }
   .outerDiv .leftHomeDiv .postDiv {
+    z-index: 0;
     width: 95%;
   }
 }
@@ -1493,22 +1520,53 @@ html p, body p {
   display: flex;
   min-width: 450px;
   max-width: 100%;
-  justify-content: space-between;
   align-items: center;
   height: fit-content;
+}
+.homeOuterDiv .homeInnerDiv .profileUpperDiv .desktopProfileDiv .profileDetailDiv .profileUsernameDiv button {
+  overflow: hidden;
+  text-decoration: none;
+  color: white;
+  background-color: #00A6FB;
+  padding: 0.4rem 1rem 0.4rem 1rem;
+  border-radius: 3px;
+  transition-duration: 0.6s;
+  border: none;
+  font-size: 16px;
+  font-weight: 600;
+  width: 120px;
+  margin: 0rem 1rem 0rem 1rem;
+}
+.homeOuterDiv .homeInnerDiv .profileUpperDiv .desktopProfileDiv .profileDetailDiv .profileUsernameDiv button:hover {
+  cursor: pointer;
+}
+.homeOuterDiv .homeInnerDiv .profileUpperDiv .desktopProfileDiv .profileDetailDiv .profileUsernameDiv .followingButton {
+  background-color: white;
+  border: 2px solid black;
+  color: black;
+}
+.homeOuterDiv .homeInnerDiv .profileUpperDiv .desktopProfileDiv .profileDetailDiv .profileUsernameDiv .editProfileButton {
+  width: 120px;
+  background-color: #f0f6fa;
+  padding: 0.4rem 0.5rem 0.4rem 0.5rem;
+  border: 2px solid black;
+  color: black;
+}
+.homeOuterDiv .homeInnerDiv .profileUpperDiv .desktopProfileDiv .profileDetailDiv .profileUsernameDiv .editProfileButton a {
+  text-decoration: none;
+  width: 120px;
+  background-color: #f0f6fa;
+  color: black;
+}
+.homeOuterDiv .homeInnerDiv .profileUpperDiv .desktopProfileDiv .profileDetailDiv .profileUsernameDiv .uploadButton {
+  width: 40px;
+  height: 40px;
+  text-decoration: none;
+  color: black;
 }
 .homeOuterDiv .homeInnerDiv .profileUpperDiv .desktopProfileDiv .profileDetailDiv .profileUsernameDiv h1 {
   margin: 0%;
   font-weight: 300;
-}
-.homeOuterDiv .homeInnerDiv .profileUpperDiv .desktopProfileDiv .profileDetailDiv .profileUsernameDiv #follow {
-  background-color: #00A6FB;
-  color: white;
-  border: none;
-  font-weight: bold;
-  padding: 0rem 1.5rem 0rem 1.5rem;
-  border-radius: 5px;
-  min-height: 30px;
 }
 .homeOuterDiv .homeInnerDiv .profileUpperDiv .desktopProfileDiv .profileDetailDiv .profileUsernameDiv #dropDown {
   background-color: #00A6FB;
@@ -1517,12 +1575,14 @@ html p, body p {
   padding: 0rem 1rem 0rem 1rem;
   min-height: 30px;
   border-radius: 5px;
+  max-width: 100px;
 }
 .homeOuterDiv .homeInnerDiv .profileUpperDiv .desktopProfileDiv .profileDetailDiv .profileUsernameDiv #dropDown svg {
   height: 1.5rem;
   width: 1.5rem;
 }
 .homeOuterDiv .homeInnerDiv .profileUpperDiv .desktopProfileDiv .profileDetailDiv .profileUsernameDiv #settings {
+  display: none;
   background: none;
   border: none;
   padding: 0rem 1rem 0rem 1rem;
@@ -1696,6 +1756,9 @@ html p, body p {
   color: darkgray;
   cursor: pointer;
 }
+.homeOuterDiv .homeInnerDiv .profileBottomDiv .postNavbar button a {
+  z-index: 1;
+}
 .homeOuterDiv .homeInnerDiv .profileBottomDiv .postDiv {
   height: fit-content;
   width: 100%;
@@ -1720,7 +1783,7 @@ html p, body p {
   padding-bottom: 100%;
 }
 .homeOuterDiv .homeInnerDiv .profileBottomDiv .postDiv img {
-  z-index: 1;
+  z-index: 0;
   position: absolute;
   top: 0%;
   right: 0;
@@ -1742,6 +1805,51 @@ html p, body p {
   .homeOuterDiv .homeInnerDiv .profileUpperDiv .mobileProfileDiv {
     display: flex;
   }
+  .homeOuterDiv .homeInnerDiv .profileUpperDiv .mobileProfileDiv span {
+    min-width: 220px;
+    width: 100%;
+  }
+  .homeOuterDiv .homeInnerDiv .profileUpperDiv .mobileProfileDiv span button {
+    overflow: hidden;
+    text-decoration: none;
+    color: white;
+    background-color: #00A6FB;
+    padding: 0.4rem 1rem 0.4rem 1rem;
+    border-radius: 3px;
+    transition-duration: 0.6s;
+    border: none;
+    font-size: 14px;
+    margin-right: 2rem;
+    font-weight: 600;
+    width: 100px;
+  }
+  .homeOuterDiv .homeInnerDiv .profileUpperDiv .mobileProfileDiv span button:hover {
+    cursor: pointer;
+  }
+  .homeOuterDiv .homeInnerDiv .profileUpperDiv .mobileProfileDiv span .uploadButton {
+    width: 40px;
+    height: 40px;
+    text-decoration: none;
+    margin-right: 1rem;
+    color: black;
+  }
+  .homeOuterDiv .homeInnerDiv .profileUpperDiv .mobileProfileDiv span .followingButton {
+    background-color: white;
+    border: 2px solid black;
+    color: black;
+  }
+  .homeOuterDiv .homeInnerDiv .profileUpperDiv .mobileProfileDiv span .editProfileButton {
+    width: 120px;
+    background-color: #f0f6fa;
+    padding: 0.4rem 0.5rem 0.4rem 0.5rem;
+    margin-right: 1rem;
+    border: 2px solid black;
+    color: black;
+  }
+  .homeOuterDiv .homeInnerDiv .profileUpperDiv .mobileProfileDiv span .editProfileButton a {
+    text-decoration: none;
+    color: black;
+  }
 }
 @media screen and (max-width: 480px) {
   .homeOuterDiv .homeInnerDiv {
@@ -1762,6 +1870,45 @@ html p, body p {
   }
   .homeOuterDiv .homeInnerDiv .profileUpperDiv .mobileProfileDiv .marginDiv .mobileUpperDiv .mobileUpperRightDiv span {
     min-width: 220px;
+    width: 100%;
+  }
+  .homeOuterDiv .homeInnerDiv .profileUpperDiv .mobileProfileDiv .marginDiv .mobileUpperDiv .mobileUpperRightDiv span button {
+    overflow: hidden;
+    text-decoration: none;
+    color: white;
+    background-color: #00A6FB;
+    padding: 0.4rem 1rem 0.4rem 1rem;
+    border-radius: 3px;
+    transition-duration: 0.6s;
+    border: none;
+    font-size: 14px;
+    font-weight: 600;
+    width: 100px;
+  }
+  .homeOuterDiv .homeInnerDiv .profileUpperDiv .mobileProfileDiv .marginDiv .mobileUpperDiv .mobileUpperRightDiv span button:hover {
+    cursor: pointer;
+  }
+  .homeOuterDiv .homeInnerDiv .profileUpperDiv .mobileProfileDiv .marginDiv .mobileUpperDiv .mobileUpperRightDiv span .followButton {
+    margin-right: 1rem;
+  }
+  .homeOuterDiv .homeInnerDiv .profileUpperDiv .mobileProfileDiv .marginDiv .mobileUpperDiv .mobileUpperRightDiv span .followingButton {
+    background-color: white;
+    border: 2px solid black;
+    color: black;
+  }
+  .homeOuterDiv .homeInnerDiv .profileUpperDiv .mobileProfileDiv .marginDiv .mobileUpperDiv .mobileUpperRightDiv span .uploadButton {
+    margin: 0rem 1rem 0rem 1rem;
+  }
+  .homeOuterDiv .homeInnerDiv .profileUpperDiv .mobileProfileDiv .marginDiv .mobileUpperDiv .mobileUpperRightDiv span .editProfileButton {
+    width: 120px;
+    background-color: #f0f6fa;
+    padding: 0.4rem 0.5rem 0.4rem 0.5rem;
+    margin-right: 0rem;
+    border: 2px solid black;
+    color: black;
+  }
+  .homeOuterDiv .homeInnerDiv .profileUpperDiv .mobileProfileDiv .marginDiv .mobileUpperDiv .mobileUpperRightDiv span #dropDown {
+    width: 50px;
   }
   .homeOuterDiv .homeInnerDiv .profileUpperDiv .mobileProfileDiv .marginDiv .mobileUpperDiv .mobileUpperRightDiv h1 {
     font-size: 24px;
@@ -1806,6 +1953,7 @@ html p, body p {
   align-items: center;
   justify-content: center;
   background-color: #f0f6fa;
+  padding-top: 5rem;
 }
 #uploadOuterDiv #uploadMainDiv {
   display: flex;
@@ -1814,6 +1962,30 @@ html p, body p {
   background-color: #f0f6fa;
   width: 100%;
   height: 500px;
+}
+#uploadOuterDiv #uploadMainDiv .successModal {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+#uploadOuterDiv #uploadMainDiv .successModal svg {
+  color: #3ce43c;
+}
+#uploadOuterDiv #uploadMainDiv .successModal p {
+  color: #3ce43c;
+  font-size: 18px;
+  font-weight: 500;
+  margin: 1rem 0 1rem 0;
+}
+#uploadOuterDiv #uploadMainDiv .successModal #confirm {
+  background-color: #09c709;
+  color: white;
+  font-size: 18px;
+  font-weight: 700;
+  border: none;
+  border-radius: 10px;
+  padding: 0.5rem;
+  cursor: pointer;
 }
 #uploadOuterDiv #uploadMainDiv #uploadFormDiv {
   display: flex;
@@ -1831,7 +2003,7 @@ html p, body p {
   justify-content: space-between;
   background-color: white;
   border: 1px solid #e7e7e7;
-  height: 600px;
+  height: 650px;
 }
 #uploadOuterDiv #uploadMainDiv #uploadFormDiv #uploadForm h1 {
   margin: 0%;
@@ -1842,10 +2014,14 @@ html p, body p {
 }
 #uploadOuterDiv #uploadMainDiv #uploadFormDiv #uploadForm #uploadArea {
   width: 100%;
-  height: 350px;
+  min-height: 300px;
+  max-height: 300px;
   border: 2px solid black;
   border-radius: 10px;
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 #uploadOuterDiv #uploadMainDiv #uploadFormDiv #uploadForm #uploadArea svg {
   position: absolute;
@@ -1856,6 +2032,52 @@ html p, body p {
   position: absolute;
   opacity: 0;
   cursor: pointer;
+}
+#uploadOuterDiv #uploadMainDiv #uploadFormDiv #uploadForm #errorLabel {
+  font-size: 15px;
+  font-weight: 500;
+  color: red;
+  width: 100%;
+  text-align: center;
+}
+#uploadOuterDiv #uploadMainDiv #uploadFormDiv #uploadForm #imageCarouselDiv {
+  width: 100%;
+  max-height: 300px;
+  min-height: 300px;
+  border: 2px solid black;
+  border-radius: 10px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#uploadOuterDiv #uploadMainDiv #uploadFormDiv #uploadForm #imageCarouselDiv #leftSlide {
+  width: 50px;
+  height: 50px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-right: 2rem;
+  position: absolute;
+  left: 0%;
+  z-index: 10;
+}
+#uploadOuterDiv #uploadMainDiv #uploadFormDiv #uploadForm #imageCarouselDiv .uploadImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: flex;
+  z-index: 5;
+}
+#uploadOuterDiv #uploadMainDiv #uploadFormDiv #uploadForm #imageCarouselDiv #rightSlide {
+  width: 50px;
+  height: 50px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  right: 0;
+  z-index: 10;
 }
 #uploadOuterDiv #uploadMainDiv #uploadFormDiv #uploadForm #textAreaDiv {
   width: 100%;
@@ -1869,6 +2091,25 @@ html p, body p {
   font-family: Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   font-weight: 500;
   font-size: 18px;
+}
+#uploadOuterDiv #uploadMainDiv #uploadFormDiv #uploadForm #textAreaDiv #shareDiv {
+  display: flex;
+  width: 100%;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 13px;
+  font-weight: 500;
+}
+#uploadOuterDiv #uploadMainDiv #uploadFormDiv #uploadForm #loadingBarBackground {
+  width: 100%;
+  height: 10px;
+  background-color: white;
+  margin-top: 10px;
+  border: 1px solid black;
+}
+#uploadOuterDiv #uploadMainDiv #uploadFormDiv #uploadForm #loadingBarBackground #loadingBarFill {
+  height: 100%;
+  background-color: #3ce43c;
 }
 #uploadOuterDiv #uploadMainDiv #uploadFormDiv #uploadForm #buttonDiv {
   width: 100%;
@@ -2388,54 +2629,106 @@ html p, body p {
   }
 }
 @media screen and (max-width: 480px) {
-  #dmOuterDiv .exploreInnerDiv {
-    width: 100%;
+  #dmOuterDiv #dmMainDiv {
+    margin-top: 4rem;
   }
-  #dmOuterDiv .exploreInnerDiv .videoGlobalStrip {
+  #dmOuterDiv #dmMainDiv #dmMainLeft #dmHeader {
+    font-size: 14px;
+  }
+  #dmOuterDiv #dmMainDiv #dmMainLeft #dmPeopleList {
+    height: 90%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
+  #dmOuterDiv #dmMainDiv #dmMainLeft #dmPeopleList .receiverProfile {
     display: flex;
-    height: 350px;
-    justify-content: center;
-    align-items: center;
-    margin-top: 0rem;
+    cursor: pointer;
   }
-  #dmOuterDiv .exploreInnerDiv .videoGlobalStrip .videoLeft {
+  #dmOuterDiv #dmMainDiv #dmMainLeft #dmPeopleList .receiverProfile #receiverImage {
+    margin-left: 0.5rem;
+  }
+  #dmOuterDiv #dmMainDiv #dmMainLeft #dmPeopleList .receiverProfile #receiverImage img {
+    width: 20px;
+    height: 20px;
+  }
+  #dmOuterDiv #dmMainDiv #dmMainLeft #dmPeopleList .receiverProfile #receiverDetail {
+    margin-left: 0.5em;
+  }
+  #dmOuterDiv #dmMainDiv #dmMainLeft #dmPeopleList .receiverProfile #receiverDetail h1 {
+    font-size: 10px;
+    margin-bottom: 0.3rem;
+  }
+  #dmOuterDiv #dmMainDiv #dmMainLeft #dmPeopleList .receiverProfile #receiverDetail p {
+    font-size: 8px;
+  }
+  #dmOuterDiv #dmMainDiv #dmMainRight #dmReceiverHeader #dmReceiverImage {
+    margin-left: 2rem;
+  }
+  #dmOuterDiv #dmMainDiv #dmMainRight #dmReceiverHeader #dmReceiverImage img {
+    width: 35px;
+    height: 35px;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+  #dmOuterDiv #dmMainDiv #dmMainRight #dmReceiverHeader #dmReceiverDetail {
+    margin-left: 1rem;
+  }
+  #dmOuterDiv #dmMainDiv #dmMainRight #dmReceiverHeader #dmReceiverDetail h1 {
+    font-size: 16px;
+  }
+  #dmOuterDiv #dmMainDiv #dmMainRight #dmReceiverHeader #dmReceiverDetail p {
+    font-size: 13px;
+  }
+  #dmOuterDiv #dmMainDiv #dmMainRight #dmMessageDiv {
+    height: 90%;
     display: flex;
     flex-direction: column;
-    width: 34%;
-    height: 350px;
-    justify-content: space-around;
   }
-  #dmOuterDiv .exploreInnerDiv .videoGlobalStrip .videoLeft img {
-    width: 100%;
-    height: 350px;
-    object-fit: cover;
-    padding: 0%;
+  #dmOuterDiv #dmMainDiv #dmMainRight #dmMessageDiv #dmMessageList {
+    overflow-y: scroll;
+    height: 90%;
+    padding-top: 0.5rem;
   }
-  #dmOuterDiv .exploreInnerDiv .videoGlobalStrip .videoRight {
-    width: 66%;
+  #dmOuterDiv #dmMainDiv #dmMainRight #dmMessageDiv #dmMessageList .sendDm {
+    margin: 1rem 0rem 1rem 0rem;
+  }
+  #dmOuterDiv #dmMainDiv #dmMainRight #dmMessageDiv #dmMessageList .sendDm img {
+    width: 25px;
+    height: 25px;
+    margin: 0rem 1rem 0rem 1rem;
+  }
+  #dmOuterDiv #dmMainDiv #dmMainRight #dmMessageDiv #dmMessageList .sendDm #msg {
+    font-size: 12px;
+  }
+  #dmOuterDiv #dmMainDiv #dmMainRight #dmMessageDiv #dmMessageList .receiveDm {
+    margin: 1rem 0rem 1rem 0rem;
+  }
+  #dmOuterDiv #dmMainDiv #dmMainRight #dmMessageDiv #dmMessageList .receiveDm img {
+    width: 25px;
+    height: 25px;
+    margin: 0rem 1rem 0rem 1rem;
+  }
+  #dmOuterDiv #dmMainDiv #dmMainRight #dmMessageDiv #dmMessageList .receiveDm #msg {
+    font-size: 12px;
+  }
+  #dmOuterDiv #dmMainDiv #dmMainRight #dmMessageDiv #chatBox {
     display: flex;
-    height: 350px;
-    justify-content: center;
-    align-items: center;
-  }
-  #dmOuterDiv .exploreInnerDiv .videoGlobalStrip .videoRight img {
-    height: 350px;
-    width: 100%;
-    object-fit: cover;
-    padding: 0%;
-  }
-  #dmOuterDiv .exploreInnerDiv .imageStrip {
-    display: flex;
-    height: 350px;
-    width: 100%;
-    flex-wrap: wrap;
     justify-content: space-between;
+    padding: 0rem 1rem 0rem 1rem;
+    align-items: center;
+    height: 10%;
+    border-top: 1px solid #e7e7e7;
   }
-  #dmOuterDiv .exploreInnerDiv .imageStrip img {
-    width: 33%;
-    height: 50%;
-    object-fit: cover;
-    padding: 0%;
+  #dmOuterDiv #dmMainDiv #dmMainRight #dmMessageDiv #chatBox input {
+    padding: 0.3rem;
+    border-radius: 20px;
+    width: 80%;
+    font-size: 12px;
+  }
+  #dmOuterDiv #dmMainDiv #dmMainRight #dmMessageDiv #chatBox #sendButton {
+    width: 18%;
+    padding: 0.2rem;
+    font-size: 12px;
   }
 }
 
@@ -2657,7 +2950,7 @@ html p, body p {
 .activityStrip .detail {
   display: flex;
   width: fit-content;
-  max-width: 80%;
+  max-width: 75%;
   justify-content: flex-start;
   align-items: center;
 }
@@ -2680,7 +2973,7 @@ html p, body p {
 }
 .activityStrip .right {
   width: fit-content;
-  max-width: 20%;
+  max-width: 25%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -2706,6 +2999,11 @@ html p, body p {
 }
 .activityStrip .right button:hover {
   cursor: pointer;
+}
+.activityStrip .right .followingButton {
+  background-color: white;
+  border: 2px solid black;
+  color: black;
 }
 @media screen and (max-width: 480px) {
   .activityStrip .right button {
@@ -2835,6 +3133,54 @@ html p, body p {
     width: 100%;
     margin-top: 0%;
   }
+}
+
+.searchPopUp {
+  position: fixed;
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+  height: fit-content;
+  min-height: 40px;
+  text-decoration: none;
+  padding: 0rem 1rem 0rem 1.2rem;
+}
+.searchPopUp .loadingButton {
+  background: none;
+  border: none;
+  height: 100%;
+  padding: 0%;
+  margin: 0%;
+}
+.searchPopUp .searchStrip {
+  display: flex;
+  width: 100%;
+  height: 30px;
+  margin: 0.3rem 1rem 0.3rem 1rem;
+  text-decoration: none;
+  align-items: center;
+}
+.searchPopUp .searchStrip img {
+  height: 30px;
+  width: 30px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-right: 1rem;
+}
+.searchPopUp .searchStrip p {
+  font-size: 14px;
+  width: 100% px;
+  margin: 0%;
+  padding: 0%;
+  color: black;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 600;
 }
 
 /*# sourceMappingURL=/tpaweb.f69400ca.css.map */

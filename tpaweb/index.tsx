@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { createContext } from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'
 import './style.scss'
+
 
 import {
   ApolloClient,
@@ -14,9 +15,17 @@ const client = new ApolloClient({
   cache: new InMemoryCache()
 });
 
+window.addEventListener("load", () => {
+  navigator.serviceWorker
+    .register("./serviceWorker.js")
+    .then(res => console.log("service worker registered"))
+    .catch(err => console.log("service worker not registered", err));
+});
+
 ReactDOM.render(
+
   <ApolloProvider client={client}>
-    <App />
+    <App/>
   </ApolloProvider>,
   document.getElementById('root'),
 )

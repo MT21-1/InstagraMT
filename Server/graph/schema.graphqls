@@ -15,6 +15,27 @@ type User{
   is_google_account: Boolean!
 }
 
+type PostContent{
+  id: String!
+  post_id: String!
+  type: String!
+  path: String!
+}
+
+type Post{
+  id: String!
+  user_id: String!
+  caption: String!
+  created_at: String!
+  post_contents: [PostContent!]!
+}
+
+type Relation{
+  id: String!
+  follow_id: String!
+  followed_id: String!
+}
+
 input InputUser{
   email: String!
   full_name: String!
@@ -37,6 +58,23 @@ input updatePassword{
   password: String!
 }
 
+input newPost{
+  content: [newPostContent]!
+  caption: String!
+  user_id: String!
+}
+
+input newPostContent{
+  path: String!
+  type: String!
+}
+
+input newRelation{
+  follow_id: String!
+  followed_id: String!
+}
+
+
 type Mutation{
   createUser(input: InputUser!): String!
   loginUser(input: LoginUser!): String!
@@ -50,4 +88,13 @@ type Mutation{
   verifyResetPassword(input: updatePassword!): String!
   getUserBasedOnUsername(input: String!): User!
   getUserBasedOnEmail(input: String!): User!
+  getPostBasedOnUserId(input: String!): [Post!]!
+  getPostBasedOnPostId(input:String!): Post!
+  insertNewPost(input: newPost!): Post!
+  createRelation(input: newRelation!): Relation!
+  deleteRelation(input: newRelation!): Boolean!
+  getFollowers(input:String!): [Relation!]!
+  getFollowing(input:String!): [Relation!]!
+  isFollowing(input: newRelation!): Boolean!
+  searchUser(input: String!): [User!]!
 }

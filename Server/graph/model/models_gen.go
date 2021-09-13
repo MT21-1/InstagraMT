@@ -19,6 +19,22 @@ type VerifyEmail struct {
 	Token string `json:"token"`
 }
 
+type NewPost struct {
+	Content []*NewPostContent `json:"content"`
+	Caption string            `json:"caption"`
+	UserID  string            `json:"user_id"`
+}
+
+type NewPostContent struct {
+	Path string `json:"path"`
+	Type string `json:"type"`
+}
+
+type NewRelation struct {
+	FollowID   string `json:"follow_id"`
+	FollowedID string `json:"followed_id"`
+}
+
 type UpdatePassword struct {
 	Token    string `json:"token"`
 	Password string `json:"password"`

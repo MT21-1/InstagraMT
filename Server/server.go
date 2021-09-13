@@ -10,6 +10,7 @@ import (
 
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/playground"
+	"github.com/go-pg/pg/extra/pgdebug"
 	"github.com/go-pg/pg/v10"
 )
 
@@ -28,6 +29,11 @@ func main() {
 	}
 
 	db := pg.Connect(dbOptions)
+
+	db.AddQueryHook(pgdebug.DebugHook{
+		Verbose: true,
+	})
+
 	defer db.Close()
 
 	resolver := &graph.Resolver{Db: db}

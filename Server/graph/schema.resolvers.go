@@ -261,6 +261,137 @@ func (r *mutationResolver) GetUserBasedOnEmail(ctx context.Context, input string
 	return &user, nil
 }
 
+func (r *mutationResolver) GetPostBasedOnUserID(ctx context.Context, input string) ([]*model.Post, error) {
+	var post []*model.Post
+	err := r.Db.Model(&post).Where("user_id = ?", input).Select()
+
+	if err != nil {
+		return nil, err
+	}
+
+	for i := range post {
+		var postContent []*model.PostContent
+		errs := r.Db.Model(&postContent).Where("post_id = ?", post[i].ID).Select()
+		if errs != nil {
+			post[i].PostContents = nil
+		} else {
+			post[i].PostContents = postContent
+		}
+	}
+
+	return post, nil
+}
+
+func (r *mutationResolver) GetPostBasedOnPostID(ctx context.Context, input string) (*model.Post, error) {
+	var post model.Post
+	err := r.Db.Model(&post).Where("id = ?", input).Select()
+
+	if err != nil {
+		return nil, err
+	}
+
+	var postContent []*model.PostContent
+	errs := r.Db.Model(&postContent).Where("post_id = ?", input).Select()
+	if errs != nil {
+		post.PostContents = nil
+	} else {
+		post.PostContents = postContent
+	}
+
+	return &post, nil
+}
+
+func (r *mutationResolver) InsertNewPost(ctx context.Context, input model.NewPost) (*model.Post, error) {
+	post := model.Post{
+		UserID:  input.UserID,
+		Caption: input.Caption,
+	}
+
+	_, err := r.Db.Model(&post).Insert()
+	if err != nil {
+		return nil, err
+	}
+
+	contentCount := len(input.Content)
+	postContents := make([]*model.PostContent, contentCount)
+	for i, content := range input.Content {
+		postContents[i] = &model.PostContent{
+			Type:   content.Type,
+			Path:   content.Path,
+			PostID: post.ID,
+		}
+		print(content.Path)
+	}
+	_, err2 := r.Db.Model(&postContents).Insert()
+
+	if err2 != nil {
+		return nil, err2
+	}
+	return &post, nil
+}
+
+func (r *mutationResolver) CreateRelation(ctx context.Context, input model.NewRelation) (*model.Relation, error) {
+	rel := model.Relation{
+		FollowID:   input.FollowID,
+		FollowedID: input.FollowedID,
+	}
+	_, err := r.Db.Model(&rel).Insert()
+	if err != nil {
+		return nil, err
+	}
+	return &rel, nil
+}
+
+func (r *mutationResolver) DeleteRelation(ctx context.Context, input model.NewRelation) (bool, error) {
+	var rel model.Relation
+	r.Db.Model(&rel).Where("follow_id = ? AND followed_id = ?", input.FollowID, input.FollowedID).Delete()
+
+	return true, nil
+}
+
+func (r *mutationResolver) GetFollowers(ctx context.Context, input string) ([]*model.Relation, error) {
+	var rel []*model.Relation
+	err := r.Db.Model(&rel).Where("followed_id = ?", input).Select()
+	if err != nil {
+		return nil, err
+	}
+	return rel, nil
+}
+
+func (r *mutationResolver) GetFollowing(ctx context.Context, input string) ([]*model.Relation, error) {
+	var rel []*model.Relation
+	err := r.Db.Model(&rel).Where("follow_id = ?", input).Select()
+	if err != nil {
+		return nil, err
+	}
+	return rel, nil
+}
+
+func (r *mutationResolver) IsFollowing(ctx context.Context, input model.NewRelation) (bool, error) {
+	var rel model.Relation
+	err := r.Db.Model(&rel).Where("follow_id = ? AND followed_id = ?", input.FollowID, input.FollowedID).First()
+	if err != nil {
+		return false, err
+	}
+
+	return true, nil
+}
+
+func (r *mutationResolver) SearchUser(ctx context.Context, input string) ([]*model.User, error) {
+	var users []*model.User
+
+	if input == "" {
+		return nil, nil
+	}
+
+	err := r.Db.Model(&users).Where("username LIKE ? and is_verified = true", "%"+input+"%").Select()
+
+	if err != nil {
+		return nil, err
+	}
+	return users, nil
+}
+
 func (r *queryResolver) Users(ctx context.Context) ([]*model.User, error) {
 	var users []*model.User
 	err := r.Db.Model(&users).Select()

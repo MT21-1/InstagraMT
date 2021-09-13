@@ -5,7 +5,7 @@ import { GmailLogin } from '../Components/GmailLogin'
 import GuestHeader from '../AddOns/Header/GuestHeader'
 import Footer from '../AddOns/Footer/Footer'
 import Countdown from 'react-countdown'
-
+import ReactLoading from "react-loading"
 
 const emailExistQuery = gql `
     
@@ -32,7 +32,7 @@ export default function ForgotPasswordPage(){
 
     const [timeIndex, setTimeIndex] = useState(0)
     const [currentTime, setCurrentTime] = useState(null)
-
+    const loadingBtn = (<div className="loadingAnimation"><ReactLoading type={"spokes"} color={'black'} height={'100%'} width={'100%'}/></div>)
     const styles = {
         display: 'none'
     }
@@ -81,7 +81,7 @@ export default function ForgotPasswordPage(){
           return <a href="#" onClick={checkEmail}> Resend Code</a>;
         } else {
           // Render a countdown
-          return <span> {minutes}:{seconds}</span>;
+          return <span className="countdown">{loadingBtn}{minutes}:{seconds}</span>;
         }
       };
 

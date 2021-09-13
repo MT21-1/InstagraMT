@@ -6,7 +6,7 @@ import { GmailLogin } from '../Components/GmailLogin'
 import GuestHeader from '../AddOns/Header/GuestHeader'
 import Footer from '../AddOns/Footer/Footer'
 import { useHistory } from 'react-router-dom'
-
+import ReactLoading from "react-loading"
 
 
 const loginQuery = gql`
@@ -29,6 +29,7 @@ const getUser = gql`
     mutation getUserFromEmail($email: String!){
     getUserBasedOnEmail(input: $email)
     {
+        id
         email
         username
         picture
@@ -51,7 +52,9 @@ export default function LoginPage(){
     const history = useHistory()
 
     const [_, setJWT] = useContext(JWTContext)
-    
+
+    const loadingBtn = (<button className="loadingButton" ><ReactLoading type={"spokes"} color={'white'} height={'7%'} width={'7%'}/></button>)
+
     const responseGoogle = (response) => {
         console.log(response);
       }
@@ -89,7 +92,6 @@ export default function LoginPage(){
                     email: email
                 }
             })
-
         }
         
     }, [data])
@@ -121,7 +123,7 @@ export default function LoginPage(){
                                 <input type="text" name="id" id="id" placeholder="Email" onChange={e=>{setEmail(e.target.value)}}/>
                                 <input type="password" name="pass" id="pass" placeholder="Password" onChange={e=>{setPassword(e.target.value)}}/>
                                 <p className="errorText" id="error"></p>
-                                <input type="submit" value="Log In" id="loginButton" onClick={logins}/>
+                                {(loading)?(loadingBtn):(<input type="submit" value="Log In" id="loginButton" onClick={logins}/>)}
                             </form>
                             <div id="orDiv">
                                 <hr />

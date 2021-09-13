@@ -5,7 +5,7 @@ import { GmailLogin } from '../Components/GmailLogin'
 import GuestHeader from '../AddOns/Header/GuestHeader'
 import Footer from '../AddOns/Footer/Footer'
 import { Redirect, useHistory } from 'react-router-dom'
-
+import ReactLoading from "react-loading"
 
 const registerQuery = gql`
         mutation createNewUser2($email: String!, $full_name:String!, $username: String!, $pass: String!){
@@ -27,6 +27,7 @@ export default function RegisterPage(){
     const [register, {data, loading, error}] = useMutation(registerQuery)
     const [_, setJWT] = useContext(JWTContext)
     const history = useHistory()
+    const loadingBtn = (<button className="loadingButton" ><ReactLoading type={"spokes"} color={'white'} height={'7%'} width={'7%'}/></button>)
     useEffect(() => {
         if(data !== undefined && data!= null){
             history.push("/verify/"+email);
@@ -75,7 +76,8 @@ export default function RegisterPage(){
                             <input type="text" name="id" id="id" placeholder="Username" onChange={e=>{setUsername(e.target.value)}}/>
                             <input type="password" name="pass" id="pass" placeholder="Password" onChange={e=>{setPassword(e.target.value)}}/>
                             <p id="error" className="errorText"></p>
-                            <input type="button" value="Sign Up" id="registerButton" onClick={registerUser}/>
+                            {(loading)?loadingBtn:(<input type="button" value="Sign Up" id="registerButton" onClick={registerUser}/>)}
+                            
                         </form>
                         
                         <p className="terms">By signing up, you agree to our <a href="#">Terms</a> , <a href="#">Data Policy</a> and <a href="#">Cookies Policy</a> .</p>

@@ -12,17 +12,23 @@
   "license": "ISC",
   "dependencies": {
     "@apollo/client": "^3.4.5",
+    "firebase": "^8.9.0",
     "graphql": "^15.5.1",
     "millify": "^4.0.0",
+    "promise": "^8.1.0",
     "react": "^17.0.2",
     "react-animated-popup": "^0.1.1",
     "react-copy-to-clipboard": "^5.0.4",
     "react-countdown": "^2.3.2",
     "react-dom": "^17.0.2",
     "react-google-login": "^5.2.2",
+    "react-loading": "^2.0.3",
     "react-router-dom": "^5.2.0",
     "react-show-more-text": "^1.5.0",
-    "reactjs-popup": "^2.0.5"
+    "reactjs-popup": "^2.0.5",
+    "rxjs": "^7.3.0",
+    "uuid": "^8.3.2",
+    "uuidv4": "^6.2.12"
   },
   "devDependencies": {
     "@types/react": "^17.0.15",
