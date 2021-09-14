@@ -256,7 +256,17 @@ func (r *mutationResolver) GetUserBasedOnEmail(ctx context.Context, input string
 	err := r.Db.Model(&user).Where("email = ?", input).First()
 
 	if err != nil {
-		return nil, errors.New("invalid username")
+		return nil, errors.New("invalid email")
+	}
+	return &user, nil
+}
+
+func (r *mutationResolver) GetUserBasedOnID(ctx context.Context, input string) (*model.User, error) {
+	var user model.User
+	err := r.Db.Model(&user).Where("id = ?", input).First()
+
+	if err != nil {
+		return nil, errors.New("invalid user_id")
 	}
 	return &user, nil
 }
@@ -278,6 +288,15 @@ func (r *mutationResolver) GetPostBasedOnUserID(ctx context.Context, input strin
 			post[i].PostContents = postContent
 		}
 	}
+	for i := range post {
+		var postComment []*model.PostComment
+		errs := r.Db.Model(&postComment).Where("post_id = ?", post[i].ID).Select()
+		if errs != nil {
+			post[i].PostComments = nil
+		} else {
+			post[i].PostComments = postComment
+		}
+	}
 
 	return post, nil
 }
@@ -292,10 +311,29 @@ func (r *mutationResolver) GetPostBasedOnPostID(ctx context.Context, input strin
 
 	var postContent []*model.PostContent
 	errs := r.Db.Model(&postContent).Where("post_id = ?", input).Select()
+
 	if errs != nil {
 		post.PostContents = nil
 	} else {
 		post.PostContents = postContent
+	}
+
+	var postComment []*model.PostComment
+	errss := r.Db.Model(&postComment).Where("post_id = ?", input).Select()
+	if errss != nil {
+		post.PostComments = nil
+	} else {
+		post.PostComments = postComment
+	}
+
+	for i, content := range postComment {
+		var postReply []*model.PostReply
+		errsss := r.Db.Model(&postReply).Where("comment_id = ?", content.ID).Select()
+		if errsss != nil {
+			post.PostComments[i].Replies = nil
+		} else {
+			post.PostComments[i].Replies = postReply
+		}
 	}
 
 	return &post, nil
@@ -390,6 +428,312 @@ func (r *mutationResolver) SearchUser(ctx context.Context, input string) ([]*mod
 		return nil, err
 	}
 	return users, nil
+}
+
+func (r *mutationResolver) SearchHashtag(ctx context.Context, input string) ([]*model.Hashtag, error) {
+	var hashtags []*model.Hashtag
+
+	if input == "" {
+		return nil, nil
+	}
+
+	err := r.Db.Model(&hashtags).Where("hashtag LIKE ?", "%"+input+"%").Select()
+
+	if err != nil {
+		return nil, err
+	}
+	return hashtags, nil
+}
+
+func (r *mutationResolver) DeletePostByID(ctx context.Context, input string) (bool, error) {
+	var post model.Post
+	r.Db.Model(&post).Where("id = ?", input).Delete()
+	return true, nil
+}
+
+func (r *mutationResolver) EditPostByID(ctx context.Context, input model.NewEditPost) (bool, error) {
+	var post model.Post
+	_, err := r.Db.Model(&post).Set("caption = '"+input.NewCaption+"'").Where("id = ?", input.PostID).Update()
+	if err != nil {
+		return false, err
+	}
+	return true, err
+}
+
+func (r *mutationResolver) GetSavedPostBasedOnUserID(ctx context.Context, input string) ([]*model.SavedPost, error) {
+	var post []*model.SavedPost
+	err := r.Db.Model(&post).Where("user_id = ?", input).Select()
+
+	if err != nil {
+		return nil, err
+	}
+
+	for i := range post {
+		var postContent []*model.PostContent
+		errs := r.Db.Model(&postContent).Where("post_id = ?", post[i].PostID).Select()
+		if errs != nil {
+			post[i].PostContents = nil
+		} else {
+			post[i].PostContents = postContent
+		}
+	}
+
+	return post, nil
+}
+
+func (r *mutationResolver) GetTaggedPostBasedOnUserID(ctx context.Context, input string) ([]*model.TaggedPost, error) {
+	var post []*model.TaggedPost
+	err := r.Db.Model(&post).Where("user_id = ?", input).Select()
+
+	if err != nil {
+		return nil, err
+	}
+
+	for i := range post {
+		var postContent []*model.PostContent
+		errs := r.Db.Model(&postContent).Where("post_id = ?", post[i].PostID).Select()
+		if errs != nil {
+			post[i].PostContents = nil
+		} else {
+			post[i].PostContents = postContent
+		}
+	}
+
+	return post, nil
+}
+
+func (r *mutationResolver) SavePostByID(ctx context.Context, input model.NewSavedPost) (bool, error) {
+	post := model.SavedPost{
+		UserID: input.UserID,
+		PostID: input.PostID,
+	}
+	_, err := r.Db.Model(&post).Insert()
+	if err != nil {
+		return false, err
+	}
+	return true, nil
+}
+
+func (r *mutationResolver) UnsavePostByID(ctx context.Context, input model.NewSavedPost) (bool, error) {
+	var post model.SavedPost
+	r.Db.Model(&post).Where("post_id = ? AND user_id = ?", input.PostID, input.UserID).Delete()
+	return true, nil
+}
+
+func (r *mutationResolver) LikePostByID(ctx context.Context, input model.NewLikedPost) (bool, error) {
+	newLike := model.LikedPost{
+		UserID: input.UserID,
+		PostID: input.PostID,
+	}
+	_, err := r.Db.Model(&newLike).Insert()
+	if err != nil {
+		return false, nil
+	}
+	return true, nil
+}
+
+func (r *mutationResolver) UnLikePostByID(ctx context.Context, input model.NewLikedPost) (bool, error) {
+	var likePost model.LikedPost
+	r.Db.Model(&likePost).Where("post_id = ? AND user_id = ?", input.PostID, input.UserID).Delete()
+	return true, nil
+}
+
+func (r *mutationResolver) CommentPost(ctx context.Context, input model.NewComment) (bool, error) {
+	comment := model.PostComment{
+		UserID:  input.UserID,
+		PostID:  input.PostID,
+		Comment: input.Comment,
+	}
+	_, err := r.Db.Model(&comment).Insert()
+	if err != nil {
+		return false, err
+	}
+	return true, err
+}
+
+func (r *mutationResolver) DeleteCommentByID(ctx context.Context, input string) (bool, error) {
+	var comment model.PostComment
+	r.Db.Model(&comment).Where("id = ?", input).Delete()
+	return true, nil
+}
+
+func (r *mutationResolver) LikeCommentByID(ctx context.Context, input model.NewLikeComment) (bool, error) {
+	likeComment := model.LikedComment{
+		UserID:    input.UserID,
+		CommentID: input.CommentID,
+	}
+	_, err := r.Db.Model(&likeComment).Insert()
+	if err != nil {
+		return false, err
+	}
+	return true, nil
+}
+
+func (r *mutationResolver) UnlikeCommentByID(ctx context.Context, input model.NewLikeComment) (bool, error) {
+	var likeComment model.LikedComment
+
+	r.Db.Model(&likeComment).Where("comment_id = ? AND user_id = ?", input.CommentID, input.UserID).Delete()
+	return true, nil
+}
+
+func (r *mutationResolver) PostIsLiked(ctx context.Context, input model.NewLikedPost) (bool, error) {
+	var likedpost model.LikedPost
+
+	err := r.Db.Model(&likedpost).Where("user_id = ? AND post_id = ?", input.UserID, input.PostID).Select()
+
+	if err != nil {
+		return false, err
+	}
+	return true, nil
+}
+
+func (r *mutationResolver) PostIsSaved(ctx context.Context, input model.NewSavedPost) (bool, error) {
+	var saved model.SavedPost
+	err := r.Db.Model(&saved).Where("user_id = ? AND post_id = ?", input.UserID, input.PostID).Select()
+	if err != nil {
+		return false, err
+	}
+	return true, nil
+}
+
+func (r *mutationResolver) CommentIsLiked(ctx context.Context, input model.NewLikeComment) (bool, error) {
+	var likedpost model.LikedComment
+
+	err := r.Db.Model(&likedpost).Where("user_id = ? AND comment_id = ?", input.UserID, input.CommentID).Select()
+
+	if err != nil {
+		return false, err
+	}
+	return true, nil
+}
+
+func (r *mutationResolver) CommentLikeCount(ctx context.Context, input *string) (int, error) {
+	var LikedComment []*model.LikedComment
+	err := r.Db.Model(&LikedComment).Where("comment_id = ?", input).Select()
+	if err != nil {
+		return 0, err
+	}
+	len := 0
+	for range LikedComment {
+		len++
+	}
+	return len, nil
+}
+
+func (r *mutationResolver) PostLikeCount(ctx context.Context, input string) (int, error) {
+	var postLike []*model.LikedPost
+	err := r.Db.Model(&postLike).Where("post_id = ?", input).Select()
+	if err != nil {
+		return 0, err
+	}
+	len := 0
+	for range postLike {
+		len++
+	}
+	return len, nil
+}
+
+func (r *mutationResolver) PostCommentCount(ctx context.Context, input string) (int, error) {
+	var PostComment []*model.PostComment
+	err := r.Db.Model(&PostComment).Where("post_id = ?", input).Select()
+	if err != nil {
+		return 0, err
+	}
+	len := 0
+	for range PostComment {
+		len++
+	}
+	return len, nil
+}
+
+func (r *mutationResolver) LikeReplyByID(ctx context.Context, input model.NewLikedReply) (bool, error) {
+	newLike := model.LikedReply{
+		UserID:  input.UserID,
+		ReplyID: input.ReplyID,
+	}
+	_, err := r.Db.Model(&newLike).Insert()
+	if err != nil {
+		return false, err
+	}
+	return true, nil
+}
+
+func (r *mutationResolver) UnlikeReplyByID(ctx context.Context, input model.NewLikedReply) (bool, error) {
+	var newLike model.LikedReply
+	r.Db.Model(&newLike).Where("reply_id = ? AND user_id = ?", input.ReplyID, input.UserID).Delete()
+	return true, nil
+}
+
+func (r *mutationResolver) PostReply(ctx context.Context, input model.NewReply) (bool, error) {
+	newReply := model.PostReply{
+		UserID:    input.UserID,
+		CommentID: input.CommentID,
+		Reply:     input.Reply,
+	}
+
+	_, err := r.Db.Model(&newReply).Insert()
+	if err != nil {
+		return false, err
+	}
+	return true, nil
+}
+
+func (r *mutationResolver) DeleteReplyByID(ctx context.Context, input string) (bool, error) {
+	var reply model.PostReply
+	r.Db.Model(&reply).Where("id = ?", input).Delete()
+	return true, nil
+}
+
+func (r *mutationResolver) ReplyIsLiked(ctx context.Context, input model.NewLikedReply) (bool, error) {
+	var likereply model.LikedReply
+	err := r.Db.Model(&likereply).Where("reply_id = ? AND user_id = ?", input.ReplyID, input.UserID).Select()
+	if err != nil {
+		return false, err
+	}
+	return true, nil
+}
+
+func (r *mutationResolver) ReplyLikeCount(ctx context.Context, input string) (int, error) {
+	var likereply []*model.LikedReply
+	err := r.Db.Model(&likereply).Where("reply_id = ?", input).Select()
+	if err != nil {
+		return 0, err
+	}
+	len := 0
+	for range likereply {
+		len++
+	}
+	return len, nil
+}
+
+func (r *mutationResolver) SelectPostExplorePage(ctx context.Context, nextpost *string) (*model.PostPagged, error) {
+
+	var posts []*model.Post
+	query := r.Db.Model(&posts)
+
+	if nextpost != nil {
+		query = query.Where("id <= ? and DATE_PART('day',current_date::timestamp - created_at::timestamp) <= 7", nextpost)
+	} else {
+		query = query.Where("DATE_PART('day',current_date::timestamp - created_at::timestamp) <= 7")
+	}
+
+	err := query.Relation("PostContents").Order("id desc").Limit(4).Select()
+	if err != nil {
+		return nil, err
+	}
+
+	var postPagged model.PostPagged
+	postLength := len(posts)
+	if postLength == 4 {
+		postPagged.Posts = posts[:postLength-1]
+		postPagged.Nextpost = posts[postLength-1].ID
+		postPagged.Hasnext = true
+	} else {
+		postPagged.Posts = posts
+		postPagged.Hasnext = false
+	}
+	return &postPagged, nil
+
 }
 
 func (r *queryResolver) Users(ctx context.Context) ([]*model.User, error) {

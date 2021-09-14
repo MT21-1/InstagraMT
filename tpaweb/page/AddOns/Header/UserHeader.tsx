@@ -11,12 +11,16 @@ import { debounceTime, distinctUntilChanged, map, Subject } from "rxjs";
 import { useMutation } from "@apollo/client";
 import ReactLoading from "react-loading"
 
-const searchUserQuery = gql`
-    mutation searchUser($username: String!){
+const searchQuery = gql`
+    mutation search($username: String!){
         searchUser(input:$username){
             id
             username
             picture
+        }
+        searchHashtag(input:$username){
+            id
+            hashtag
         }
     }
 `
@@ -26,8 +30,9 @@ export default function UserHeader(){
     const jwt = localStorage.getItem("jwt")
     const user = JSON.parse(localStorage.getItem("user"))
     const subject = useMemo(() => new Subject<string>(), [])
-    const [searchUser, searchUserData] = useMutation(searchUserQuery)
+    const [searchQ, searchData] = useMutation(searchQuery)
     const [userList, setUserList] = useState([]);
+    const [hashtagList, setHashtagList] = useState([])
     const loadingBtn = (<button className="loadingButton" ><ReactLoading type={"spokes"} color={'black'} height={'7%'} width={'7%'}/></button>)
     console.log(user)
     function logOut(){
@@ -45,7 +50,7 @@ export default function UserHeader(){
             )
             .subscribe(
                 search => {
-                searchUser({
+                searchQ({
                     variables:{
                         username: search
                     }
@@ -56,10 +61,12 @@ export default function UserHeader(){
 
 
     useEffect(() => {
-        if(searchUserData.data !== undefined && searchUserData != null){
-            setUserList(searchUserData.data.searchUser)
+        console.log(searchData.data)
+        if(searchData.data !== undefined && searchData != null){
+            setUserList(searchData.data.searchUser)
+            setHashtagList(searchData.data.searchHashtag)
         }
-    }, [searchUserData.data])
+    }, [searchData.data])
     
     return(
         // klo udah login panggil ini
@@ -74,22 +81,30 @@ export default function UserHeader(){
                     <Popup trigger={<input type="search" autoComplete="off" onChange={(e) => subject.next(e.target.value)} placeholder="Search" name="searchQuery" id=""/>} 
                     position="bottom left">
                         <div className="searchPopUp">
-                            {(searchUserData.loading)?
+                            {(searchData.loading)?
                                 (loadingBtn)
-                                :
-                                (searchUserData.data != undefined && searchUserData.data != null && userList != null && userList.length != 0)?
-                                    searchUserData.data.searchUser.map(user => {
-                                        return(
-                                            <a href={"/profile/"+user.username} className="searchStrip">
-                                                <img src={user.picture} alt="" />
-                                                <p>{user.username}</p>
-                                            </a>
-                                        )
-
-                                    })
-                                    :
-                                    <div>User not Found</div>
-                                }
+                            :null}
+                            {(searchData.data != undefined && searchData.data != null && userList != null && userList.length != 0)?
+                                searchData.data.searchUser.map(user => {
+                                    return(
+                                        <a href={"/profile/"+user.username} className="searchStrip">
+                                            <img src={user.picture} alt="" />
+                                            <p>{user.username}</p>
+                                        </a>
+                                    )
+                                }): null
+                            }
+                            {(searchData.data != undefined && searchData.data != null && hashtagList != null && hashtagList.length !=0)?
+                                searchData.data.searchHashtag.map(hashtag => {
+                                    return(
+                                        <a href={"#"} className="searchStrip">
+                                            <img src="/hashtag.png" alt="" />
+                                            <p>{hashtag.hashtag}</p>
+                                        </a>
+                                    )
+                                }):
+                                null  
+                            }
                         </div>
                     </Popup>
                         
@@ -116,33 +131,34 @@ export default function UserHeader(){
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
                     </svg>
                     </a>
-                    <Popup trigger={
+                    
+                        <Popup trigger={
                                 <a href="#" id="like">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                                     </svg>
+                                    </svg>
                                 </a>
-                                } 
-                    position="bottom right">
-                        <div className="activityPopUp">
-                            
-                            <div id="activityPopUpFooter">
-                                <MentionStrip></MentionStrip>
-                                <FollowStrip></FollowStrip>
-                                <FollowStrip></FollowStrip>
-                                <FollowStrip></FollowStrip>
-                                <FollowStrip></FollowStrip>
-                                <FollowStrip></FollowStrip>
-                                <LikeStrip></LikeStrip>
-                                <CommentStrip></CommentStrip>
-                                <CommentStrip></CommentStrip>
-                                <CommentStrip></CommentStrip>
-                                <CommentStrip></CommentStrip>
-                                <TaggedStrip></TaggedStrip>
-                                <a href="/activity" id="showMore">Show More</a>
+                                    } 
+                        position="bottom right">
+                            <div className="activityPopUp">
+                                
+                                <div id="activityPopUpFooter">
+                                    <MentionStrip></MentionStrip>
+                                    <FollowStrip></FollowStrip>
+                                    <FollowStrip></FollowStrip>
+                                    <FollowStrip></FollowStrip>
+                                    <FollowStrip></FollowStrip>
+                                    <FollowStrip></FollowStrip>
+                                    <LikeStrip></LikeStrip>
+                                    <CommentStrip></CommentStrip>
+                                    <CommentStrip></CommentStrip>
+                                    <CommentStrip></CommentStrip>
+                                    <CommentStrip></CommentStrip>
+                                    <TaggedStrip></TaggedStrip>
+                                    <a href="/activity" id="showMore">Show More</a>
+                                </div>
                             </div>
-                        </div>
-                    </Popup>
+                        </Popup>
                     
 
                     

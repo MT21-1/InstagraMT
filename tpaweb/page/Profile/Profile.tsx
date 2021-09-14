@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom'
 import Footer from '../AddOns/Footer/Footer'
 import UserHeader from '../AddOns/Header/UserHeader'
 import ReactLoading from "react-loading"
+import {useRouteMatch, Router, Redirect, Route, Switch } from 'react-router-dom'
 const getUserQuery = gql`
     mutation getUserFromUsername($username: String!){
         getUserBasedOnUsername(input: $username)
@@ -63,7 +64,59 @@ const getAllPostQuery = gql`
         }
     }
 `
+const getAllSavedPostQuery = gql`
+    mutation getAllSavedPost($user_id:String!){
+        getSavedPostBasedOnUserId(input:$user_id){
+            id
+                post_id
+            user_id
+            post_contents{
+                id
+                path
+                type
+            }
+        }
+    }
+`
+const getAllTaggedPostQuery = gql`
+mutation getAllTaggedPost($user_id:String!){
+    getTaggedPostBasedOnUserId(input:$user_id){
+        id
+    		post_id
+        user_id
+        post_contents{
+            id
+            path
+            type
+        }
+    }
+}
+`
 
+const checkSavedPostQuery = gql`
+    mutation checkSaved($user_id: String!, $post_id: String!){
+        postIsSaved(input:{
+            user_id: $user_id
+        post_id: $post_id
+    })
+    }
+`
+const savePostQuery = gql`
+    mutation savePost($user_id: String!, $post_id: String!){
+        savePostById(input:{
+            user_id: $user_id
+        post_id: $post_id
+    })
+    }
+`
+const unsavePostQuery = gql`
+    mutation unsavePost($user_id: String!, $post_id: String!){
+        unsavePostById(input:{
+            user_id: $user_id
+        post_id: $post_id
+    })
+    }
+`
 export default function Profile(){
     const loadingBtn = (<div className="loadingAnimation"><ReactLoading type={"spokes"} color={'black'} height={'100%'} width={'100%'}/></div>)
     const {username} = useParams<{username:string}>();
@@ -72,6 +125,9 @@ export default function Profile(){
     const [unfollowUser, unfollowUserData] = useMutation(unfollowQuery)
     const [isFollowing, isFollowingData] = useMutation(issFollowing)
     const [getAllPost, postData] = useMutation(getAllPostQuery)
+    const [getAllSavedPost, savedData] = useMutation(getAllSavedPostQuery)
+    const [getAllTaggedPost, taggedData] = useMutation(getAllTaggedPostQuery)
+
     const [follow, setFollow] = useState(false)
     const currUser = JSON.parse(localStorage.getItem("user"))
     const [picUrl, setPicUrl] = useState("");
@@ -83,7 +139,12 @@ export default function Profile(){
     const [following, setFollowing] = useState("");
     const [postCount, setPostCount] = useState("");
     const [postLoading, setLoading] = useState(true);
+    const [savedPostCount, setSavedPostCount] = useState("");
+    const [savedLoading, setSavedLoading] = useState(true);
+    const [taggedLoading, setTaggedLoading] = useState(true);
+    const [taggedPostCount, setTaggedPostCount] = useState("");
     let user;
+    const match = useRouteMatch();
 
     var fwrs = 45900000;
     var flws = 4590;
@@ -157,6 +218,16 @@ export default function Profile(){
                     user_id: userId
                 }
             })
+            getAllSavedPost({
+                variables:{
+                    user_id: userId
+                }
+            })
+            getAllTaggedPost({
+                variables:{
+                    user_id: userId
+                }
+            })
             console.log("load post...")
        }
        
@@ -170,6 +241,20 @@ export default function Profile(){
        }
        console.log(postLoading)
    }, [postData.data])
+
+    useEffect(() => {
+        if(savedData.data != null && savedData.data !== undefined){
+            setSavedLoading(false)
+            setSavedPostCount((savedData.data.getSavedPostBasedOnUserId.length))
+        }
+    }, [savedData.data])
+
+    useEffect(() => {
+        if(taggedData.data != null && taggedData.data !== undefined){
+            setTaggedLoading(false)
+            setTaggedPostCount((taggedData.data.getTaggedPostBasedOnUserId.length))
+        }
+    }, [taggedData.data])
 
    const followBtn = (<button className="followButton" onClick={toggleFollow}>Follow</button>)
    const followingBtn = (<button className="followingButton"onClick={toggleFollow}>Following</button>)
@@ -287,35 +372,98 @@ export default function Profile(){
                             
                             {/* {"navbar untuk posts"} */}
                             <div className="postNavbar">
-                                <button>POSTS</button>
-                                <button>REELS</button>
-                                <button>IGTV</button>
-                                <button>TAGGED</button>
+                                <button> <a href={`/profile/${username}`}>POSTS</a></button>
+                                <button> <a href={`/profile/${username}/tagged`}>TAGGED</a>  </button>
+                                <button> <a href={`/profile/${username}/saved`}>SAVED</a></button>
                             </div>
+                            <Switch>
+                                <Route exact path = {`${match.path}`}>
+                                    {/* {"isi dari posts nanti di map"} */}
+                                    <div className="postDiv">
+                                        {/* {"nnti isi pakai post"} */}
+                                        
+                                        {(postLoading)?
+                                            loadingBtn:
+                                            
+                                            (postCount == '0')?
+                                                <div>No Posts Available...</div>:
 
-                            {/* {"isi dari posts nanti di map"} */}
-                            <div className="postDiv">
-                                {/* {"nnti isi pakai post"} */}
-                                
-                                {(postLoading)?
-                                    loadingBtn:
-                                    
-                                    (postCount == '0')?
-                                        <div>No Posts Available...</div>:
+                                                postData.data.getPostBasedOnUserId.map((content)=>{
+                                                    
+                                                    return(
+                                                        
+                                                    (content.post_contents[0].type == "video")?    
+                                                        (
+                                                            <button>
+                                                                <a href={"/post/"+content.id}>
+                                                                <video src={content.post_contents[0].path}/>
+                                                                </a>
+                                                            </button>
+                                                        )
+                                                    :
+                                                        (
+                                                        <button>
+                                                            <a href={"/post/"+content.id}>
+                                                                <img src={content.post_contents[0].path} alt="image" />
+                                                            </a>    
+                                                        </button>
+                                                        )
+                                                    )
+                                                })
+                                        }
+                                    </div>
+                                </Route>
+                                <Route exact path = {`${match.path}/saved`}>
+                                    {/* {"isi dari posts nanti di map"} */}
+                                    <div className="postDiv">
+                                        {/* {"nnti isi pakai post"} */}
+                                        
+                                        {(savedLoading)?
+                                            loadingBtn:
+                                            
+                                            (savedPostCount == '0')?
+                                                <div>No Posts Available...</div>:
 
-                                        postData.data.getPostBasedOnUserId.map((content)=>{
-                                            return(
-                                                
-                                                    <button>
-                                                        <a href={"/post/" + content.id}>
-                                                            <img src={content.post_contents[0].path} alt="image" />
-                                                        </a>
-                                                    </button>
-                                                
-                                            )
-                                        })
-                                }
-                            </div>
+                                                savedData.data.getSavedPostBasedOnUserId.map((content)=>{
+                                                    return(
+                                                        
+                                                            <button>
+                                                                <a href={"/post/" + content.post_id}>
+                                                                    <img src={content.post_contents[0].path} alt="image" />
+                                                                </a>
+                                                            </button>
+                                                        
+                                                    )
+                                                })
+                                        }
+                                    </div>
+                                </Route>
+                                <Route exact path = {`${match.path}/tagged`}>
+                                    {/* {"isi dari posts nanti di map"} */}
+                                    <div className="postDiv">
+                                        {/* {"nnti isi pakai post"} */}
+                                        
+                                        {(taggedLoading)?
+                                            loadingBtn:
+                                            
+                                            (taggedPostCount == '0')?
+                                                <div>No Posts Available...</div>:
+
+                                                taggedData.data.getTaggedPostBasedOnUserId.map((content)=>{
+                                                    return(
+                                                        
+                                                            <button>
+                                                                <a href={"/post/" + content.post_id}>
+                                                                    <img src={content.post_contents[0].path} alt="image" />
+                                                                </a>
+                                                            </button>
+                                                        
+                                                    )
+                                                })
+                                        }
+                                    </div>
+                                </Route>
+                            </Switch>
                         </div>
 
                 </div>

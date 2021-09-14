@@ -93,7 +93,7 @@ export default function App(){
                         <Route exact path="/reset/:token">
                             <ResetPasswordPage/>
                         </Route>
-                        <Route exact path="/profile/:username">
+                        <Route path="/profile/:username">
                             {
                                 <Profile/>
                             }

@@ -14,9 +14,41 @@ type LoginUser struct {
 	Password string `json:"password"`
 }
 
+type PostPagged struct {
+	Posts    []*Post `json:"posts"`
+	Nextpost string  `json:"nextpost"`
+	Hasnext  bool    `json:"hasnext"`
+}
+
 type VerifyEmail struct {
 	Email string `json:"email"`
 	Token string `json:"token"`
+}
+
+type NewComment struct {
+	UserID  string `json:"user_id"`
+	PostID  string `json:"post_id"`
+	Comment string `json:"comment"`
+}
+
+type NewEditPost struct {
+	PostID     string `json:"post_id"`
+	NewCaption string `json:"new_caption"`
+}
+
+type NewLikeComment struct {
+	UserID    string `json:"user_id"`
+	CommentID string `json:"comment_id"`
+}
+
+type NewLikedPost struct {
+	UserID string `json:"user_id"`
+	PostID string `json:"post_id"`
+}
+
+type NewLikedReply struct {
+	UserID  string `json:"user_id"`
+	ReplyID string `json:"reply_id"`
 }
 
 type NewPost struct {
@@ -33,6 +65,17 @@ type NewPostContent struct {
 type NewRelation struct {
 	FollowID   string `json:"follow_id"`
 	FollowedID string `json:"followed_id"`
+}
+
+type NewReply struct {
+	UserID    string `json:"user_id"`
+	CommentID string `json:"comment_id"`
+	Reply     string `json:"reply"`
+}
+
+type NewSavedPost struct {
+	UserID string `json:"user_id"`
+	PostID string `json:"post_id"`
 }
 
 type UpdatePassword struct {

@@ -51,7 +51,7 @@ html .countdown, body .countdown {
 }
 
 .pembungkus {
-  z-index: 1;
+  z-index: 10;
   position: fixed;
   height: 60px;
   width: 100%;
@@ -1435,20 +1435,91 @@ html .countdown, body .countdown {
   width: 100%;
   justify-content: space-between;
 }
-.comment #usernameComment {
-  font-weight: 600;
-}
 .comment #comment {
   margin-left: 0.4rem;
 }
 .comment .commentValue {
   display: flex;
 }
+.comment .commentValue #usernameComment {
+  text-decoration: none;
+  color: black;
+}
 .comment .interactComment button {
   width: 30px;
   cursor: pointer;
   background-color: transparent;
   border: none;
+}
+
+.commentSection {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.commentSection .comment {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.commentSection .comment img {
+  min-width: 50px;
+  min-height: 50px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.commentSection .comment .commentRight {
+  margin-left: 0.2rem;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.commentSection .comment .commentRightTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.commentSection .comment .commentRightTop .commentValue {
+  word-wrap: break-word;
+  width: 80%;
+}
+.commentSection .comment .commentRightTop .interactComment {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 20%;
+}
+.commentSection .comment .commentRightTop button {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+.commentSection .comment .infoDiv {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 14px;
+}
+.commentSection .comment .infoDiv .totalLikes {
+  background: none;
+  border: none;
+  display: flex;
+  color: darkgray;
+  padding: 0%;
+  margin: 0%;
+  margin-right: 1rem;
+  font-weight: 400;
+}
+.commentSection .comment .infoDiv .replyButton {
+  background: none;
+  border: none;
+  display: flex;
+  color: darkgray;
+  padding-left: 0%;
+  cursor: pointer;
 }
 
 .errorText {
@@ -1782,7 +1853,7 @@ html .countdown, body .countdown {
   display: block;
   padding-bottom: 100%;
 }
-.homeOuterDiv .homeInnerDiv .profileBottomDiv .postDiv img {
+.homeOuterDiv .homeInnerDiv .profileBottomDiv .postDiv img, .homeOuterDiv .homeInnerDiv .profileBottomDiv .postDiv video {
   z-index: 0;
   position: absolute;
   top: 0%;
@@ -2067,7 +2138,7 @@ html .countdown, body .countdown {
   height: 100%;
   object-fit: cover;
   display: flex;
-  z-index: 5;
+  z-index: 1;
 }
 #uploadOuterDiv #uploadMainDiv #uploadFormDiv #uploadForm #imageCarouselDiv #rightSlide {
   width: 50px;
@@ -2215,51 +2286,47 @@ html .countdown, body .countdown {
 .exploreOuterDiv .exploreInnerDiv {
   width: 70%;
 }
-.exploreOuterDiv .exploreInnerDiv .videoGlobalStrip {
-  display: flex;
-  height: 650px;
-  justify-content: center;
-  align-items: center;
-  margin-top: 2rem;
-}
-.exploreOuterDiv .exploreInnerDiv .videoGlobalStrip .videoLeft {
-  display: flex;
-  flex-direction: column;
-  width: 34%;
-  height: 600px;
-  justify-content: space-around;
-}
-.exploreOuterDiv .exploreInnerDiv .videoGlobalStrip .videoLeft img {
-  width: 90%;
-  height: 300px;
-  object-fit: cover;
-  padding: 2rem 2rem 0rem 0rem;
-}
-.exploreOuterDiv .exploreInnerDiv .videoGlobalStrip .videoRight {
-  width: 66%;
-  display: flex;
-  height: 600px;
-  justify-content: center;
-  align-items: center;
-}
-.exploreOuterDiv .exploreInnerDiv .videoGlobalStrip .videoRight img {
-  height: 570px;
+.exploreOuterDiv .exploreInnerDiv .postDiv {
+  height: fit-content;
   width: 100%;
-  object-fit: cover;
-  padding: 2rem 0rem 0rem 0rem;
+  padding: 0%;
+  display: grid;
+  grid-template-columns: repeat(3, 20vw);
+  grid-auto-rows: 20vw;
+  grid-gap: 1.5vw;
+  justify-content: center;
+  border: none;
 }
-.exploreOuterDiv .exploreInnerDiv .imageStrip {
-  display: flex;
-  height: 650px;
+.exploreOuterDiv .exploreInnerDiv .postDiv button {
+  cursor: pointer;
+  margin: 1.5%;
+  background: none;
+  border: none;
+  position: relative;
   width: 100%;
-  flex-wrap: wrap;
-  justify-content: space-between;
 }
-.exploreOuterDiv .exploreInnerDiv .imageStrip img {
-  width: 31%;
-  height: 300px;
+.exploreOuterDiv .exploreInnerDiv .postDiv button:after {
+  content: "";
+  display: block;
+  padding-bottom: 100%;
+}
+.exploreOuterDiv .exploreInnerDiv .postDiv img, .exploreOuterDiv .exploreInnerDiv .postDiv video {
+  z-index: 0;
+  position: absolute;
+  top: 0%;
+  right: 0;
+  bottom: 0%;
+  left: 0%;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  padding: 2rem 0rem 0rem 0rem;
+  object-position: center;
+}
+@media screen and (max-width: 1024px) {
+  .exploreOuterDiv .exploreInnerDiv .postDiv {
+    grid-template-columns: repeat(3, 30vw);
+    grid-auto-rows: 30vw;
+  }
 }
 @media screen and (max-width: 1024px) {
   .exploreOuterDiv .exploreInnerDiv {
@@ -2396,6 +2463,7 @@ html .countdown, body .countdown {
   font-size: 24px;
   text-align: center;
   font-weight: 500;
+  z-index: 10;
 }
 .deleteModal svg {
   width: 80px;
@@ -3181,6 +3249,273 @@ html .countdown, body .countdown {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 600;
+}
+
+.postOuterDiv {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 0 0 0;
+  background-color: #f0f6fa;
+}
+.postOuterDiv .postInnerDiv {
+  width: 1000px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.postOuterDiv .postInnerDiv .postDiv {
+  margin: 1rem 0 1rem 0;
+  background-color: white;
+  border: 1px solid #e7e7e7;
+  width: 100%;
+  min-height: 500px;
+  height: 600px;
+  display: flex;
+  padding: 0.8rem;
+  flex-direction: row;
+}
+.postOuterDiv .postInnerDiv .postDiv .postLeftDiv {
+  width: 60%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.postOuterDiv .postInnerDiv .postDiv .postLeftDiv .postProfileDiv {
+  padding: 0%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+  height: 50px;
+  min-height: 50px;
+}
+.postOuterDiv .postInnerDiv .postDiv .postLeftDiv .postProfileDiv a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  color: black;
+  font-weight: 600;
+}
+.postOuterDiv .postInnerDiv .postDiv .postLeftDiv .postProfileDiv a span {
+  margin-left: 1rem;
+}
+.postOuterDiv .postInnerDiv .postDiv .postLeftDiv .postProfileDiv a span:hover {
+  text-decoration: underline;
+}
+.postOuterDiv .postInnerDiv .postDiv .postLeftDiv .postProfileDiv a img {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+}
+.postOuterDiv .postInnerDiv .postDiv .postLeftDiv .postProfileDiv button {
+  width: 40px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+.postOuterDiv .postInnerDiv .postDiv .postLeftDiv .pictureDiv {
+  width: 100%;
+  height: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+.postOuterDiv .postInnerDiv .postDiv .postLeftDiv .pictureDiv #leftSlide {
+  width: 50px;
+  height: 50px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-right: 2rem;
+  position: absolute;
+  left: 0%;
+  z-index: 10;
+}
+.postOuterDiv .postInnerDiv .postDiv .postLeftDiv .pictureDiv .displayed {
+  display: flex;
+  object-fit: contain;
+  width: 90%;
+  max-height: 100%;
+  overflow: hidden;
+  height: 100%;
+  z-index: 5;
+}
+.postOuterDiv .postInnerDiv .postDiv .postLeftDiv .pictureDiv #rightSlide {
+  width: 50px;
+  height: 50px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  right: 0;
+  z-index: 10;
+}
+.postOuterDiv .postInnerDiv .postDiv .postRightDiv {
+  overflow-x: hidden;
+  min-height: 100%;
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.postOuterDiv .postInnerDiv .postDiv .postRightDiv .interactDiv {
+  display: flex;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 0rem 0 1rem 0;
+}
+.postOuterDiv .postInnerDiv .postDiv .postRightDiv .interactDiv .interactInnerDiv {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+.postOuterDiv .postInnerDiv .postDiv .postRightDiv .interactDiv .interactInnerDiv .leftInnerDiv {
+  display: flex;
+  width: 145px;
+  justify-content: space-between;
+}
+.postOuterDiv .postInnerDiv .postDiv .postRightDiv .interactDiv .interactInnerDiv button {
+  width: 45px;
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+}
+.postOuterDiv .postInnerDiv .postDiv .postRightDiv .interactDiv .interactInnerDiv button svg {
+  color: black;
+}
+.postOuterDiv .postInnerDiv .postDiv .postRightDiv #likes {
+  margin: 0.1rem 0 0.1rem 0;
+  padding: 0%;
+  width: 100%;
+  font-weight: 600;
+}
+.postOuterDiv .postInnerDiv .postDiv .postRightDiv .captionDiv {
+  min-height: 50px;
+  height: fit-content;
+  display: flex;
+  width: 100%;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.postOuterDiv .postInnerDiv .postDiv .postRightDiv .captionDiv #username {
+  font-weight: 600;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+.postOuterDiv .postInnerDiv .postDiv .postRightDiv .captionDiv #caption {
+  margin-left: 0.4rem;
+  display: flex;
+}
+.postOuterDiv .postInnerDiv .postDiv .postRightDiv .captionDiv #showMore {
+  display: flex;
+  color: darkgray;
+  font-size: 14px;
+  justify-content: center;
+  align-items: flex-start;
+  cursor: pointer;
+}
+.postOuterDiv .postInnerDiv .postDiv .postRightDiv .viewMoreComments {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 0%;
+  margin: 0%;
+  text-decoration: none;
+  color: darkgray;
+  font-weight: 400;
+  width: 100%;
+}
+.postOuterDiv .postInnerDiv .postDiv .postRightDiv .commentSection {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.postOuterDiv .postInnerDiv .postDiv .postRightDiv .commentSection .comment {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  min-height: 50px;
+  padding: 1rem 0 1rem 0;
+}
+.postOuterDiv .postInnerDiv .postDiv .postRightDiv .commentSection .comment img {
+  min-width: 30px;
+  min-height: 30px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.postOuterDiv .postInnerDiv .postDiv .postRightDiv .commentSection .comment .commentRight {
+  margin-left: 1rem;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.postOuterDiv .postInnerDiv .postDiv .postRightDiv .commentSection .comment .commentRightTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.postOuterDiv .postInnerDiv .postDiv .postRightDiv .commentSection .comment .commentRightTop .commentValue {
+  display: flex;
+  word-wrap: break-word;
+  width: 100%;
+}
+.postOuterDiv .postInnerDiv .postDiv .postRightDiv .commentSection .comment .commentRightTop .commentValue #comment {
+  width: 180px;
+}
+.postOuterDiv .postInnerDiv .postDiv .postRightDiv .commentSection .comment .commentRightTop button {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+.postOuterDiv .postInnerDiv .postDiv .postRightDiv .commentSection .comment .replyButton {
+  background: none;
+  border: none;
+  display: flex;
+  color: darkgray;
+  padding-left: 0%;
+}
+.postOuterDiv .postInnerDiv .postDiv .postRightDiv #time {
+  display: flex;
+  width: 100%;
+  color: darkgray;
+  font-size: 12px;
+}
+.postOuterDiv .postInnerDiv .postDiv .postRightDiv .inputCommentSection {
+  border-top: 1px solid #e7e7e7;
+  padding: 12px 0 0 0;
+  margin: 12px 0 12px 0;
+  display: flex;
+  width: 100%;
+}
+.postOuterDiv .postInnerDiv .postDiv .postRightDiv .inputCommentSection button {
+  width: 45px;
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+}
+.postOuterDiv .postInnerDiv .postDiv .postRightDiv .inputCommentSection input {
+  font-weight: 400;
+  width: 100%;
+  border: none;
+}
+.postOuterDiv .postInnerDiv .postDiv .postRightDiv .inputCommentSection #postButton {
+  color: #00A6FB;
+  font-weight: 700;
 }
 
 /*# sourceMappingURL=/tpaweb.f69400ca.css.map */

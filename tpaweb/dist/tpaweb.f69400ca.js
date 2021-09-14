@@ -82981,7 +82981,7 @@ var client_1 = require("@apollo/client");
 
 var react_loading_1 = __importDefault(require("react-loading"));
 
-var searchUserQuery = graphql_tag_1.default(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n    mutation searchUser($username: String!){\n        searchUser(input:$username){\n            id\n            username\n            picture\n        }\n    }\n"], ["\n    mutation searchUser($username: String!){\n        searchUser(input:$username){\n            id\n            username\n            picture\n        }\n    }\n"])));
+var searchQuery = graphql_tag_1.default(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n    mutation search($username: String!){\n        searchUser(input:$username){\n            id\n            username\n            picture\n        }\n        searchHashtag(input:$username){\n            id\n            hashtag\n        }\n    }\n"], ["\n    mutation search($username: String!){\n        searchUser(input:$username){\n            id\n            username\n            picture\n        }\n        searchHashtag(input:$username){\n            id\n            hashtag\n        }\n    }\n"])));
 
 function UserHeader() {
   var _a = react_1.useContext(App_1.JWTContext),
@@ -82994,13 +82994,17 @@ function UserHeader() {
     return new rxjs_1.Subject();
   }, []);
 
-  var _b = client_1.useMutation(searchUserQuery),
-      searchUser = _b[0],
-      searchUserData = _b[1];
+  var _b = client_1.useMutation(searchQuery),
+      searchQ = _b[0],
+      searchData = _b[1];
 
   var _c = react_1.useState([]),
       userList = _c[0],
       setUserList = _c[1];
+
+  var _d = react_1.useState([]),
+      hashtagList = _d[0],
+      setHashtagList = _d[1];
 
   var loadingBtn = react_1.default.createElement("button", {
     className: "loadingButton"
@@ -83021,7 +83025,7 @@ function UserHeader() {
     var subscribe = subject.pipe(rxjs_1.debounceTime(500), rxjs_1.distinctUntilChanged(), rxjs_1.map(function (search) {
       return search.trim();
     })).subscribe(function (search) {
-      searchUser({
+      searchQ({
         variables: {
           username: search
         }
@@ -83032,10 +83036,13 @@ function UserHeader() {
     };
   }, [subject]);
   react_1.useEffect(function () {
-    if (searchUserData.data !== undefined && searchUserData != null) {
-      setUserList(searchUserData.data.searchUser);
+    console.log(searchData.data);
+
+    if (searchData.data !== undefined && searchData != null) {
+      setUserList(searchData.data.searchUser);
+      setHashtagList(searchData.data.searchHashtag);
     }
-  }, [searchUserData.data]);
+  }, [searchData.data]);
   return (// klo udah login panggil ini
     react_1.default.createElement("div", {
       className: "pembungkus"
@@ -83061,7 +83068,7 @@ function UserHeader() {
       position: "bottom left"
     }, react_1.default.createElement("div", {
       className: "searchPopUp"
-    }, searchUserData.loading ? loadingBtn : searchUserData.data != undefined && searchUserData.data != null && userList != null && userList.length != 0 ? searchUserData.data.searchUser.map(function (user) {
+    }, searchData.loading ? loadingBtn : null, searchData.data != undefined && searchData.data != null && userList != null && userList.length != 0 ? searchData.data.searchUser.map(function (user) {
       return react_1.default.createElement("a", {
         href: "/profile/" + user.username,
         className: "searchStrip"
@@ -83069,7 +83076,15 @@ function UserHeader() {
         src: user.picture,
         alt: ""
       }), react_1.default.createElement("p", null, user.username));
-    }) : react_1.default.createElement("div", null, "User not Found"))))), react_1.default.createElement("div", {
+    }) : null, searchData.data != undefined && searchData.data != null && hashtagList != null && hashtagList.length != 0 ? searchData.data.searchHashtag.map(function (hashtag) {
+      return react_1.default.createElement("a", {
+        href: "#",
+        className: "searchStrip"
+      }, react_1.default.createElement("img", {
+        src: "/hashtag.png",
+        alt: ""
+      }), react_1.default.createElement("p", null, hashtag.hashtag));
+    }) : null)))), react_1.default.createElement("div", {
       className: "iconDiv"
     }, react_1.default.createElement("a", {
       href: "/",
@@ -83409,8 +83424,197 @@ function DMPage() {
 }
 
 exports.default = DMPage;
-},{"react":"node_modules/react/index.js","../AddOns/Footer/Footer":"page/AddOns/Footer/Footer.tsx","../AddOns/Header/UserHeader":"page/AddOns/Header/UserHeader.tsx","../Components/dmProfile":"page/Components/dmProfile.tsx","../Components/receiveDm":"page/Components/receiveDm.tsx","../Components/sendDm":"page/Components/sendDm.tsx"}],"page/ExplorePage/videoStrip.tsx":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","../AddOns/Footer/Footer":"page/AddOns/Footer/Footer.tsx","../AddOns/Header/UserHeader":"page/AddOns/Header/UserHeader.tsx","../Components/dmProfile":"page/Components/dmProfile.tsx","../Components/receiveDm":"page/Components/receiveDm.tsx","../Components/sendDm":"page/Components/sendDm.tsx"}],"page/ExplorePage/ExplorePage.tsx":[function(require,module,exports) {
 "use strict";
+
+var __makeTemplateObject = this && this.__makeTemplateObject || function (cooked, raw) {
+  if (Object.defineProperty) {
+    Object.defineProperty(cooked, "raw", {
+      value: raw
+    });
+  } else {
+    cooked.raw = raw;
+  }
+
+  return cooked;
+};
+
+var __createBinding = this && this.__createBinding || (Object.create ? function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  Object.defineProperty(o, k2, {
+    enumerable: true,
+    get: function get() {
+      return m[k];
+    }
+  });
+} : function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  o[k2] = m[k];
+});
+
+var __setModuleDefault = this && this.__setModuleDefault || (Object.create ? function (o, v) {
+  Object.defineProperty(o, "default", {
+    enumerable: true,
+    value: v
+  });
+} : function (o, v) {
+  o["default"] = v;
+});
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+  }
+
+  __setModuleDefault(result, mod);
+
+  return result;
+};
+
+var __awaiter = this && this.__awaiter || function (thisArg, _arguments, P, generator) {
+  function adopt(value) {
+    return value instanceof P ? value : new P(function (resolve) {
+      resolve(value);
+    });
+  }
+
+  return new (P || (P = Promise))(function (resolve, reject) {
+    function fulfilled(value) {
+      try {
+        step(generator.next(value));
+      } catch (e) {
+        reject(e);
+      }
+    }
+
+    function rejected(value) {
+      try {
+        step(generator["throw"](value));
+      } catch (e) {
+        reject(e);
+      }
+    }
+
+    function step(result) {
+      result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+    }
+
+    step((generator = generator.apply(thisArg, _arguments || [])).next());
+  });
+};
+
+var __generator = this && this.__generator || function (thisArg, body) {
+  var _ = {
+    label: 0,
+    sent: function sent() {
+      if (t[0] & 1) throw t[1];
+      return t[1];
+    },
+    trys: [],
+    ops: []
+  },
+      f,
+      y,
+      t,
+      g;
+  return g = {
+    next: verb(0),
+    "throw": verb(1),
+    "return": verb(2)
+  }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
+    return this;
+  }), g;
+
+  function verb(n) {
+    return function (v) {
+      return step([n, v]);
+    };
+  }
+
+  function step(op) {
+    if (f) throw new TypeError("Generator is already executing.");
+
+    while (_) {
+      try {
+        if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+        if (y = 0, t) op = [op[0] & 2, t.value];
+
+        switch (op[0]) {
+          case 0:
+          case 1:
+            t = op;
+            break;
+
+          case 4:
+            _.label++;
+            return {
+              value: op[1],
+              done: false
+            };
+
+          case 5:
+            _.label++;
+            y = op[1];
+            op = [0];
+            continue;
+
+          case 7:
+            op = _.ops.pop();
+
+            _.trys.pop();
+
+            continue;
+
+          default:
+            if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
+              _ = 0;
+              continue;
+            }
+
+            if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
+              _.label = op[1];
+              break;
+            }
+
+            if (op[0] === 6 && _.label < t[1]) {
+              _.label = t[1];
+              t = op;
+              break;
+            }
+
+            if (t && _.label < t[2]) {
+              _.label = t[2];
+
+              _.ops.push(op);
+
+              break;
+            }
+
+            if (t[2]) _.ops.pop();
+
+            _.trys.pop();
+
+            continue;
+        }
+
+        op = body.call(thisArg, _);
+      } catch (e) {
+        op = [6, e];
+        y = 0;
+      } finally {
+        f = t = 0;
+      }
+    }
+
+    if (op[0] & 5) throw op[1];
+    return {
+      value: op[0] ? op[1] : void 0,
+      done: true
+    };
+  }
+};
 
 var __importDefault = this && this.__importDefault || function (mod) {
   return mod && mod.__esModule ? mod : {
@@ -83421,104 +83625,147 @@ var __importDefault = this && this.__importDefault || function (mod) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-
-var react_1 = __importDefault(require("react"));
-
-function VideoStrip() {
-  return react_1.default.createElement("div", {
-    className: "videoGlobalStrip"
-  }, react_1.default.createElement("div", {
-    className: "videoLeft"
-  }, react_1.default.createElement("img", {
-    src: "wp.jpg",
-    alt: ""
-  }), react_1.default.createElement("img", {
-    src: "wp.jpg",
-    alt: ""
-  })), react_1.default.createElement("div", {
-    className: "videoRight"
-  }, react_1.default.createElement("img", {
-    src: "wp.jpg",
-    alt: ""
-  })));
-}
-
-exports.default = VideoStrip;
-},{"react":"node_modules/react/index.js"}],"page/ExplorePage/imageStrip.tsx":[function(require,module,exports) {
-"use strict";
-
-var __importDefault = this && this.__importDefault || function (mod) {
-  return mod && mod.__esModule ? mod : {
-    "default": mod
-  };
-};
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var react_1 = __importDefault(require("react"));
-
-function ImageStrip() {
-  return (// grid 2 x 3
-    react_1.default.createElement("div", {
-      className: "imageStrip"
-    }, react_1.default.createElement("img", {
-      src: "wp.jpg",
-      alt: ""
-    }), react_1.default.createElement("img", {
-      src: "wp.jpg",
-      alt: ""
-    }), react_1.default.createElement("img", {
-      src: "wp.jpg",
-      alt: ""
-    }), react_1.default.createElement("img", {
-      src: "wp.jpg",
-      alt: ""
-    }), react_1.default.createElement("img", {
-      src: "wp.jpg",
-      alt: ""
-    }), react_1.default.createElement("img", {
-      src: "wp.jpg",
-      alt: ""
-    }))
-  );
-}
-
-exports.default = ImageStrip;
-},{"react":"node_modules/react/index.js"}],"page/ExplorePage/ExplorePage.tsx":[function(require,module,exports) {
-"use strict";
-
-var __importDefault = this && this.__importDefault || function (mod) {
-  return mod && mod.__esModule ? mod : {
-    "default": mod
-  };
-};
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var react_1 = __importDefault(require("react"));
-
-var videoStrip_1 = __importDefault(require("./videoStrip"));
-
-var imageStrip_1 = __importDefault(require("./imageStrip"));
 
 var UserHeader_1 = __importDefault(require("../AddOns/Header/UserHeader"));
 
 var Footer_1 = __importDefault(require("../AddOns/Footer/Footer"));
 
+var graphql_tag_1 = __importDefault(require("graphql-tag"));
+
+var react_1 = __importStar(require("react"));
+
+var client_1 = require("@apollo/client");
+
+var react_loading_1 = __importDefault(require("react-loading"));
+
+var selectPostQuery = graphql_tag_1.default(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\nmutation selectPostExplore($nextpost: String){\n    selectPostExplorePage(nextpost:$nextpost){\n        posts{\n            id\n            user_id\n            caption\n            created_at\n            post_contents{\n                id\n                post_id\n                type\n                path\n            }\n        }\n        nextpost\n        hasnext\n    }\n    \n  }\n"], ["\nmutation selectPostExplore($nextpost: String){\n    selectPostExplorePage(nextpost:$nextpost){\n        posts{\n            id\n            user_id\n            caption\n            created_at\n            post_contents{\n                id\n                post_id\n                type\n                path\n            }\n        }\n        nextpost\n        hasnext\n    }\n    \n  }\n"])));
+
 function ExplorePage() {
+  var _a = react_1.useState({
+    data: []
+  }),
+      posts = _a[0],
+      setPosts = _a[1];
+
+  var _b = react_1.useState(""),
+      nextpost = _b[0],
+      setNextPost = _b[1];
+
+  var postsRef = react_1.useRef(null);
+  var nextPostTriggerRef = react_1.useRef(null);
+
+  var _c = react_1.useState(false),
+      isLoading = _c[0],
+      setIsLoading = _c[1];
+
+  var _d = react_1.useState(),
+      observer = _d[0],
+      setObserver = _d[1];
+
+  var nextPostKeyRef = react_1.useRef(nextpost);
+  var apollo = client_1.useApolloClient();
+
+  var _e = react_1.useState(true),
+      hasnext = _e[0],
+      SetNext = _e[1];
+
+  var _f = client_1.useMutation(selectPostQuery),
+      selectPost = _f[0],
+      selectPostData = _f[1];
+
+  var loadingBtn = react_1.default.createElement("div", {
+    className: "loadingAnimation"
+  }, react_1.default.createElement(react_loading_1.default, {
+    type: "spokes",
+    color: 'black',
+    height: '100%',
+    width: '100%'
+  }));
+
+  function loadMoreItems() {
+    return __awaiter(this, void 0, void 0, function () {
+      var postPagged;
+
+      var _a;
+
+      return __generator(this, function (_b) {
+        switch (_b.label) {
+          case 0:
+            return [4
+            /*yield*/
+            , apollo.mutate({
+              mutation: selectPostQuery,
+              variables: {
+                nextpost: nextPostKeyRef.current === "" ? null : nextPostKeyRef.current
+              }
+            })];
+
+          case 1:
+            postPagged = _b.sent();
+
+            (_a = posts.data).push.apply(_a, postPagged.data.selectPostExplorePage.posts);
+
+            setPosts({
+              data: posts.data
+            });
+            setNextPost(postPagged.data.selectPostExplorePage.nextpost);
+            SetNext(postPagged.data.selectPostExplorePage.hasnext);
+            setIsLoading(false);
+            return [2
+            /*return*/
+            ];
+        }
+      });
+    });
+  }
+
+  react_1.useEffect(function () {
+    nextPostKeyRef.current = nextpost;
+  }, [nextpost]);
+  react_1.useEffect(function () {
+    setObserver(new IntersectionObserver(function (entries, observer) {
+      if (!entries[0].isIntersecting) {
+        return;
+      }
+
+      observer.unobserve(nextPostTriggerRef.current);
+      setIsLoading(true);
+      loadMoreItems();
+    }));
+  }, []);
+  react_1.useEffect(function () {
+    if (observer === undefined || isLoading || nextpost == null || hasnext == false) {
+      return;
+    }
+
+    observer.observe(nextPostTriggerRef.current);
+  }, [observer, isLoading, nextpost, hasnext]);
   return react_1.default.createElement(react_1.default.Fragment, null, react_1.default.createElement(UserHeader_1.default, null), react_1.default.createElement("div", {
     className: "exploreOuterDiv"
   }, react_1.default.createElement("div", {
     className: "exploreInnerDiv"
-  }, react_1.default.createElement(videoStrip_1.default, null), react_1.default.createElement(imageStrip_1.default, null), react_1.default.createElement(videoStrip_1.default, null), react_1.default.createElement(imageStrip_1.default, null), react_1.default.createElement(videoStrip_1.default, null), react_1.default.createElement(imageStrip_1.default, null))), react_1.default.createElement(Footer_1.default, null));
+  }, react_1.default.createElement("div", {
+    className: "postDiv",
+    ref: postsRef
+  }, posts.data.map(function (content) {
+    return content.post_contents[0].type == "video" ? react_1.default.createElement("button", null, react_1.default.createElement("a", {
+      href: "/post/" + content.id
+    }, react_1.default.createElement("video", {
+      src: content.post_contents[0].path
+    }))) : react_1.default.createElement("button", null, react_1.default.createElement("a", {
+      href: "/post/" + content.id
+    }, react_1.default.createElement("img", {
+      src: content.post_contents[0].path,
+      alt: "image"
+    })));
+  }), isLoading ? loadingBtn : react_1.default.createElement("div", {
+    ref: nextPostTriggerRef
+  }, "\xA0")))), react_1.default.createElement(Footer_1.default, null));
 }
 
 exports.default = ExplorePage;
-},{"react":"node_modules/react/index.js","./videoStrip":"page/ExplorePage/videoStrip.tsx","./imageStrip":"page/ExplorePage/imageStrip.tsx","../AddOns/Header/UserHeader":"page/AddOns/Header/UserHeader.tsx","../AddOns/Footer/Footer":"page/AddOns/Footer/Footer.tsx"}],"page/AddOns/Header/GuestHeader.tsx":[function(require,module,exports) {
+var templateObject_1;
+},{"../AddOns/Header/UserHeader":"page/AddOns/Header/UserHeader.tsx","../AddOns/Footer/Footer":"page/AddOns/Footer/Footer.tsx","graphql-tag":"node_modules/graphql-tag/lib/index.js","react":"node_modules/react/index.js","@apollo/client":"node_modules/@apollo/client/index.js","react-loading":"node_modules/react-loading/dist/react-loading.js"}],"page/AddOns/Header/GuestHeader.tsx":[function(require,module,exports) {
 "use strict";
 
 var __makeTemplateObject = this && this.__makeTemplateObject || function (cooked, raw) {
@@ -83591,7 +83838,7 @@ var client_1 = require("@apollo/client");
 
 var react_loading_1 = __importDefault(require("react-loading"));
 
-var searchUserQuery = graphql_tag_1.default(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n    mutation searchUser($username: String!){\n        searchUser(input:$username){\n            id\n            username\n            picture\n        }\n    }\n"], ["\n    mutation searchUser($username: String!){\n        searchUser(input:$username){\n            id\n            username\n            picture\n        }\n    }\n"])));
+var searchQuery = graphql_tag_1.default(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n    mutation search($username: String!){\n        searchUser(input:$username){\n            id\n            username\n            picture\n        }\n        searchHashtag(input:$username){\n            id\n            hashtag\n        }\n    }\n"], ["\n    mutation search($username: String!){\n        searchUser(input:$username){\n            id\n            username\n            picture\n        }\n        searchHashtag(input:$username){\n            id\n            hashtag\n        }\n    }\n"])));
 
 function GuestHeader() {
   var _a = react_1.useContext(App_1.JWTContext),
@@ -83603,13 +83850,17 @@ function GuestHeader() {
     return new rxjs_1.Subject();
   }, []);
 
-  var _b = client_1.useMutation(searchUserQuery),
-      searchUser = _b[0],
-      searchUserData = _b[1];
+  var _b = client_1.useMutation(searchQuery),
+      searchQ = _b[0],
+      searchData = _b[1];
 
   var _c = react_1.useState([]),
       userList = _c[0],
       setUserList = _c[1];
+
+  var _d = react_1.useState([]),
+      hashtagList = _d[0],
+      setHashtagList = _d[1];
 
   var loadingBtn = react_1.default.createElement("button", {
     className: "loadingButton"
@@ -83628,7 +83879,7 @@ function GuestHeader() {
     var subscribe = subject.pipe(rxjs_1.debounceTime(500), rxjs_1.distinctUntilChanged(), rxjs_1.map(function (search) {
       return search.trim();
     })).subscribe(function (search) {
-      searchUser({
+      searchQ({
         variables: {
           username: search
         }
@@ -83639,10 +83890,13 @@ function GuestHeader() {
     };
   }, [subject]);
   react_1.useEffect(function () {
-    if (searchUserData.data !== undefined && searchUserData != null) {
-      setUserList(searchUserData.data.searchUser);
+    console.log(searchData.data);
+
+    if (searchData.data !== undefined && searchData != null) {
+      setUserList(searchData.data.searchUser);
+      setHashtagList(searchData.data.searchHashtag);
     }
-  }, [searchUserData.data]);
+  }, [searchData.data]);
   return react_1.default.createElement("div", {
     className: "pembungkus"
   }, react_1.default.createElement("div", {
@@ -83667,7 +83921,7 @@ function GuestHeader() {
     position: "bottom left"
   }, react_1.default.createElement("div", {
     className: "searchPopUp"
-  }, searchUserData.loading ? loadingBtn : searchUserData.data != undefined && searchUserData.data != null && userList != null && userList.length != 0 ? searchUserData.data.searchUser.map(function (user) {
+  }, searchData.loading ? loadingBtn : null, searchData.data != undefined && searchData.data != null && userList != null && userList.length != 0 ? searchData.data.searchUser.map(function (user) {
     return react_1.default.createElement("a", {
       href: "/profile/" + user.username,
       className: "searchStrip"
@@ -83675,7 +83929,15 @@ function GuestHeader() {
       src: user.picture,
       alt: ""
     }), react_1.default.createElement("p", null, user.username));
-  }) : react_1.default.createElement("div", null, "User not Found"))))), react_1.default.createElement("div", {
+  }) : null, searchData.data != undefined && searchData.data != null && hashtagList != null && hashtagList.length != 0 ? searchData.data.searchHashtag.map(function (hashtag) {
+    return react_1.default.createElement("a", {
+      href: "#",
+      className: "searchStrip"
+    }, react_1.default.createElement("img", {
+      src: "/hashtag.png",
+      alt: ""
+    }), react_1.default.createElement("p", null, hashtag.hashtag));
+  }) : null)))), react_1.default.createElement("div", {
     className: "navDiv"
   }, react_1.default.createElement("a", {
     href: "/login"
@@ -84533,63 +84795,7 @@ function ForgotPasswordPage() {
 
 exports.default = ForgotPasswordPage;
 var templateObject_1, templateObject_2;
-},{"react":"node_modules/react/index.js","@apollo/client":"node_modules/@apollo/client/index.js","../../App":"App.tsx","../AddOns/Header/GuestHeader":"page/AddOns/Header/GuestHeader.tsx","../AddOns/Footer/Footer":"page/AddOns/Footer/Footer.tsx","react-countdown":"node_modules/react-countdown/dist/index.es.js","react-loading":"node_modules/react-loading/dist/react-loading.js"}],"page/Components/Comment.tsx":[function(require,module,exports) {
-"use strict";
-
-var __importDefault = this && this.__importDefault || function (mod) {
-  return mod && mod.__esModule ? mod : {
-    "default": mod
-  };
-};
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var react_1 = __importDefault(require("react"));
-
-function Comment() {
-  return react_1.default.createElement("div", {
-    className: "commentSection"
-  }, react_1.default.createElement("div", {
-    className: "comment"
-  }, react_1.default.createElement("div", {
-    className: "commentValue"
-  }, react_1.default.createElement("p", {
-    id: "usernameComment"
-  }, "mavericktherry"), react_1.default.createElement("p", {
-    id: "comment"
-  }, "Comment")), react_1.default.createElement("div", {
-    className: "interactComment"
-  }, react_1.default.createElement("button", {
-    id: "likeButton"
-  }, react_1.default.createElement("svg", {
-    xmlns: "http://www.w3.org/2000/svg",
-    fill: "none",
-    viewBox: "0 0 24 24",
-    stroke: "currentColor"
-  }, react_1.default.createElement("path", {
-    "stroke-linecap": "round",
-    "stroke-linejoin": "round",
-    "stroke-width": "2",
-    d: "M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"
-  }))), react_1.default.createElement("button", {
-    id: "dislikeButton"
-  }, react_1.default.createElement("svg", {
-    xmlns: "http://www.w3.org/2000/svg",
-    fill: "none",
-    viewBox: "0 0 24 24",
-    stroke: "currentColor"
-  }, react_1.default.createElement("path", {
-    "stroke-linecap": "round",
-    "stroke-linejoin": "round",
-    "stroke-width": "2",
-    d: "M10 14H5.236a2 2 0 01-1.789-2.894l3.5-7A2 2 0 018.736 3h4.018a2 2 0 01.485.06l3.76.94m-7 10v5a2 2 0 002 2h.096c.5 0 .905-.405.905-.904 0-.715.211-1.413.608-2.008L17 13V4m-7 10h2m5-10h2a2 2 0 012 2v6a2 2 0 01-2 2h-2.5"
-  }))))));
-}
-
-exports.default = Comment;
-},{"react":"node_modules/react/index.js"}],"node_modules/millify/dist/options.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","@apollo/client":"node_modules/@apollo/client/index.js","../../App":"App.tsx","../AddOns/Header/GuestHeader":"page/AddOns/Header/GuestHeader.tsx","../AddOns/Footer/Footer":"page/AddOns/Footer/Footer.tsx","react-countdown":"node_modules/react-countdown/dist/index.es.js","react-loading":"node_modules/react-loading/dist/react-loading.js"}],"node_modules/millify/dist/options.js":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.defaultOptions = void 0;
@@ -86912,8 +87118,6 @@ Object.defineProperty(exports, "__esModule", {
 
 var react_1 = __importStar(require("react"));
 
-var Comment_1 = __importDefault(require("./Comment"));
-
 var millify_1 = __importDefault(require("millify"));
 
 var react_animated_popup_1 = __importDefault(require("react-animated-popup"));
@@ -87125,7 +87329,7 @@ function Post() {
     "stroke-linecap": "round",
     "stroke-linejoin": "round",
     "stroke-width": "2",
-    d: "M72.089,0.02L59.624,0C45.62,0,36.57,9.285,36.57,23.656v10.907H24.037c-1.083,0-1.96,0.878-1.96,1.961v15.803\r\n                                                        c0,1.083,0.878,1.96,1.96,1.96h12.533v39.876c0,1.083,0.877,1.96,1.96,1.96h16.352c1.083,0,1.96-0.878,1.96-1.96V54.287h14.654\r\n                                                        c1.083,0,1.96-0.877,1.96-1.96l0.006-15.803c0-0.52-0.207-1.018-0.574-1.386c-0.367-0.368-0.867-0.575-1.387-0.575H56.842v-9.246\r\n                                                        c0-4.444,1.059-6.7,6.848-6.7l8.397-0.003c1.082,0,1.959-0.878,1.959-1.96V1.98C74.046,0.899,73.17,0.022,72.089,0.02z"
+    d: "M72.089,0.02L59.624,0C45.62,0,36.57,9.285,36.57,23.656v10.907H24.037c-1.083,0-1.96,0.878-1.96,1.961v15.803\r\n                                        c0,1.083,0.878,1.96,1.96,1.96h12.533v39.876c0,1.083,0.877,1.96,1.96,1.96h16.352c1.083,0,1.96-0.878,1.96-1.96V54.287h14.654\r\n                                        c1.083,0,1.96-0.877,1.96-1.96l0.006-15.803c0-0.52-0.207-1.018-0.574-1.386c-0.367-0.368-0.867-0.575-1.387-0.575H56.842v-9.246\r\n                                        c0-4.444,1.059-6.7,6.848-6.7l8.397-0.003c1.082,0,1.959-0.878,1.959-1.96V1.98C74.046,0.899,73.17,0.022,72.089,0.02z"
   }))), react_1.default.createElement("button", {
     id: "shareDm"
   }, react_1.default.createElement("svg", {
@@ -87178,7 +87382,7 @@ function Post() {
   }, "hide")))), react_1.default.createElement("a", {
     href: "#",
     className: "viewMoreComments"
-  }, " View all ", convertedComments, " Comments"), react_1.default.createElement(Comment_1.default, null), react_1.default.createElement(Comment_1.default, null), react_1.default.createElement(Comment_1.default, null), react_1.default.createElement("p", {
+  }, " View all ", convertedComments, " Comments"), react_1.default.createElement("p", {
     id: "time"
   }, "1 MINUTE AGO")), react_1.default.createElement("div", {
     className: "inputCommentSection"
@@ -87206,7 +87410,7 @@ function Post() {
 }
 
 exports.default = Post;
-},{"react":"node_modules/react/index.js","./Comment":"page/Components/Comment.tsx","millify":"node_modules/millify/dist/millify.js","react-animated-popup":"node_modules/react-animated-popup/index.js","react-copy-to-clipboard":"node_modules/react-copy-to-clipboard/lib/index.js","reactjs-popup":"node_modules/reactjs-popup/dist/reactjs-popup.esm.js"}],"page/Components/Story.tsx":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","millify":"node_modules/millify/dist/millify.js","react-animated-popup":"node_modules/react-animated-popup/index.js","react-copy-to-clipboard":"node_modules/react-copy-to-clipboard/lib/index.js","reactjs-popup":"node_modules/reactjs-popup/dist/reactjs-popup.esm.js"}],"page/Components/Story.tsx":[function(require,module,exports) {
 "use strict";
 
 var __importDefault = this && this.__importDefault || function (mod) {
@@ -87768,11 +87972,18 @@ var UserHeader_1 = __importDefault(require("../AddOns/Header/UserHeader"));
 
 var react_loading_1 = __importDefault(require("react-loading"));
 
+var react_router_dom_2 = require("react-router-dom");
+
 var getUserQuery = client_1.gql(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n    mutation getUserFromUsername($username: String!){\n        getUserBasedOnUsername(input: $username)\n        {\n            id\n            email\n            username\n            picture\n            full_name\n            is_verified\n            is_google_account\n        }\n        \n    }\n"], ["\n    mutation getUserFromUsername($username: String!){\n        getUserBasedOnUsername(input: $username)\n        {\n            id\n            email\n            username\n            picture\n            full_name\n            is_verified\n            is_google_account\n        }\n        \n    }\n"])));
 var followQuery = client_1.gql(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n    mutation insertRelation($follow_id: String!, $followed_id: String!){\n        createRelation(input:{\n        follow_id: $follow_id,\n        followed_id: $followed_id\n    }){\n        follow_id\n    }\n    }\n"], ["\n    mutation insertRelation($follow_id: String!, $followed_id: String!){\n        createRelation(input:{\n        follow_id: $follow_id,\n        followed_id: $followed_id\n    }){\n        follow_id\n    }\n    }\n"])));
 var unfollowQuery = client_1.gql(templateObject_3 || (templateObject_3 = __makeTemplateObject(["\n    mutation removeRelation($follow_id: String!, $followed_id: String!){\n        deleteRelation(input:{\n            follow_id: $follow_id,\n        followed_id: $followed_id\n    })\n    }\n"], ["\n    mutation removeRelation($follow_id: String!, $followed_id: String!){\n        deleteRelation(input:{\n            follow_id: $follow_id,\n        followed_id: $followed_id\n    })\n    }\n"])));
 var issFollowing = client_1.gql(templateObject_4 || (templateObject_4 = __makeTemplateObject(["\n    mutation issFollowing($follow_id: String!, $followed_id: String!){\n        isFollowing(input:{\n            follow_id: $follow_id,\n            followed_id: $followed_id\n        })\n    }\n"], ["\n    mutation issFollowing($follow_id: String!, $followed_id: String!){\n        isFollowing(input:{\n            follow_id: $follow_id,\n            followed_id: $followed_id\n        })\n    }\n"])));
 var getAllPostQuery = client_1.gql(templateObject_5 || (templateObject_5 = __makeTemplateObject(["\n    mutation getAllPost($user_id:String!){\n        getPostBasedOnUserId(input:$user_id){\n            id\n            caption\n            user_id\n            post_contents{\n                id\n                path\n                type\n            }\n        }\n    }\n"], ["\n    mutation getAllPost($user_id:String!){\n        getPostBasedOnUserId(input:$user_id){\n            id\n            caption\n            user_id\n            post_contents{\n                id\n                path\n                type\n            }\n        }\n    }\n"])));
+var getAllSavedPostQuery = client_1.gql(templateObject_6 || (templateObject_6 = __makeTemplateObject(["\n    mutation getAllSavedPost($user_id:String!){\n        getSavedPostBasedOnUserId(input:$user_id){\n            id\n                post_id\n            user_id\n            post_contents{\n                id\n                path\n                type\n            }\n        }\n    }\n"], ["\n    mutation getAllSavedPost($user_id:String!){\n        getSavedPostBasedOnUserId(input:$user_id){\n            id\n                post_id\n            user_id\n            post_contents{\n                id\n                path\n                type\n            }\n        }\n    }\n"])));
+var getAllTaggedPostQuery = client_1.gql(templateObject_7 || (templateObject_7 = __makeTemplateObject(["\nmutation getAllTaggedPost($user_id:String!){\n    getTaggedPostBasedOnUserId(input:$user_id){\n        id\n    \t\tpost_id\n        user_id\n        post_contents{\n            id\n            path\n            type\n        }\n    }\n}\n"], ["\nmutation getAllTaggedPost($user_id:String!){\n    getTaggedPostBasedOnUserId(input:$user_id){\n        id\n    \t\tpost_id\n        user_id\n        post_contents{\n            id\n            path\n            type\n        }\n    }\n}\n"])));
+var checkSavedPostQuery = client_1.gql(templateObject_8 || (templateObject_8 = __makeTemplateObject(["\n    mutation checkSaved($user_id: String!, $post_id: String!){\n        postIsSaved(input:{\n            user_id: $user_id\n        post_id: $post_id\n    })\n    }\n"], ["\n    mutation checkSaved($user_id: String!, $post_id: String!){\n        postIsSaved(input:{\n            user_id: $user_id\n        post_id: $post_id\n    })\n    }\n"])));
+var savePostQuery = client_1.gql(templateObject_9 || (templateObject_9 = __makeTemplateObject(["\n    mutation savePost($user_id: String!, $post_id: String!){\n        savePostById(input:{\n            user_id: $user_id\n        post_id: $post_id\n    })\n    }\n"], ["\n    mutation savePost($user_id: String!, $post_id: String!){\n        savePostById(input:{\n            user_id: $user_id\n        post_id: $post_id\n    })\n    }\n"])));
+var unsavePostQuery = client_1.gql(templateObject_10 || (templateObject_10 = __makeTemplateObject(["\n    mutation unsavePost($user_id: String!, $post_id: String!){\n        unsavePostById(input:{\n            user_id: $user_id\n        post_id: $post_id\n    })\n    }\n"], ["\n    mutation unsavePost($user_id: String!, $post_id: String!){\n        unsavePostById(input:{\n            user_id: $user_id\n        post_id: $post_id\n    })\n    }\n"])));
 
 function Profile() {
   var loadingBtn = react_1.default.createElement("div", {
@@ -87808,49 +88019,74 @@ function Profile() {
       getAllPost = _f[0],
       postData = _f[1];
 
-  var _g = react_1.useState(false),
-      follow = _g[0],
-      setFollow = _g[1];
+  var _g = client_1.useMutation(getAllSavedPostQuery),
+      getAllSavedPost = _g[0],
+      savedData = _g[1];
+
+  var _h = client_1.useMutation(getAllTaggedPostQuery),
+      getAllTaggedPost = _h[0],
+      taggedData = _h[1];
+
+  var _j = react_1.useState(false),
+      follow = _j[0],
+      setFollow = _j[1];
 
   var currUser = JSON.parse(localStorage.getItem("user"));
 
-  var _h = react_1.useState(""),
-      picUrl = _h[0],
-      setPicUrl = _h[1];
-
-  var _j = react_1.useState(""),
-      username2 = _j[0],
-      setUsername2 = _j[1];
-
   var _k = react_1.useState(""),
-      bio = _k[0],
-      setBio = _k[1];
+      picUrl = _k[0],
+      setPicUrl = _k[1];
 
   var _l = react_1.useState(""),
-      full_name = _l[0],
-      setFull_name = _l[1];
+      username2 = _l[0],
+      setUsername2 = _l[1];
 
   var _m = react_1.useState(""),
-      userId = _m[0],
-      setUserId = _m[1];
+      bio = _m[0],
+      setBio = _m[1];
 
   var _o = react_1.useState(""),
-      followers = _o[0],
-      setFollowers = _o[1];
+      full_name = _o[0],
+      setFull_name = _o[1];
 
   var _p = react_1.useState(""),
-      following = _p[0],
-      setFollowing = _p[1];
+      userId = _p[0],
+      setUserId = _p[1];
 
   var _q = react_1.useState(""),
-      postCount = _q[0],
-      setPostCount = _q[1];
+      followers = _q[0],
+      setFollowers = _q[1];
 
-  var _r = react_1.useState(true),
-      postLoading = _r[0],
-      setLoading = _r[1];
+  var _r = react_1.useState(""),
+      following = _r[0],
+      setFollowing = _r[1];
+
+  var _s = react_1.useState(""),
+      postCount = _s[0],
+      setPostCount = _s[1];
+
+  var _t = react_1.useState(true),
+      postLoading = _t[0],
+      setLoading = _t[1];
+
+  var _u = react_1.useState(""),
+      savedPostCount = _u[0],
+      setSavedPostCount = _u[1];
+
+  var _v = react_1.useState(true),
+      savedLoading = _v[0],
+      setSavedLoading = _v[1];
+
+  var _w = react_1.useState(true),
+      taggedLoading = _w[0],
+      setTaggedLoading = _w[1];
+
+  var _x = react_1.useState(""),
+      taggedPostCount = _x[0],
+      setTaggedPostCount = _x[1];
 
   var user;
+  var match = react_router_dom_2.useRouteMatch();
   var fwrs = 45900000;
   var flws = 4590;
   var pstcnt = 1424;
@@ -87922,6 +88158,16 @@ function Profile() {
           user_id: userId
         }
       });
+      getAllSavedPost({
+        variables: {
+          user_id: userId
+        }
+      });
+      getAllTaggedPost({
+        variables: {
+          user_id: userId
+        }
+      });
       console.log("load post...");
     }
   }, [userId]);
@@ -87934,6 +88180,18 @@ function Profile() {
 
     console.log(postLoading);
   }, [postData.data]);
+  react_1.useEffect(function () {
+    if (savedData.data != null && savedData.data !== undefined) {
+      setSavedLoading(false);
+      setSavedPostCount(savedData.data.getSavedPostBasedOnUserId.length);
+    }
+  }, [savedData.data]);
+  react_1.useEffect(function () {
+    if (taggedData.data != null && taggedData.data !== undefined) {
+      setTaggedLoading(false);
+      setTaggedPostCount(taggedData.data.getTaggedPostBasedOnUserId.length);
+    }
+  }, [taggedData.data]);
   var followBtn = react_1.default.createElement("button", {
     className: "followButton",
     onClick: toggleFollow
@@ -88082,20 +88340,57 @@ function Profile() {
     className: "profileBottomDiv"
   }, react_1.default.createElement("div", {
     className: "postNavbar"
-  }, react_1.default.createElement("button", null, "POSTS"), react_1.default.createElement("button", null, "REELS"), react_1.default.createElement("button", null, "IGTV"), react_1.default.createElement("button", null, "TAGGED")), react_1.default.createElement("div", {
+  }, react_1.default.createElement("button", null, " ", react_1.default.createElement("a", {
+    href: "/profile/" + username
+  }, "POSTS")), react_1.default.createElement("button", null, " ", react_1.default.createElement("a", {
+    href: "/profile/" + username + "/tagged"
+  }, "TAGGED"), "  "), react_1.default.createElement("button", null, " ", react_1.default.createElement("a", {
+    href: "/profile/" + username + "/saved"
+  }, "SAVED"))), react_1.default.createElement(react_router_dom_2.Switch, null, react_1.default.createElement(react_router_dom_2.Route, {
+    exact: true,
+    path: "" + match.path
+  }, react_1.default.createElement("div", {
     className: "postDiv"
   }, postLoading ? loadingBtn : postCount == '0' ? react_1.default.createElement("div", null, "No Posts Available...") : postData.data.getPostBasedOnUserId.map(function (content) {
-    return react_1.default.createElement("button", null, react_1.default.createElement("a", {
+    return content.post_contents[0].type == "video" ? react_1.default.createElement("button", null, react_1.default.createElement("a", {
+      href: "/post/" + content.id
+    }, react_1.default.createElement("video", {
+      src: content.post_contents[0].path
+    }))) : react_1.default.createElement("button", null, react_1.default.createElement("a", {
       href: "/post/" + content.id
     }, react_1.default.createElement("img", {
       src: content.post_contents[0].path,
       alt: "image"
     })));
-  }))))), react_1.default.createElement(Footer_1.default, null));
+  }))), react_1.default.createElement(react_router_dom_2.Route, {
+    exact: true,
+    path: match.path + "/saved"
+  }, react_1.default.createElement("div", {
+    className: "postDiv"
+  }, savedLoading ? loadingBtn : savedPostCount == '0' ? react_1.default.createElement("div", null, "No Posts Available...") : savedData.data.getSavedPostBasedOnUserId.map(function (content) {
+    return react_1.default.createElement("button", null, react_1.default.createElement("a", {
+      href: "/post/" + content.post_id
+    }, react_1.default.createElement("img", {
+      src: content.post_contents[0].path,
+      alt: "image"
+    })));
+  }))), react_1.default.createElement(react_router_dom_2.Route, {
+    exact: true,
+    path: match.path + "/tagged"
+  }, react_1.default.createElement("div", {
+    className: "postDiv"
+  }, taggedLoading ? loadingBtn : taggedPostCount == '0' ? react_1.default.createElement("div", null, "No Posts Available...") : taggedData.data.getTaggedPostBasedOnUserId.map(function (content) {
+    return react_1.default.createElement("button", null, react_1.default.createElement("a", {
+      href: "/post/" + content.post_id
+    }, react_1.default.createElement("img", {
+      src: content.post_contents[0].path,
+      alt: "image"
+    })));
+  }))))))), react_1.default.createElement(Footer_1.default, null));
 }
 
 exports.default = Profile;
-var templateObject_1, templateObject_2, templateObject_3, templateObject_4, templateObject_5;
+var templateObject_1, templateObject_2, templateObject_3, templateObject_4, templateObject_5, templateObject_6, templateObject_7, templateObject_8, templateObject_9, templateObject_10;
 },{"@apollo/client":"node_modules/@apollo/client/index.js","millify":"node_modules/millify/dist/millify.js","react":"node_modules/react/index.js","react-router-dom":"node_modules/react-router-dom/esm/react-router-dom.js","../AddOns/Footer/Footer":"page/AddOns/Footer/Footer.tsx","../AddOns/Header/UserHeader":"page/AddOns/Header/UserHeader.tsx","react-loading":"node_modules/react-loading/dist/react-loading.js"}],"page/RegisterPage/RegisterPage.tsx":[function(require,module,exports) {
 "use strict";
 
@@ -99017,7 +99312,429 @@ registerStorage(_app.default);
 "use strict";
 
 require("@firebase/storage");
-},{"@firebase/storage":"node_modules/@firebase/storage/dist/index.browser.esm.js"}],"page/PostPage/PostPage.tsx":[function(require,module,exports) {
+},{"@firebase/storage":"node_modules/@firebase/storage/dist/index.browser.esm.js"}],"page/Components/Comment.tsx":[function(require,module,exports) {
+"use strict";
+
+var __makeTemplateObject = this && this.__makeTemplateObject || function (cooked, raw) {
+  if (Object.defineProperty) {
+    Object.defineProperty(cooked, "raw", {
+      value: raw
+    });
+  } else {
+    cooked.raw = raw;
+  }
+
+  return cooked;
+};
+
+var __createBinding = this && this.__createBinding || (Object.create ? function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  Object.defineProperty(o, k2, {
+    enumerable: true,
+    get: function get() {
+      return m[k];
+    }
+  });
+} : function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  o[k2] = m[k];
+});
+
+var __setModuleDefault = this && this.__setModuleDefault || (Object.create ? function (o, v) {
+  Object.defineProperty(o, "default", {
+    enumerable: true,
+    value: v
+  });
+} : function (o, v) {
+  o["default"] = v;
+});
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+  }
+
+  __setModuleDefault(result, mod);
+
+  return result;
+};
+
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Comment = void 0;
+
+var client_1 = require("@apollo/client");
+
+var graphql_tag_1 = __importDefault(require("graphql-tag"));
+
+var millify_1 = __importDefault(require("millify"));
+
+var react_1 = __importStar(require("react"));
+
+var getUserQuery = graphql_tag_1.default(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n    mutation getUserFromId($user_id:String!){\n\tgetUserBasedOnId(input:$user_id){\n\t\tid\n    email\n    username\n    picture\n    full_name\n  }\n}\n"], ["\n    mutation getUserFromId($user_id:String!){\n\tgetUserBasedOnId(input:$user_id){\n\t\tid\n    email\n    username\n    picture\n    full_name\n  }\n}\n"])));
+var likeCommentQuery = graphql_tag_1.default(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\nmutation LikeComment($comment_id: String!, $user_id: String!){\n    likeCommentById(input:{\n      comment_id: $comment_id\n      user_id:$user_id\n    })\n  }\n"], ["\nmutation LikeComment($comment_id: String!, $user_id: String!){\n    likeCommentById(input:{\n      comment_id: $comment_id\n      user_id:$user_id\n    })\n  }\n"])));
+var unlikeCommentQuery = graphql_tag_1.default(templateObject_3 || (templateObject_3 = __makeTemplateObject(["\n  mutation unlikeComment($comment_id: String!, $user_id: String!){\n    unlikeCommentById(input:{\n      comment_id: $comment_id\n      user_id:$user_id\n    })\n  }\n"], ["\n  mutation unlikeComment($comment_id: String!, $user_id: String!){\n    unlikeCommentById(input:{\n      comment_id: $comment_id\n      user_id:$user_id\n    })\n  }\n"])));
+var checkLikeCommentQuery = graphql_tag_1.default(templateObject_4 || (templateObject_4 = __makeTemplateObject(["  \n  mutation checkLikeComment($comment_id: String!, $user_id: String!){\n      commentIsLiked(input:{\n      comment_id: $comment_id\n      user_id:$user_id\n    })\n  }\n"], ["  \n  mutation checkLikeComment($comment_id: String!, $user_id: String!){\n      commentIsLiked(input:{\n      comment_id: $comment_id\n      user_id:$user_id\n    })\n  }\n"])));
+var deleteCommentQuery = graphql_tag_1.default(templateObject_5 || (templateObject_5 = __makeTemplateObject(["\n    mutation deleteComment($comment_id: String!){\n        deleteCommentById(input:$comment_id)\n    }\n"], ["\n    mutation deleteComment($comment_id: String!){\n        deleteCommentById(input:$comment_id)\n    }\n"])));
+var getLikeCountQuery = graphql_tag_1.default(templateObject_6 || (templateObject_6 = __makeTemplateObject(["\n    mutation checkLikeCount($comment_id: String!){\n\tcommentLikeCount(input:$comment_id)\n}\n"], ["\n    mutation checkLikeCount($comment_id: String!){\n\tcommentLikeCount(input:$comment_id)\n}\n"])));
+var addNewReplyQuery = graphql_tag_1.default(templateObject_7 || (templateObject_7 = __makeTemplateObject(["\n    mutation addNewReply($comment_id: String!, $user_id: String!, $reply: String!){\n\tpostReply(input:{\n    comment_id:$comment_id\n    user_id:$user_id\n    reply:$reply\n  })\n}\n"], ["\n    mutation addNewReply($comment_id: String!, $user_id: String!, $reply: String!){\n\tpostReply(input:{\n    comment_id:$comment_id\n    user_id:$user_id\n    reply:$reply\n  })\n}\n"])));
+var deleteReplyQuery = graphql_tag_1.default(templateObject_8 || (templateObject_8 = __makeTemplateObject(["\nmutation deleteReply($reply_id: String!){\n  deleteReplyById(input:$reply_id)\n}\n"], ["\nmutation deleteReply($reply_id: String!){\n  deleteReplyById(input:$reply_id)\n}\n"])));
+var likeReplyQuery = graphql_tag_1.default(templateObject_9 || (templateObject_9 = __makeTemplateObject(["\nmutation likeReply($user_id: String!, $reply_id: String!){\n  \tlikeReplyById(input:{\n      user_id:$user_id\n      reply_id: $reply_id\n    })\n}\n"], ["\nmutation likeReply($user_id: String!, $reply_id: String!){\n  \tlikeReplyById(input:{\n      user_id:$user_id\n      reply_id: $reply_id\n    })\n}\n"])));
+var unlikeReplyQuery = graphql_tag_1.default(templateObject_10 || (templateObject_10 = __makeTemplateObject(["\nmutation unlikeReply($user_id: String!, $reply_id: String!){\n  \tunlikeReplyById(input:{\n      user_id:$user_id\n      reply_id: $reply_id\n    })\n}\n"], ["\nmutation unlikeReply($user_id: String!, $reply_id: String!){\n  \tunlikeReplyById(input:{\n      user_id:$user_id\n      reply_id: $reply_id\n    })\n}\n"])));
+var replyIsLikedQuery = graphql_tag_1.default(templateObject_11 || (templateObject_11 = __makeTemplateObject(["\n    mutation checkReplyIsLiked($user_id: String!, $reply_id: String!){\n        replyIsLiked(input:{\n        user_id:$user_id\n        reply_id: $reply_id\n    })\n    }\n"], ["\n    mutation checkReplyIsLiked($user_id: String!, $reply_id: String!){\n        replyIsLiked(input:{\n        user_id:$user_id\n        reply_id: $reply_id\n    })\n    }\n"])));
+var replyLikeCountQuery = graphql_tag_1.default(templateObject_12 || (templateObject_12 = __makeTemplateObject(["\n    mutation checkReplyLikeCount($reply_id: String!){\n    replyLikeCount(input:$reply_id)\n    }\n"], ["\n    mutation checkReplyLikeCount($reply_id: String!){\n    replyLikeCount(input:$reply_id)\n    }\n"])));
+
+var Comment = function Comment(props) {
+  var atHome = window.location.pathname == "/" ? true : false;
+  var comment_id = props.comment_id;
+  var comment_value = props.comment_value;
+  var comment_user_id = props.comment_user_id;
+  var comment_header_id = props.comment_header_id;
+  var comment_replies = props.comment_replies;
+  console.log(comment_header_id);
+  console.log(comment_replies);
+  console.log(comment_id);
+  var likeBtn = react_1.default.createElement("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    fill: "currentColor",
+    viewBox: "0 0 20 20"
+  }, react_1.default.createElement("path", {
+    d: "M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z",
+    "fill-rule": "evenodd",
+    "clip-rule": "evenodd"
+  }));
+  var notLikeBtn = react_1.default.createElement("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    fill: "none",
+    viewBox: "0 0 24 24",
+    stroke: "currentColor"
+  }, react_1.default.createElement("path", {
+    "stroke-linecap": "round",
+    "stroke-linejoin": "round",
+    "stroke-width": "2",
+    d: "M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+  }));
+
+  var _a = react_1.useState(false),
+      like = _a[0],
+      setlike = _a[1];
+
+  var _b = react_1.useState(""),
+      likeCounts = _b[0],
+      setLikeCounts = _b[1];
+
+  var _c = react_1.useState(""),
+      username = _c[0],
+      setUsername = _c[1];
+
+  var _d = react_1.useState(""),
+      userProfile = _d[0],
+      setUserProfile = _d[1];
+
+  var _e = client_1.useMutation(getUserQuery),
+      getUser = _e[0],
+      getUserData = _e[1];
+
+  var _f = client_1.useMutation(deleteCommentQuery),
+      deleteComment = _f[0],
+      deleteCommentData = _f[1];
+
+  var _g = client_1.useMutation(checkLikeCommentQuery),
+      checkLikeComment = _g[0],
+      checkLikeCommentData = _g[1];
+
+  var _h = client_1.useMutation(likeCommentQuery),
+      likeComment = _h[0],
+      likeCommentData = _h[1];
+
+  var _j = client_1.useMutation(unlikeCommentQuery),
+      unlikeComment = _j[0],
+      unlikeCommentData = _j[1];
+
+  var _k = client_1.useMutation(getLikeCountQuery),
+      likeCount = _k[0],
+      likeCountData = _k[1];
+
+  var _l = react_1.useState(false),
+      replyVisibility = _l[0],
+      setReplyVisibility = _l[1];
+
+  var _m = react_1.useState(0),
+      replyCount = _m[0],
+      setReplyCount = _m[1];
+
+  var _o = client_1.useMutation(addNewReplyQuery),
+      addReply = _o[0],
+      addReplyData = _o[1];
+
+  var _p = client_1.useMutation(likeReplyQuery),
+      likeReply = _p[0],
+      LikeReplyData = _p[1];
+
+  var _q = client_1.useMutation(deleteReplyQuery),
+      deleteReply = _q[0],
+      deleteReplyData = _q[1];
+
+  var _r = client_1.useMutation(unlikeReplyQuery),
+      unlikeReply = _r[0],
+      unlikeReplyData = _r[1];
+
+  var _s = client_1.useMutation(replyIsLikedQuery),
+      replyIsLiked = _s[0],
+      replyIsLikedData = _s[1];
+
+  var _t = client_1.useMutation(replyLikeCountQuery),
+      replyLikeCount = _t[0],
+      replyLikeCountData = _t[1];
+
+  var _u = react_1.useState(""),
+      newReply = _u[0],
+      setNewReply = _u[1];
+
+  var _v = react_1.useState(false),
+      showReplyInput = _v[0],
+      setShowReplyInput = _v[1];
+
+  var currUser = JSON.parse(localStorage.getItem("user"));
+
+  function toggleLike() {
+    if (like) {
+      if (comment_header_id == -1) {
+        unlikeComment({
+          variables: {
+            user_id: currUser.id,
+            comment_id: comment_id
+          }
+        });
+      } else {
+        unlikeReply({
+          variables: {
+            user_id: currUser.id,
+            reply_id: comment_id
+          }
+        });
+      }
+    } else {
+      if (comment_header_id == -1) {
+        likeComment({
+          variables: {
+            user_id: currUser.id,
+            comment_id: comment_id
+          }
+        });
+      } else {
+        likeReply({
+          variables: {
+            user_id: currUser.id,
+            reply_id: comment_id
+          }
+        });
+      }
+    }
+
+    setlike(!like);
+  }
+
+  function deleteCmment() {
+    if (comment_header_id == -1) {
+      deleteComment({
+        variables: {
+          comment_id: comment_id
+        }
+      });
+    } else {
+      deleteReply({
+        variables: {
+          reply_id: comment_id
+        }
+      });
+    }
+  }
+
+  function addRply() {
+    if (comment_header_id == -1) {
+      addReply({
+        variables: {
+          comment_id: comment_id,
+          user_id: currUser.id,
+          reply: newReply
+        }
+      });
+    } else {
+      addReply({
+        variables: {
+          comment_id: comment_header_id,
+          user_id: currUser.id,
+          reply: newReply
+        }
+      });
+    }
+  }
+
+  react_1.useEffect(function () {
+    if (addReplyData.data != null && addReplyData.data != undefined) window.location.reload();
+  }, [addReplyData.data]);
+  react_1.useEffect(function () {
+    getUser({
+      variables: {
+        user_id: comment_user_id
+      }
+    });
+
+    if (comment_header_id == -1) {
+      checkLikeComment({
+        variables: {
+          comment_id: comment_id,
+          user_id: currUser.id
+        }
+      });
+      likeCount({
+        variables: {
+          comment_id: comment_id
+        }
+      });
+    } else {
+      replyIsLiked({
+        variables: {
+          user_id: currUser.id,
+          reply_id: comment_id
+        }
+      });
+      replyLikeCount({
+        variables: {
+          reply_id: comment_id
+        }
+      });
+    }
+  }, []);
+  react_1.useEffect(function () {
+    if (deleteCommentData.data !== undefined && deleteCommentData.data != null) {
+      window.location.reload();
+    }
+  }, [deleteCommentData.loading]);
+  react_1.useEffect(function () {
+    if (deleteReplyData.data !== undefined && deleteReplyData.data != null) {
+      window.location.reload();
+    }
+  }, [deleteReplyData.loading]);
+  react_1.useEffect(function () {
+    if (getUserData.data !== undefined && getUserData.data != null) {
+      setUsername(getUserData.data.getUserBasedOnId.username);
+      setUserProfile(getUserData.data.getUserBasedOnId.picture);
+    }
+  }, [getUserData.data]);
+  react_1.useEffect(function () {
+    if (likeCountData.data !== undefined && likeCountData.data != null) {
+      var likes = likeCountData.data.commentLikeCount;
+      setLikeCounts(millify_1.default(likes * 1000));
+    }
+
+    if (replyLikeCountData.data !== undefined && replyLikeCountData.data != null) {
+      var likes = replyLikeCountData.data.replyLikeCount;
+      setLikeCounts(millify_1.default(likes * 1000));
+    }
+  }, [likeCountData.data, replyLikeCountData.data]);
+  react_1.useEffect(function () {
+    if (comment_header_id == -1) {
+      if (checkLikeCommentData.error != null) {
+        setlike(false);
+      } else {
+        setlike(true);
+      }
+    } else {
+      if (replyIsLikedData.error != null) {
+        setlike(false);
+      } else {
+        setlike(true);
+      }
+    }
+  }, [checkLikeCommentData.loading, replyIsLikedData.loading]);
+  return react_1.default.createElement("div", {
+    className: "commentSection"
+  }, react_1.default.createElement("div", {
+    className: "comment"
+  }, atHome ? null : react_1.default.createElement("img", {
+    src: userProfile,
+    alt: ""
+  }), react_1.default.createElement("div", {
+    className: "commentRight"
+  }, react_1.default.createElement("div", {
+    className: "commentRightTop"
+  }, react_1.default.createElement("div", {
+    className: "commentValue"
+  }, react_1.default.createElement("a", {
+    id: "usernameComment",
+    href: '/profile/' + username
+  }, react_1.default.createElement("b", null, username), " ", comment_value)), react_1.default.createElement("div", {
+    className: "interactComment"
+  }, react_1.default.createElement("button", {
+    id: "likeButton",
+    onClick: toggleLike
+  }, like ? likeBtn : notLikeBtn), currUser.id == comment_user_id ? react_1.default.createElement("button", {
+    id: "likeButton",
+    onClick: deleteCmment
+  }, react_1.default.createElement("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    fill: "none",
+    viewBox: "0 0 24 24",
+    stroke: "currentColor"
+  }, react_1.default.createElement("path", {
+    "stroke-linecap": "round",
+    "stroke-linejoin": "round",
+    "stroke-width": "2",
+    d: "M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+  }))) : null)), react_1.default.createElement("div", {
+    className: "infoDiv"
+  }, react_1.default.createElement("p", {
+    className: "totalLikes"
+  }, likeCounts, " Likes"), atHome ? null : react_1.default.createElement("button", {
+    className: "replyButton",
+    onClick: function onClick() {
+      return setShowReplyInput(!showReplyInput);
+    }
+  }, "Reply"), comment_replies != undefined && comment_replies != null && comment_replies.length > 0 && comment_header_id == -1 ? !replyVisibility ? react_1.default.createElement("button", {
+    className: "replyButton",
+    onClick: function onClick() {
+      return setReplyVisibility(!replyVisibility);
+    }
+  }, "View ", comment_replies.length, " Replies") : null : null), showReplyInput ? react_1.default.createElement("span", null, react_1.default.createElement("input", {
+    type: "text",
+    placeholder: "Add a reply...",
+    onChange: function onChange(e) {
+      setNewReply(e.target.value);
+    }
+  }), react_1.default.createElement("button", {
+    onClick: addRply
+  }, "Post")) : null, comment_header_id == -1 && comment_replies != null && comment_replies.length > 0 ? replyVisibility ? react_1.default.createElement("div", {
+    className: "commentReplies"
+  }, comment_replies.map(function (content) {
+    return react_1.default.createElement(exports.Comment, {
+      comment_id: content.id,
+      comment_value: content.reply,
+      comment_user_id: content.user_id,
+      comment_header_id: comment_id,
+      comment_replies: null
+    });
+  }), react_1.default.createElement("button", {
+    className: "replyButton",
+    onClick: function onClick() {
+      return setReplyVisibility(!replyVisibility);
+    }
+  }, "Hide ", comment_replies.length, " Replies")) : null : null)));
+};
+
+exports.Comment = Comment;
+var templateObject_1, templateObject_2, templateObject_3, templateObject_4, templateObject_5, templateObject_6, templateObject_7, templateObject_8, templateObject_9, templateObject_10, templateObject_11, templateObject_12;
+},{"@apollo/client":"node_modules/@apollo/client/index.js","graphql-tag":"node_modules/graphql-tag/lib/index.js","millify":"node_modules/millify/dist/millify.js","react":"node_modules/react/index.js"}],"page/PostPage/PostPage.tsx":[function(require,module,exports) {
 "use strict";
 
 var __makeTemplateObject = this && this.__makeTemplateObject || function (cooked, raw) {
@@ -99082,9 +99799,37 @@ var graphql_tag_1 = __importDefault(require("graphql-tag"));
 
 var react_1 = __importStar(require("react"));
 
+var react_animated_popup_1 = __importDefault(require("react-animated-popup"));
+
 var react_router_1 = require("react-router");
 
-var getPostQuery = graphql_tag_1.default(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\nmutation getPost($post_id: String!){\n  getPostBasedOnPostId(input:$post_id){\n    \t\tid\n        caption\n        user_id\n        post_contents{\n            id\n            path\n            type\n        }\n  }\n}\n"], ["\nmutation getPost($post_id: String!){\n  getPostBasedOnPostId(input:$post_id){\n    \t\tid\n        caption\n        user_id\n        post_contents{\n            id\n            path\n            type\n        }\n  }\n}\n"])));
+var Footer_1 = __importDefault(require("../AddOns/Footer/Footer"));
+
+var UserHeader_1 = __importDefault(require("../AddOns/Header/UserHeader"));
+
+var reactjs_popup_1 = __importDefault(require("reactjs-popup"));
+
+var millify_1 = __importDefault(require("millify"));
+
+var react_copy_to_clipboard_1 = require("react-copy-to-clipboard");
+
+var react_loading_1 = __importDefault(require("react-loading"));
+
+var Comment_1 = require("../Components/Comment");
+
+var getPostQuery = graphql_tag_1.default(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\nmutation getPost($post_id: String!){\n  getPostBasedOnPostId(input:$post_id){\n    \tid\n        caption\n        user_id\n        post_contents{\n            id\n            path\n            type\n        }\n        post_comments{\n            id\n            comment\n            user_id\n            replies{\n              id\n              user_id\n              reply\n            }\n        }\n  }\n}\n"], ["\nmutation getPost($post_id: String!){\n  getPostBasedOnPostId(input:$post_id){\n    \tid\n        caption\n        user_id\n        post_contents{\n            id\n            path\n            type\n        }\n        post_comments{\n            id\n            comment\n            user_id\n            replies{\n              id\n              user_id\n              reply\n            }\n        }\n  }\n}\n"])));
+var getUserQuery = graphql_tag_1.default(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n    mutation getUserFromId($user_id:String!){\n\tgetUserBasedOnId(input:$user_id){\n\t\tid\n    email\n    username\n    picture\n    full_name\n  }\n}\n"], ["\n    mutation getUserFromId($user_id:String!){\n\tgetUserBasedOnId(input:$user_id){\n\t\tid\n    email\n    username\n    picture\n    full_name\n  }\n}\n"])));
+var editPostQuery = graphql_tag_1.default(templateObject_3 || (templateObject_3 = __makeTemplateObject(["\n    mutation editPost($caption: String!, $post_id: String!){\n        editPostById(input:{\n            new_caption:$caption\n            post_id: $post_id\n    })\n    }\n"], ["\n    mutation editPost($caption: String!, $post_id: String!){\n        editPostById(input:{\n            new_caption:$caption\n            post_id: $post_id\n    })\n    }\n"])));
+var deletePostQuery = graphql_tag_1.default(templateObject_4 || (templateObject_4 = __makeTemplateObject(["\n    mutation deletePost($post_id: String!){\n        deletePostById(input:$post_id)\n    }\n"], ["\n    mutation deletePost($post_id: String!){\n        deletePostById(input:$post_id)\n    }\n"])));
+var checkLikeQuery = graphql_tag_1.default(templateObject_5 || (templateObject_5 = __makeTemplateObject(["\n  mutation checkLike($user_id: String!, $post_id: String!){\n    postIsLiked(input:{\n      user_id:$user_id\n      post_id:$post_id\n    }) \n  }\n"], ["\n  mutation checkLike($user_id: String!, $post_id: String!){\n    postIsLiked(input:{\n      user_id:$user_id\n      post_id:$post_id\n    }) \n  }\n"])));
+var likeQuery = graphql_tag_1.default(templateObject_6 || (templateObject_6 = __makeTemplateObject(["\n  mutation likePost($user_id: String!, $post_id: String!){\n    likePostById(input:{\n      user_id:$user_id\n      post_id:$post_id\n    }) \n  }\n"], ["\n  mutation likePost($user_id: String!, $post_id: String!){\n    likePostById(input:{\n      user_id:$user_id\n      post_id:$post_id\n    }) \n  }\n"])));
+var dislikeQuery = graphql_tag_1.default(templateObject_7 || (templateObject_7 = __makeTemplateObject(["\n  mutation dislikePost($user_id: String!, $post_id: String!){\n    unLikePostById(input:{\n      user_id:$user_id\n      post_id:$post_id\n    }) \n  }\n"], ["\n  mutation dislikePost($user_id: String!, $post_id: String!){\n    unLikePostById(input:{\n      user_id:$user_id\n      post_id:$post_id\n    }) \n  }\n"])));
+var checkSavedPostQuery = graphql_tag_1.default(templateObject_8 || (templateObject_8 = __makeTemplateObject(["\n    mutation checkSaved($user_id: String!, $post_id: String!){\n        postIsSaved(input:{\n            user_id: $user_id\n        post_id: $post_id\n    })\n    }\n"], ["\n    mutation checkSaved($user_id: String!, $post_id: String!){\n        postIsSaved(input:{\n            user_id: $user_id\n        post_id: $post_id\n    })\n    }\n"])));
+var savePostQuery = graphql_tag_1.default(templateObject_9 || (templateObject_9 = __makeTemplateObject(["\n    mutation savePost($user_id: String!, $post_id: String!){\n        savePostById(input:{\n            user_id: $user_id\n        post_id: $post_id\n    })\n    }\n"], ["\n    mutation savePost($user_id: String!, $post_id: String!){\n        savePostById(input:{\n            user_id: $user_id\n        post_id: $post_id\n    })\n    }\n"])));
+var unsavePostQuery = graphql_tag_1.default(templateObject_10 || (templateObject_10 = __makeTemplateObject(["\n    mutation unsavePost($user_id: String!, $post_id: String!){\n        unsavePostById(input:{\n            user_id: $user_id\n        post_id: $post_id\n    })\n    }\n"], ["\n    mutation unsavePost($user_id: String!, $post_id: String!){\n        unsavePostById(input:{\n            user_id: $user_id\n        post_id: $post_id\n    })\n    }\n"])));
+var postCommentQuery = graphql_tag_1.default(templateObject_11 || (templateObject_11 = __makeTemplateObject(["\n    mutation postComment($user_id: String!, $post_id: String!, $comment: String!){\n        commentPost(input:{\n        user_id:$user_id\n        post_id:$post_id\n        comment:$comment\n    })\n    }\n"], ["\n    mutation postComment($user_id: String!, $post_id: String!, $comment: String!){\n        commentPost(input:{\n        user_id:$user_id\n        post_id:$post_id\n        comment:$comment\n    })\n    }\n"])));
+var postLikeCountQuery = graphql_tag_1.default(templateObject_12 || (templateObject_12 = __makeTemplateObject(["\n    mutation checkPostLikeCount($post_id: String!){\n\t    postLikeCount(input:$post_id)\n    }\n\n"], ["\n    mutation checkPostLikeCount($post_id: String!){\n\t    postLikeCount(input:$post_id)\n    }\n\n"])));
+var postCommentCountQuery = graphql_tag_1.default(templateObject_13 || (templateObject_13 = __makeTemplateObject(["\n    mutation checkPostCommentCount($post_id: String!){\n        postCommentCount(input:$post_id)\n    }\n"], ["\n    mutation checkPostCommentCount($post_id: String!){\n        postCommentCount(input:$post_id)\n    }\n"])));
 
 function PostPage() {
   var postId = react_router_1.useParams().postId;
@@ -99096,25 +99841,644 @@ function PostPage() {
       loading = _b.loading,
       error = _b.error;
 
-  var user = JSON.parse(localStorage.getItem("user"));
+  var _c = client_1.useMutation(editPostQuery),
+      editPost = _c[0],
+      editPostData = _c[1];
+
+  var _d = client_1.useMutation(deletePostQuery),
+      deletePost = _d[0],
+      deletePostData = _d[1];
+
+  var _e = client_1.useMutation(checkLikeQuery),
+      checkLike = _e[0],
+      checkLikeData = _e[1];
+
+  var _f = client_1.useMutation(likeQuery),
+      likePost = _f[0],
+      likePostData = _f[1];
+
+  var _g = client_1.useMutation(dislikeQuery),
+      dislikePost = _g[0],
+      dislikePostData = _g[1];
+
+  var _h = client_1.useMutation(checkSavedPostQuery),
+      checkSaved = _h[0],
+      checkSavedData = _h[1];
+
+  var _j = client_1.useMutation(savePostQuery),
+      savePost = _j[0],
+      savePostData = _j[1];
+
+  var _k = client_1.useMutation(unsavePostQuery),
+      unsavePost = _k[0],
+      unsavePostData = _k[1];
+
+  var _l = client_1.useMutation(postCommentQuery),
+      postComment = _l[0],
+      postCommentData = _l[1];
+
+  var _m = client_1.useMutation(postLikeCountQuery),
+      postLikeCount = _m[0],
+      postLikeCountData = _m[1];
+
+  var currUser = JSON.parse(localStorage.getItem("user"));
+
+  var _o = client_1.useMutation(getUserQuery),
+      getUser = _o[0],
+      userData = _o[1];
+
+  var _p = react_1.useState(false),
+      visible = _p[0],
+      setVisible = _p[1];
+
+  var _q = react_1.useState(false),
+      visible2 = _q[0],
+      setVisible2 = _q[1];
+
+  var _r = react_1.useState(false),
+      visible3 = _r[0],
+      setVisible3 = _r[1];
+
+  var _s = react_1.useState(""),
+      comment = _s[0],
+      setComment = _s[1];
+
+  var _t = react_1.useState([]),
+      commentArray = _t[0],
+      setCommentArray = _t[1];
+
+  var _u = react_1.useState(false),
+      showMore = _u[0],
+      setShowMore = _u[1];
+
+  var _v = react_1.useState(false),
+      like = _v[0],
+      setLike = _v[1];
+
+  var _w = react_1.useState(false),
+      saved = _w[0],
+      setSaved = _w[1];
+
+  var _x = react_1.useState(""),
+      username = _x[0],
+      setUsername = _x[1];
+
+  var _y = react_1.useState(""),
+      userProfile = _y[0],
+      setUserProfile = _y[1];
+
+  var _z = react_1.useState(""),
+      userId = _z[0],
+      setUserId = _z[1];
+
+  var _0 = react_1.useState(""),
+      likeCount = _0[0],
+      setLikeCount = _0[1];
+
+  var _1 = react_1.useState(0),
+      commentCount = _1[0],
+      setCommentCount = _1[1];
+
+  var _2 = react_1.useState(""),
+      caption = _2[0],
+      setCaption = _2[1];
+
+  var _3 = react_1.useState(""),
+      newCaption = _3[0],
+      setNewCaption = _3[1];
+
+  var _4 = react_1.useState(""),
+      originalCaption = _4[0],
+      setOriginalCaption = _4[1];
+
+  var _5 = react_1.useState(false),
+      isShort = _5[0],
+      setIsShort = _5[1];
+
+  var _6 = react_1.useState([]),
+      image = _6[0],
+      setImage = _6[1];
+
+  var _7 = react_1.useState(0),
+      idx = _7[0],
+      setIdx = _7[1];
+
+  var history = react_router_1.useHistory();
+  var loadingBtn = react_1.default.createElement("div", {
+    className: "loadingAnimation"
+  }, react_1.default.createElement(react_loading_1.default, {
+    type: "spokes",
+    color: 'black',
+    height: '100%',
+    width: '100%'
+  }));
+  var likes = 32644000;
+  var comments = 68200;
+  var shortened = false;
+  var convertedLikes = millify_1.default(likes);
+  var convertedComments = millify_1.default(comments);
+
+  function left() {
+    if (idx != 0) {
+      setIdx(idx - 1);
+    }
+  }
+
+  function right() {
+    if (idx < image.length - 1) {
+      setIdx(idx + 1);
+    }
+  }
+
+  function showFullCaption() {
+    if (!showMore) {
+      setCaption(originalCaption);
+    } else {
+      setCaption(originalCaption.substr(0, 20) + "...");
+    }
+
+    setShowMore(!showMore);
+  }
+
+  function toggleLike() {
+    if (like) {
+      dislikePost({
+        variables: {
+          user_id: currUser.id,
+          post_id: postId
+        }
+      });
+    } else {
+      likePost({
+        variables: {
+          user_id: currUser.id,
+          post_id: postId
+        }
+      });
+    }
+
+    setLike(!like); // masukin code dbnya
+  }
+
+  function toggleSaved() {
+    if (!saved) {
+      savePost({
+        variables: {
+          user_id: currUser.id,
+          post_id: postId
+        }
+      });
+    } else {
+      unsavePost({
+        variables: {
+          user_id: currUser.id,
+          post_id: postId
+        }
+      });
+    }
+
+    setSaved(!saved); // masukin code dbnya
+  }
+
+  function deletePst() {
+    deletePost({
+      variables: {
+        post_id: postId
+      }
+    });
+  }
+
+  function editPst() {
+    editPost({
+      variables: {
+        post_id: postId,
+        caption: newCaption
+      }
+    });
+  }
+
+  function addCmmnt() {
+    if (caption.length > 0) {
+      postComment({
+        variables: {
+          comment: comment,
+          user_id: currUser.id,
+          post_id: postId
+        }
+      });
+    }
+  }
+
+  react_1.useEffect(function () {
+    if (postCommentData.data != undefined && postCommentData.data != null) {
+      window.location.reload();
+    }
+  }, [postCommentData]);
   react_1.useEffect(function () {
     getPost({
       variables: {
         post_id: postId
       }
     });
+    checkLike({
+      variables: {
+        post_id: postId,
+        user_id: currUser.id
+      }
+    });
+    checkSaved({
+      variables: {
+        post_id: postId,
+        user_id: currUser.id
+      }
+    });
+    postLikeCount({
+      variables: {
+        post_id: postId
+      }
+    });
   }, []);
+  react_1.useEffect(function () {
+    if (checkSavedData.error != null) {
+      setSaved(false);
+    } else {
+      setSaved(true);
+    }
+  }, [checkSavedData.loading]);
+  react_1.useEffect(function () {
+    if (editPostData.data != undefined && editPostData.data != null) {
+      window.location.reload();
+    }
+  }, [editPostData]);
+  react_1.useEffect(function () {
+    if (deletePostData.data != undefined && deletePostData.data != null) {
+      console.log("redirect..");
+      history.push('/profile/' + username);
+    }
+  }, [deletePostData]);
+  react_1.useEffect(function () {
+    if (checkLikeData.error != null) {
+      setLike(false);
+    } else {
+      setLike(true);
+    }
+  }, [checkLikeData.loading]);
+  react_1.useEffect(function () {
+    if (postLikeCountData.data != undefined && postLikeCountData != null) {
+      var likeCounts = postLikeCountData.data.postLikeCount;
+      setLikeCount(millify_1.default(likeCounts * 1000));
+    }
+  }, [postLikeCountData]);
   react_1.useEffect(function () {
     if (data !== undefined && data != null) {
       console.log(data.getPostBasedOnPostId);
+      setUserId(data.getPostBasedOnPostId.user_id);
+      setOriginalCaption(data.getPostBasedOnPostId.caption);
+      setImage(data.getPostBasedOnPostId.post_contents);
+      setCommentArray(data.getPostBasedOnPostId.post_comments);
+
+      if (data.getPostBasedOnPostId.caption.length > 30) {
+        setCaption(data.getPostBasedOnPostId.caption.substr(0, 20) + "...");
+        setShowMore(false);
+        setIsShort(false);
+        console.log("short caption");
+      } else {
+        setCaption(data.getPostBasedOnPostId.caption);
+        setIsShort(true);
+      }
     }
   }, [data]);
-  return react_1.default.createElement("div", null, "test");
+  react_1.useEffect(function () {
+    if (userData.data !== undefined && userData.data != null) {
+      console.log(userData.data.getUserBasedOnId);
+      setUsername(userData.data.getUserBasedOnId.username);
+      setUserProfile(userData.data.getUserBasedOnId.picture);
+    }
+  }, [userData]);
+  react_1.useEffect(function () {
+    // query dapetin data user
+    if (userId != null && userId != undefined) {
+      getUser({
+        variables: {
+          user_id: userId
+        }
+      });
+    }
+  }, [userId]);
+  return react_1.default.createElement(react_1.default.Fragment, null, react_1.default.createElement(UserHeader_1.default, null), react_1.default.createElement("div", {
+    className: "postOuterDiv"
+  }, react_1.default.createElement("div", {
+    className: "postInnerDiv"
+  }, react_1.default.createElement("div", {
+    className: "postDiv"
+  }, react_1.default.createElement(react_animated_popup_1.default, {
+    visible: visible2,
+    onClose: function onClose() {
+      return setVisible2(false);
+    }
+  }, react_1.default.createElement("div", {
+    className: "deleteModal"
+  }, react_1.default.createElement("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    fill: "none",
+    viewBox: "0 0 24 24",
+    stroke: "currentColor"
+  }, react_1.default.createElement("path", {
+    "stroke-linecap": "round",
+    "stroke-linejoin": "round",
+    "stroke-width": "2",
+    d: "M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+  })), react_1.default.createElement("p", null, "Are You Sure You Want To Delete The Post?"), react_1.default.createElement("button", {
+    id: "confirm",
+    onClick: deletePst
+  }, "Yes"))), react_1.default.createElement(react_animated_popup_1.default, {
+    visible: visible3,
+    onClose: function onClose() {
+      return setVisible3(false);
+    }
+  }, react_1.default.createElement("div", {
+    className: "deleteModal"
+  }, react_1.default.createElement("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    fill: "none",
+    viewBox: "0 0 24 24",
+    stroke: "currentColor"
+  }, react_1.default.createElement("path", {
+    "stroke-linecap": "round",
+    "stroke-linejoin": "round",
+    "stroke-width": "2",
+    d: "M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+  })), react_1.default.createElement("p", null, "Insert New Caption:"), react_1.default.createElement("input", {
+    type: "text",
+    autoComplete: "off",
+    onChange: function onChange(e) {
+      setNewCaption(e.target.value);
+    }
+  }), react_1.default.createElement("button", {
+    id: "confirm",
+    onClick: editPst
+  }, "Update"))), react_1.default.createElement("div", {
+    className: "postLeftDiv"
+  }, react_1.default.createElement("div", {
+    className: "postProfileDiv"
+  }, react_1.default.createElement("a", {
+    href: "/profile/" + username,
+    id: "username"
+  }, react_1.default.createElement("img", {
+    src: userProfile,
+    alt: ""
+  }), react_1.default.createElement("span", null, username)), userId == currUser.id ? react_1.default.createElement(reactjs_popup_1.default, {
+    trigger: react_1.default.createElement("button", {
+      id: "postSettingButton"
+    }, react_1.default.createElement("svg", {
+      xmlns: "http://www.w3.org/2000/svg",
+      fill: "none",
+      viewBox: "0 0 24 24",
+      stroke: "currentColor"
+    }, react_1.default.createElement("path", {
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round",
+      "stroke-width": "2",
+      d: "M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"
+    }))),
+    position: "left top"
+  }, react_1.default.createElement("div", {
+    className: "popUpPost"
+  }, react_1.default.createElement("button", {
+    id: "editButton",
+    onClick: function onClick() {
+      return setVisible3(true);
+    }
+  }, "Edit"), react_1.default.createElement("button", {
+    onClick: function onClick() {
+      return setVisible2(true);
+    }
+  }, "Delete"))) : null), image.length != 0 && image != undefined && image != null ? react_1.default.createElement("div", {
+    className: "pictureDiv"
+  }, image.length > 1 ? react_1.default.createElement("button", {
+    id: "leftSlide",
+    onClick: left
+  }, react_1.default.createElement("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    fill: "none",
+    viewBox: "0 0 24 24",
+    stroke: "currentColor"
+  }, react_1.default.createElement("path", {
+    "stroke-linecap": "round",
+    "stroke-linejoin": "round",
+    "stroke-width": "2",
+    d: "M15 19l-7-7 7-7"
+  }))) : null, image.map(function (content, i) {
+    return i == idx ? content.type == "image" ? react_1.default.createElement("img", {
+      className: "displayed",
+      id: i.toString(),
+      src: content.path,
+      alt: "",
+      key: content.id
+    }) : react_1.default.createElement("video", {
+      className: "displayed",
+      id: i.toString(),
+      src: content.path,
+      key: content.id,
+      controls: true,
+      preload: "auto"
+    }) : null;
+  }), image.length > 1 ? react_1.default.createElement("button", {
+    id: "rightSlide",
+    onClick: right
+  }, react_1.default.createElement("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    fill: "none",
+    viewBox: "0 0 24 24",
+    stroke: "currentColor"
+  }, react_1.default.createElement("path", {
+    "stroke-linecap": "round",
+    "stroke-linejoin": "round",
+    "stroke-width": "2",
+    d: "M9 5l7 7-7 7"
+  }))) : null) : loadingBtn), react_1.default.createElement("div", {
+    className: "postRightDiv"
+  }, react_1.default.createElement("div", {
+    className: "interactDiv"
+  }, react_1.default.createElement("p", {
+    className: "captionDiv"
+  }, react_1.default.createElement("p", {
+    id: "username"
+  }, username), console.log(isShort), isShort ? react_1.default.createElement("p", {
+    id: "caption"
+  }, caption) : !showMore ? react_1.default.createElement(react_1.default.Fragment, null, react_1.default.createElement("p", {
+    id: "caption"
+  }, caption, react_1.default.createElement("div", {
+    id: "showMore",
+    onClick: showFullCaption
+  }, "more"))) : react_1.default.createElement(react_1.default.Fragment, null, react_1.default.createElement("p", {
+    id: "caption"
+  }, caption, react_1.default.createElement("div", {
+    id: "showMore",
+    onClick: showFullCaption
+  }, "hide")))), react_1.default.createElement("div", {
+    className: "interactInnerDiv"
+  }, react_1.default.createElement("div", {
+    className: "leftInnerDiv"
+  }, react_1.default.createElement("button", {
+    id: "like",
+    onClick: toggleLike
+  }, like ? react_1.default.createElement("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    viewBox: "0 0 20 20",
+    fill: "currentColor"
+  }, react_1.default.createElement("path", {
+    fillRule: "evenodd",
+    d: "M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z",
+    clipRule: "evenodd"
+  })) : react_1.default.createElement("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    fill: "none",
+    viewBox: "0 0 24 24",
+    stroke: "currentColor"
+  }, react_1.default.createElement("path", {
+    "stroke-linecap": "round",
+    "stroke-linejoin": "round",
+    "stroke-width": "2",
+    d: "M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+  }))), react_1.default.createElement("button", {
+    id: "comment"
+  }, react_1.default.createElement("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    fill: "none",
+    viewBox: "0 0 24 24",
+    stroke: "currentColor"
+  }, react_1.default.createElement("path", {
+    "stroke-linecap": "round",
+    "stroke-linejoin": "round",
+    "stroke-width": "2",
+    d: "M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+  }))), react_1.default.createElement("button", {
+    id: "share",
+    onClick: function onClick() {
+      return setVisible(true);
+    }
+  }, react_1.default.createElement("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    fill: "none",
+    viewBox: "0 0 24 24",
+    stroke: "currentColor"
+  }, react_1.default.createElement("path", {
+    "stroke-linecap": "round",
+    "stroke-linejoin": "round",
+    "stroke-width": "2",
+    d: "M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"
+  }))), react_1.default.createElement(react_animated_popup_1.default, {
+    visible: visible,
+    onClose: function onClose() {
+      return setVisible(false);
+    }
+  }, react_1.default.createElement("div", {
+    className: "modal"
+  }, "Share", react_1.default.createElement("div", {
+    id: "buttonShareModal"
+  }, react_1.default.createElement(react_copy_to_clipboard_1.CopyToClipboard, {
+    text: window.location.href
+  }, react_1.default.createElement("button", {
+    id: "shareClipboard"
+  }, react_1.default.createElement("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    fill: "none",
+    viewBox: "0 0 24 24",
+    stroke: "currentColor"
+  }, react_1.default.createElement("path", {
+    "stroke-linecap": "round",
+    "stroke-linejoin": "round",
+    "stroke-width": "2",
+    d: "M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+  })))), react_1.default.createElement("button", {
+    id: "shareSosmed"
+  }, react_1.default.createElement("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    viewBox: "0 0 96.124 96.123"
+  }, react_1.default.createElement("path", {
+    "stroke-linecap": "round",
+    "stroke-linejoin": "round",
+    "stroke-width": "2",
+    d: "M72.089,0.02L59.624,0C45.62,0,36.57,9.285,36.57,23.656v10.907H24.037c-1.083,0-1.96,0.878-1.96,1.961v15.803\r\n                                                            c0,1.083,0.878,1.96,1.96,1.96h12.533v39.876c0,1.083,0.877,1.96,1.96,1.96h16.352c1.083,0,1.96-0.878,1.96-1.96V54.287h14.654\r\n                                                            c1.083,0,1.96-0.877,1.96-1.96l0.006-15.803c0-0.52-0.207-1.018-0.574-1.386c-0.367-0.368-0.867-0.575-1.387-0.575H56.842v-9.246\r\n                                                            c0-4.444,1.059-6.7,6.848-6.7l8.397-0.003c1.082,0,1.959-0.878,1.959-1.96V1.98C74.046,0.899,73.17,0.022,72.089,0.02z"
+  }))), react_1.default.createElement("button", {
+    id: "shareDm"
+  }, react_1.default.createElement("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    fill: "none",
+    viewBox: "0 0 24 24",
+    stroke: "currentColor"
+  }, react_1.default.createElement("path", {
+    "stroke-linecap": "round",
+    "stroke-linejoin": "round",
+    "stroke-width": "2",
+    d: "M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+  }))))))), react_1.default.createElement("button", {
+    id: "save",
+    onClick: toggleSaved
+  }, saved ? react_1.default.createElement("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    viewBox: "0 0 20 20",
+    fill: "currentColor"
+  }, react_1.default.createElement("path", {
+    d: "M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z"
+  })) : react_1.default.createElement("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    fill: "none",
+    viewBox: "0 0 24 24",
+    stroke: "currentColor"
+  }, react_1.default.createElement("path", {
+    "stroke-linecap": "round",
+    "stroke-linejoin": "round",
+    "stroke-width": "2",
+    d: "M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"
+  })))), react_1.default.createElement("p", {
+    id: "likes"
+  }, likeCount, " likes"), react_1.default.createElement("p", {
+    id: "time"
+  }, "1 MINUTE AGO"), commentArray.length != 0 && commentArray != undefined && commentArray != null ? react_1.default.createElement("div", {
+    className: "pictureDiv"
+  }, commentArray.map(function (content, i) {
+    console.log(content);
+    return react_1.default.createElement(Comment_1.Comment, {
+      comment_id: content.id,
+      comment_value: content.comment,
+      comment_user_id: content.user_id,
+      comment_header_id: -1,
+      comment_replies: content.replies
+    });
+  })) : loading ? loadingBtn : "No Comments Available", react_1.default.createElement("a", {
+    href: "#",
+    className: "viewMoreComments"
+  }, " View more")), react_1.default.createElement("div", {
+    className: "inputCommentSection"
+  }, react_1.default.createElement("button", {
+    id: "emojiButton"
+  }, react_1.default.createElement("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    fill: "none",
+    viewBox: "0 0 24 24",
+    stroke: "currentColor"
+  }, react_1.default.createElement("path", {
+    "stroke-linecap": "round",
+    "stroke-linejoin": "round",
+    "stroke-width": "2",
+    d: "M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+  }))), react_1.default.createElement("input", {
+    type: "text",
+    placeholder: "Add a comment...",
+    onChange: function onChange(e) {
+      setComment(e.target.value);
+    }
+  }), react_1.default.createElement("button", {
+    id: "postButton",
+    onClick: addCmmnt
+  }, "Post")))))), react_1.default.createElement(Footer_1.default, null));
 }
 
 exports.default = PostPage;
-var templateObject_1;
-},{"@apollo/client":"node_modules/@apollo/client/index.js","graphql-tag":"node_modules/graphql-tag/lib/index.js","react":"node_modules/react/index.js","react-router":"node_modules/react-router/esm/react-router.js"}],"App.tsx":[function(require,module,exports) {
+var templateObject_1, templateObject_2, templateObject_3, templateObject_4, templateObject_5, templateObject_6, templateObject_7, templateObject_8, templateObject_9, templateObject_10, templateObject_11, templateObject_12, templateObject_13;
+},{"@apollo/client":"node_modules/@apollo/client/index.js","graphql-tag":"node_modules/graphql-tag/lib/index.js","react":"node_modules/react/index.js","react-animated-popup":"node_modules/react-animated-popup/index.js","react-router":"node_modules/react-router/esm/react-router.js","../AddOns/Footer/Footer":"page/AddOns/Footer/Footer.tsx","../AddOns/Header/UserHeader":"page/AddOns/Header/UserHeader.tsx","reactjs-popup":"node_modules/reactjs-popup/dist/reactjs-popup.esm.js","millify":"node_modules/millify/dist/millify.js","react-copy-to-clipboard":"node_modules/react-copy-to-clipboard/lib/index.js","react-loading":"node_modules/react-loading/dist/react-loading.js","../Components/Comment":"page/Components/Comment.tsx"}],"App.tsx":[function(require,module,exports) {
 "use strict";
 
 var __createBinding = this && this.__createBinding || (Object.create ? function (o, m, k, k2) {
@@ -99250,7 +100614,6 @@ function App() {
     exact: true,
     path: "/reset/:token"
   }, react_1.default.createElement(ResetPasswordPage_1.default, null)), react_1.default.createElement(react_router_dom_1.Route, {
-    exact: true,
     path: "/profile/:username"
   }, react_1.default.createElement(Profile_1.default, null)), react_1.default.createElement(react_router_dom_1.Route, {
     exact: true,
@@ -99408,7 +100771,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60419" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59713" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

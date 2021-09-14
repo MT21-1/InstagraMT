@@ -28,12 +28,73 @@ type Post{
   caption: String!
   created_at: String!
   post_contents: [PostContent!]!
+  post_comments: [PostComment!]!
 }
 
 type Relation{
   id: String!
   follow_id: String!
   followed_id: String!
+}
+
+type SavedPost{
+  id: String!
+  user_id: String!
+  post_id: String!
+  post_contents: [PostContent!]!
+}
+
+type TaggedPost{
+  id: String!
+  user_id: String!
+  post_id: String!
+  post_contents: [PostContent!]!
+}
+
+type LikedComment{
+  id: String!
+  user_id: String!
+  comment_id: String!
+}
+
+type LikedPost{
+  id: String!
+  user_id: String!
+  post_id: String!
+}
+
+type PostReply{
+  id: String!
+  user_id: String!
+  comment_id: String!
+  reply: String!
+  created_at: String!
+}
+
+type LikedReply{
+    id: String!
+    user_id: String!
+    reply_id: String!
+}
+
+type PostComment{
+  id: String!
+  user_id: String!
+  post_id: String!
+  comment: String!
+  created_at: String!
+  replies: [PostReply!]!
+}
+
+type Hashtag{
+  id: String!
+  hashtag: String!
+}
+
+type PostPagged{
+  posts:[Post!]!
+  nextpost:String!
+  hasnext:Boolean!
 }
 
 input InputUser{
@@ -74,6 +135,42 @@ input newRelation{
   followed_id: String!
 }
 
+input newEditPost{
+  post_id: String!
+  new_caption: String!
+}
+
+input newSavedPost{
+  user_id: String!
+  post_id: String!
+}
+
+input newLikedPost{
+  user_id: String!
+  post_id: String!
+}
+
+input newComment{
+  user_id: String!
+  post_id: String!
+  comment: String!
+}
+
+input newLikeComment{
+  user_id: String!
+  comment_id: String!
+}
+
+input newReply{
+  user_id: String!
+  comment_id: String!
+  reply: String!
+}
+
+input newLikedReply{
+  user_id: String!
+  reply_id: String!
+}
 
 type Mutation{
   createUser(input: InputUser!): String!
@@ -88,6 +185,7 @@ type Mutation{
   verifyResetPassword(input: updatePassword!): String!
   getUserBasedOnUsername(input: String!): User!
   getUserBasedOnEmail(input: String!): User!
+  getUserBasedOnId(input: String!): User!
   getPostBasedOnUserId(input: String!): [Post!]!
   getPostBasedOnPostId(input:String!): Post!
   insertNewPost(input: newPost!): Post!
@@ -97,4 +195,34 @@ type Mutation{
   getFollowing(input:String!): [Relation!]!
   isFollowing(input: newRelation!): Boolean!
   searchUser(input: String!): [User!]!
+  searchHashtag(input: String!): [Hashtag!]!
+  
+  deletePostById(input: String!): Boolean!
+  editPostById(input: newEditPost!): Boolean!
+  getSavedPostBasedOnUserId(input: String!): [SavedPost!]!
+  getTaggedPostBasedOnUserId(input: String!): [TaggedPost!]!
+  savePostById(input: newSavedPost!): Boolean!
+  unsavePostById(input: newSavedPost!): Boolean!
+  likePostById(input: newLikedPost!): Boolean!
+  unLikePostById(input: newLikedPost!): Boolean!
+  commentPost(input: newComment!): Boolean!
+  deleteCommentById(input: String!):Boolean!
+  likeCommentById(input: newLikeComment!): Boolean!
+  unlikeCommentById(input: newLikeComment!): Boolean!
+  postIsLiked(input: newLikedPost!): Boolean!
+  postIsSaved(input: newSavedPost!): Boolean!
+  commentIsLiked(input: newLikeComment!): Boolean!
+  commentLikeCount(input: String): Int!
+  postLikeCount(input: String!): Int!
+  postCommentCount(input: String!): Int!
+
+  likeReplyById(input: newLikedReply!): Boolean!
+  unlikeReplyById(input: newLikedReply!): Boolean!
+  postReply(input: newReply!): Boolean!
+  deleteReplyById(input: String!): Boolean!
+  replyIsLiked(input: newLikedReply!): Boolean!
+  replyLikeCount(input: String!): Int!
+
+  selectPostExplorePage(nextpost:String): PostPagged!
+
 }
