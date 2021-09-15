@@ -135,6 +135,9 @@ export const Comment = (props) =>{
     const [newReply, setNewReply] = useState("")
     const [showReplyInput, setShowReplyInput] = useState(false)
 
+    const [replyCountVisible, setReplyCountVisible] = useState(-1)
+
+
     const currUser = JSON.parse(localStorage.getItem("user"))
     function toggleLike(){
         if(like){
@@ -337,29 +340,41 @@ export const Comment = (props) =>{
                         
                        <p className="totalLikes">{likeCounts} Likes</p>
                         {(atHome)?null:<button className="replyButton" onClick={()=>setShowReplyInput(!showReplyInput)}>Reply</button>}
-                        {(comment_replies != undefined && comment_replies != null && comment_replies.length > 0 && comment_header_id == -1)?
-                            (!replyVisibility)?
-                                <button className="replyButton" onClick={() => setReplyVisibility(!replyVisibility)}>View {comment_replies.length} Replies</button>
+                        {(comment_replies != undefined && comment_replies != null && comment_replies.length > 0 && comment_header_id == -1 && !atHome)?
+                            ((replyCountVisible < comment_replies.length -1) && !atHome)?
+                                <button className="replyButton" onClick={() => 
+                                    (replyCountVisible + 3 > comment_replies.length-1)?setReplyCountVisible(comment_replies.length-1):setReplyCountVisible(replyCountVisible+3)}>View {millify(comment_replies.length - replyCountVisible -1)} Replies
+                                </button>
                             :
                                 null
                         :
                             null}
                     </div>
+
                     {(showReplyInput?
                     <span>
                         <input type="text" placeholder="Add a reply..." onChange={e =>{setNewReply(e.target.value)}}/>
                         <button onClick={addRply}>Post</button>
                     </span>
-                    
-                    
                     :null)}
+
                     {(comment_header_id == -1 && comment_replies != null && comment_replies.length > 0)?
-                        (replyVisibility?
+                        ((replyCountVisible > -1 && !atHome)?
                         <div className="commentReplies">
-                        {comment_replies.map((content) =>{
-                            return(<Comment comment_id={content.id} comment_value={content.reply} comment_user_id = {content.user_id} comment_header_id= {comment_id} comment_replies = {null}/>)
+                        {comment_replies.map((content, i) =>{
+                            console.log("reply count visible = " + replyCountVisible + "index = "+ i)
+                            return((replyCountVisible >= i)?<Comment comment_id={content.id} comment_value={content.reply} comment_user_id = {content.user_id} comment_header_id= {comment_id} comment_replies = {null}/>:null)
                         })}
-                        <button className="replyButton" onClick={() => setReplyVisibility(!replyVisibility)}>Hide {comment_replies.length} Replies</button>
+
+                        {(comment_replies != undefined && comment_replies != null && comment_replies.length > 0 && comment_header_id == -1)?
+                            ((replyCountVisible > -1) && !atHome)?
+                                <button className="replyButton" onClick={() => setReplyCountVisible(-1)}>Hide Replies</button>
+                            :
+                                null
+                        :
+                            null}
+
+                        
                     </div>:null)
                     : null}
                     

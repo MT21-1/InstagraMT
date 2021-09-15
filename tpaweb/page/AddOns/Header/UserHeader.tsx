@@ -5,6 +5,7 @@ import TaggedStrip from "../../ActivityPage/TaggedStrip";
 import CommentStrip from "../../ActivityPage/commentStrip";
 import LikeStrip from "../../ActivityPage/likeStrip";
 import FollowStrip from "../../ActivityPage/followStrip";
+import Toggle from "../../../toggle"
 import React, { useState, useEffect, useContext, useMemo } from 'react'
 import gql from "graphql-tag";
 import { debounceTime, distinctUntilChanged, map, Subject } from "rxjs";
@@ -74,7 +75,9 @@ export default function UserHeader(){
             <div className="header">
                 <div className="logo">
                     <h1>InstagraMT</h1>
+                    <Toggle />
                 </div>
+                
                 <div className="searchBar">
                     <form action="">
                     

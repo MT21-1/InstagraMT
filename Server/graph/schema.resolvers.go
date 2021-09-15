@@ -10,6 +10,7 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"strings"
@@ -707,7 +708,6 @@ func (r *mutationResolver) ReplyLikeCount(ctx context.Context, input string) (in
 }
 
 func (r *mutationResolver) SelectPostExplorePage(ctx context.Context, nextpost *string) (*model.PostPagged, error) {
-
 	var posts []*model.Post
 	query := r.Db.Model(&posts)
 
@@ -733,7 +733,63 @@ func (r *mutationResolver) SelectPostExplorePage(ctx context.Context, nextpost *
 		postPagged.Hasnext = false
 	}
 	return &postPagged, nil
+}
 
+func (r *mutationResolver) SelectPostHomePage(ctx context.Context, nextpost *string, userID string) (*model.PostPagged, error) {
+	var relations []*model.Relation
+	// ambil dia follo siapa
+	err := r.Db.Model(&relations).Where("follow_id = ?", userID).Select()
+
+	if err != nil {
+		return nil, err
+	}
+
+	var user model.User
+	// buat arrey untuk nyimpan followed pny id
+	lenUser := len(relations)
+	followed_id := make([]string, lenUser)
+
+	for i, u := range relations {
+		err = r.Db.Model(&user).Where("id = ?", u.FollowedID).Select()
+		followed_id[i] = user.Id
+	}
+	// tambahin sm puny sendiri spy bisa liat post sendiri
+	followed_id = append(followed_id, userID)
+
+	if len(followed_id) == 0 {
+		return nil, err
+	}
+
+	var posts []*model.Post
+	query := r.Db.Model(&posts)
+
+	if nextpost != nil {
+		query = query.Where("id <=?", nextpost).WhereIn("user_id in(?)", followed_id)
+	} else {
+		query = query.WhereIn("user_id in (?)", followed_id)
+	}
+
+	err = query.Relation("PostContents").Order("id desc").Limit(4).Select()
+	if err != nil {
+		return nil, err
+	}
+
+	var postPagged model.PostPagged
+	postLength := len(posts)
+
+	if postLength == 4 {
+		postPagged.Posts = posts[:postLength-1]
+		postPagged.Nextpost = posts[postLength-1].ID
+		postPagged.Hasnext = true
+	} else {
+		postPagged.Posts = posts
+		postPagged.Hasnext = false
+	}
+	return &postPagged, nil
+}
+
+func (r *mutationResolver) GetMutualFriend(ctx context.Context, input string) ([]*model.User, error) {
+	panic(fmt.Errorf("not implemented"))
 }
 
 func (r *queryResolver) Users(ctx context.Context) ([]*model.User, error) {

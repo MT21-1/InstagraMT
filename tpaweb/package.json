@@ -24,6 +24,7 @@
     "react-google-login": "^5.2.2",
     "react-loading": "^2.0.3",
     "react-router-dom": "^5.2.0",
+    "react-share": "^4.4.0",
     "react-show-more-text": "^1.5.0",
     "reactjs-popup": "^2.0.5",
     "rxjs": "^7.3.0",

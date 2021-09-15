@@ -222,7 +222,9 @@ type Mutation{
   deleteReplyById(input: String!): Boolean!
   replyIsLiked(input: newLikedReply!): Boolean!
   replyLikeCount(input: String!): Int!
-
+  
   selectPostExplorePage(nextpost:String): PostPagged!
 
+  selectPostHomePage(nextpost: String, user_id: String!): PostPagged!
+  getMutualFriend(input: String!): [User!]!
 }

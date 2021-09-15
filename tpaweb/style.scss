@@ -1,11 +1,25 @@
 $phone : 480px;
 $tablet : 1024px;
+$popUpWidth: 200px;
 $mainColor: #072AC8;
 $secColor: #00A6FB;
-$lightMainColor: white;
+$lightMainColor: var(--lightMainColor);
 $line:rgb(231, 231, 231);
-$lightSecColor: rgb(240, 246, 250);
-$popUpWidth: 200px;
+$lightSecColor: var(--lightSecColor);
+$textColor: var(--textColor);
+$borderColor: "#FAFAFA";
+
+body{
+    --lightMainColor: #FAFAFA;
+    --lightSecColor: #F0F0F0;
+    --textColor: black;
+}
+
+body.dark{
+    --lightMainColor: #505050;
+    --lightSecColor: #050505;
+    --textColor: #FAFAFA;
+}
 
 .body,html::-webkit-scrollbar{
     width: 8px;
@@ -81,10 +95,16 @@ html, body{
         width: 70%;
         height: 55px;
         .logo{
+            display: flex;
             font-family: "Style Script", cursive;
             font-size: 1rem;
             width: fit-content;
-            
+            color:$textColor;
+            .toggle{
+                background: none;
+                border: none;
+                cursor: pointer;
+            }
         }
         .searchBar{
             display: flex;
@@ -106,7 +126,7 @@ html, body{
             width: 200px;
             svg{
                 height: 2rem;
-                color: black;
+                color:$textColor;
                 object-fit: contain;
             }
             img{
@@ -268,6 +288,7 @@ html, body{
                     font-size: 3rem;
                     width: fit-content;
                     margin: 0;
+                    color: $textColor;
                 }
 
                 form{
@@ -330,7 +351,7 @@ html, body{
                    border: none;
                    width: 100%;
                     span{
-                        color: $mainColor;
+                        color: $textColor;
                         font-size: 1rem;
                         font-weight: 600;
                     }
@@ -348,6 +369,7 @@ html, body{
                 }
 
                 a{
+                    color: $textColor;
                     text-align: center;
                     width: 100%;
                     text-decoration: none;
@@ -359,6 +381,7 @@ html, body{
                 padding: 1rem 2.5rem 1rem 2.5rem;
                 background-color: $lightMainColor;
                 border: 1px solid $line;
+                color: $textColor;
                 a{
                     text-decoration: none;
                     margin-left: 5px;
@@ -373,6 +396,7 @@ html, body{
                 justify-content: center;
                 align-items: center;
                 height: 100px;
+                color: $textColor;
                 p{
                     font-size: 14px;
                     font-weight: 300;
@@ -449,7 +473,7 @@ html, body{
         a{
             text-decoration: none;
             font-size: 11px;
-            color: black;
+            color: $textColor;
             margin: 0 4px 0 4px;
         }
     }
@@ -459,10 +483,12 @@ html, body{
         align-items: center;
         width: 400px;
         font-size: 12px;
+        color: $textColor;
         select{
             font-size: 12px;
             background-color: $lightSecColor;
             border:none;
+            color: $textColor;
         }
 
     }
@@ -503,14 +529,15 @@ html, body{
             height: 820px;
             width: 360px;
             background-color: $lightSecColor;
+            color: $textColor;
             .signUp{
-                color: darkgray;
+                color: $textColor;
                 text-align: center;
                 font-size: 18px;
                 font-weight: 500;
             }
             .terms{
-                color: darkgray;
+                color: $textColor;
                 text-align: center;
                 font-size: 12px;
                 font-weight: 300;
@@ -528,7 +555,7 @@ html, body{
                 background-color: $lightMainColor;
                 border: 1px solid $line;
                 height: 550px;
-                
+                color: $textColor;
                 #title{
                     font-family: "Style Script", cursive;
                     font-size: 3rem;
@@ -596,7 +623,7 @@ html, body{
                    border:none;
                    width: 100%;
                     span{
-                        color: $lightMainColor;
+                        color: white;
                         font-size: 1rem;
                         font-weight: 600;
                     }
@@ -885,6 +912,7 @@ html, body{
                     font-size: 1.5rem;
                     width: fit-content;
                     margin: 0;
+                    color: $textColor;
                 }
 
                 .forgotText{
@@ -959,8 +987,10 @@ html, body{
                 justify-content: space-between;
                 background-color: $lightMainColor;
                 border: 1px solid $line;
+                
                 a{
                     text-decoration: none;
+                    color: $textColor;
                     font-weight: 500;
                 }
             }
@@ -1144,7 +1174,7 @@ html, body{
         justify-content: flex-start;
         align-items: center;
         padding: 0.3rem 0rem 0.3rem 0rem;
-        color: black;
+        color:$textColor;
         svg{
             width: 24px;
             padding: 0.2rem 0.5rem 0.2rem 0rem;
@@ -1163,6 +1193,7 @@ html, body{
             display: flex;
             justify-content: flex-start;
             align-items: center;
+            color:$textColor;
         }
     }
 }
@@ -1186,7 +1217,7 @@ html, body{
         
         .leftHomeDiv{
             padding: 4rem 0rem 0rem 0rem;
-            width: 66%;
+            width: 65%;
             display: flex;
             align-items: center;
             flex-direction: column;
@@ -1222,6 +1253,218 @@ html, body{
                 
 
             }
+            .postDiv{
+                margin: 1rem 0 1rem 0;
+                background-color: $lightMainColor;
+                border:1px solid $line;
+                width: 100%;
+                display: flex;
+                padding: 0.8rem;
+                flex-direction: column;
+                .postProfileDiv{
+                    padding:0.5rem 0.5rem 0.5rem 0.5rem;
+                    color: $textColor;
+                    display: flex;
+                    justify-content: space-between;
+                    width: 98%;
+                    a{
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        text-decoration: none;
+                        color: $textColor;
+                        font-weight: 600;
+                        span{
+                            margin-left: 1rem;
+                        }
+                        span:hover{
+                            text-decoration: underline;
+                        }
+                        img,video{
+                            width: 3rem;
+                            height: 3rem;
+                            border-radius: 50%; 
+                        }
+                    }
+                    button{
+                        width: 40px;
+                        background-color: transparent;
+                        border:none;
+                        cursor: pointer;
+                    }
+            
+                }
+                .pictureDiv{
+                    position: relative;
+                    width: 100%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    .videoDiv{
+                        position: relative;
+                        display: flex;
+                        width: 100%;
+                        justify-content: center;
+                        align-items: center;
+                        button{
+                            position: absolute;
+                            width: 50px;
+                            height: 50px;
+                            z-index: 10;
+                            cursor: pointer;
+                            background: none;
+                            color: $lightSecColor;
+                            border: none;
+                        }
+                    }
+                    
+                    #leftSlide{
+                        width: 50px;
+                        height: 50px;
+                        background:none;
+                        border: none;
+                        cursor: pointer;
+                        margin-right: 2rem;
+                        position: absolute;
+                        left: 0%;
+                        z-index: 10;
+                    }
+                    .displayed{
+                        display: flex;
+                        object-fit: contain;
+                        width: 100%;
+                        max-height: 100%;
+                        overflow: hidden;
+                        height: 400px;
+                        z-index: 5;
+                    }
+                    #rightSlide{
+                        width: 50px;
+                        height: 50px;
+                        background:none;
+                        border: none;
+                        cursor: pointer;
+                        position: absolute;
+                        right: 0;
+                        z-index: 10;
+                    }
+                    
+                }
+                .interactDiv{
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    margin: 1rem 0 1rem 0;
+                    width: 98%;
+                    padding: 0rem 0.5rem 0rem 0.5rem;
+                    .interactInnerDiv{
+                        display: flex;
+                        width: 100%;
+                        justify-content: space-between;
+                        .leftInnerDiv{
+                            display: flex;
+                            width: 145px;
+                            justify-content: space-between;
+                        }
+                        button{
+                            width: 45px;
+                            cursor: pointer;
+                            background-color: transparent;
+                            border:none;
+                            svg{
+                                color: $textColor;
+                            }
+                        }
+                    }
+                    .pictureDiv{
+                        display: flex;
+                        flex-direction: column;
+                        .commentRightTop{
+                            display: flex;
+                            justify-content: space-between;
+                            .interactComment{
+                                width: fit-content;
+                            }
+                        }
+                    }
+                }
+                #likes{
+                    color: $textColor;
+                    margin: 0.1rem 0 0.1rem 0;
+                    padding: 0%;
+                    width: 100%;
+                    font-weight: 600;
+                }
+            
+                .captionDiv{
+                    display: flex;
+                    width: 100%;
+                    #username{
+                        color: $textColor;
+                        font-weight: 600;
+                    }
+                    #caption{
+                        color: $textColor;
+                        margin-left: 0.4rem;
+                        display: flex;
+                    }
+                    #showMore{
+                        display: flex;
+                        color: darkgray;
+                        font-size: 14px;
+                        justify-content: center;
+                        align-items: flex-end;
+                        cursor: pointer;
+                    }
+                }
+                .viewMoreComments{
+                    display: flex;
+                    justify-content: flex-start;
+                    align-items: flex-start;
+                    padding: 0%;
+                    margin: 0%;
+                    text-decoration: none;
+                    color: darkgray;
+                    font-weight: 400;
+                    width: 100%;
+                    
+                }
+                .commentSection{
+                    display: flex;
+                    flex-direction: column;
+                    width: 100%;
+                }
+                #time{
+                    display: flex;
+                    width: 100%;
+                    color: darkgray;
+                    font-size: 12px;
+                }
+                .inputCommentSection{
+                    border-top:1px solid $line;
+                    padding:12px 0 0 0 ;
+                    margin:12px 0 12px 0; 
+                    display: flex;
+                    width: 100%;
+                    button{
+                        color: $textColor;
+                        width: 45px;
+                        cursor: pointer;
+                        background-color: transparent;
+                        border:none;
+                    }
+                    input{
+                        font-weight: 400;
+                        width: 100%;
+                        border:none
+                    }
+                    #postButton{
+                        color: $secColor;
+                        font-weight: 700;
+                    }
+                }
+            }
         }
 
         .rightHomeDiv{
@@ -1256,6 +1499,7 @@ html, body{
                             padding: 0%;
                         }
                         .username{
+                            color: $textColor;
                             font-weight: bold;
                         }
                         .subname{
@@ -1312,6 +1556,7 @@ html, body{
                             padding: 0%;
                         }
                         .username{
+                            color: $textColor;
                             font-weight: bold;
                         }
                         .subname{
@@ -1348,7 +1593,7 @@ html, body{
                     a{
                         text-decoration: none;
                         font-size: 11px;
-                        color: black;
+                        color: $textColor;
                         margin: 0 4px 0 4px;
                     }
                 }
@@ -1409,12 +1654,13 @@ html, body{
         display: flex;
         justify-content: space-between;
         width: 100%;
+        color: $textColor;
         a{
             display: flex;
             justify-content: center;
             align-items: center;
             text-decoration: none;
-            color: black;
+            color: $textColor;
             font-weight: 600;
             span{
                 margin-left: 1rem;
@@ -1431,6 +1677,7 @@ html, body{
 
         }
         button{
+            color: $textColor;
             width: 40px;
             background-color: transparent;
             border:none;
@@ -1483,6 +1730,7 @@ html, body{
         display: flex;
         width: 100%;
         #username{
+            color: $textColor;
             font-weight: 600;
         }
         #caption{
@@ -1569,7 +1817,7 @@ html, body{
         display: flex;
         #usernameComment{
             text-decoration: none;
-            color: black;
+            color: $textColor;
         }
         
     }
@@ -1593,10 +1841,10 @@ html, body{
         align-items: flex-start;
         
         img{
-            min-width: 50px;
-            min-height: 50px;
-            width: 50px;
-            height: 50px;
+            min-width: 40px;
+            min-height: 40px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             object-fit: cover;
         }
@@ -1622,6 +1870,7 @@ html, body{
                 width: 20%;
             }
             button{
+                color: $textColor;
                 display: flex;
                 justify-content: center;
                 align-items: flex-start;
@@ -1720,14 +1969,14 @@ html, body{
                     flex-direction: column;
                     justify-content: center;
                     align-items: flex-start;
-                    
+                    color: $textColor;
                     .profileUsernameDiv{
                         display: flex;
                         min-width: 450px;
                         max-width: 100%;
                         align-items: center;
                         height: fit-content;
-                        
+                        color: $textColor;
                         button{
                             overflow: hidden;
                             text-decoration: none;
@@ -1752,7 +2001,7 @@ html, body{
                         }
                         .editProfileButton{
                             width: 120px;
-                            background-color: $lightSecColor;
+                            background-color: white;
                             padding: 0.4rem 0.5rem 0.4rem 0.5rem;
                             border: 2px solid black;
                             color: black;
@@ -1760,16 +2009,14 @@ html, body{
                                 text-decoration: none;
                                 width: 120px;
                                 background-color: $lightSecColor;
-                                
-                                
-                                color: black;
+                                color: gray;
                             }
                         }
                         .uploadButton{
                             width: 40px;
                             height: 40px;
                             text-decoration: none;
-                            color: black;
+                            color:$textColor;
                         }
                         h1{
                             margin: 0%;
@@ -1820,7 +2067,7 @@ html, body{
                         font-size: 12px;
                         font-weight: 600;
                         b{
-                            color: black;
+                            color: $textColor;
                         }
                     }
                 }
@@ -1834,6 +2081,7 @@ html, body{
                 min-height: 300px;
                 max-height: fit-content;
                 width: 100%;
+                color: $textColor;
                 .marginDiv{
                     width: 90%;
                     
@@ -1858,6 +2106,13 @@ html, body{
                             justify-content: center;
                             height: 100%;
                             span{
+                                button{
+                                    color: black;
+                                    background-color: white;
+                                }
+                                .uploadButton{
+                                    color: $textColor;
+                                }
                                 h1{
                                     font-size: 32px;
                                     margin: 0%;
@@ -1922,7 +2177,7 @@ html, body{
                         font-size: 12px;
                         font-weight: 600;
                         b{
-                            color: black;
+                            color: $textColor;
                         }
                     } 
                 }
@@ -1975,6 +2230,8 @@ html, body{
                     color: darkgray;
                     cursor: pointer;
                     a{
+                        color:$textColor;
+                        text-decoration: none;
                         z-index: 1;
                     }
                 }
@@ -1988,6 +2245,7 @@ html, body{
                 justify-content: flex-start;
                 background: $lightSecColor;
                 border: none;
+                color: $textColor;
                 button{
                     cursor: pointer;
                     margin: 1.5%;
@@ -2063,7 +2321,7 @@ html, body{
                         }
                         .editProfileButton{
                             width: 120px;
-                            background-color: $lightSecColor;
+                            background-color: white;
                             padding: 0.4rem 0.5rem 0.4rem 0.5rem;
                             margin-right: 1rem;
                             border: 2px solid black;
@@ -2130,7 +2388,7 @@ html, body{
                                     }
                                     .editProfileButton{
                                         width: 120px;
-                                        background-color: $lightSecColor;
+                                        background-color: white;
                                         padding: 0.4rem 0.5rem 0.4rem 0.5rem;
                                         margin-right: 0rem;
                                         border: 2px solid black;
@@ -2166,6 +2424,7 @@ html, body{
             }
             .profileBottomDiv{
                 .postDiv{
+                    color: $textColor;
                     button{
                         margin: 0.3%;
                         width: 32%;
@@ -2250,6 +2509,7 @@ html, body{
                 background-color: $lightMainColor;
                 border: 1px solid $line;
                 height: 650px;
+                color: $textColor;
                 h1{
                     margin: 0%;   
                     padding: 0%;
@@ -2484,16 +2744,20 @@ html, body{
     padding-top: 60px;
     display: flex;
     justify-content: center;
+    background-color: $lightSecColor;
     .exploreInnerDiv{
         width: 70%;
+        background-color: $lightSecColor;
         .postDiv{
             height: fit-content;
             width: 100%;
+            background-color: $lightSecColor;
             // display: flex;
             // flex-wrap: wrap;
             // flex-direction: row;
             // justify-content: flex-start;
             // border: none;
+            color: $textColor;
             padding: 0%;
             display: grid;
             grid-template-columns: repeat(3, 20vw);
@@ -2529,6 +2793,7 @@ html, body{
         }
         @media screen and (max-width: $tablet) {
             .postDiv{
+                color: $textColor;
                 grid-template-columns: repeat(3, 30vw);
                 grid-auto-rows: 30vw;
             }
@@ -2669,6 +2934,11 @@ html, body{
     justify-content: center;
     align-items: center;
     height: 100%;
+    background-color: $lightMainColor;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 2px 4px 3px rgba(0, 0, 0, 0.5);
+    border:1px solid black;
     #buttonShareModal{
         width: 100%;
         display: flex;
@@ -2676,7 +2946,7 @@ html, body{
         align-items: center;
         height: 100%;
         margin-top:1rem;
-        button{
+        button, #shareSosmed{
             width: 30%;
             padding: 1rem;
             width: 90px;
@@ -2684,8 +2954,12 @@ html, body{
             cursor:pointer;
             background: none;
             border-radius: 10px;
+            border: 1px solid black;
             margin: 0rem 0.5rem 0rem 0.5rem;
             box-shadow: 2px 4px 3px rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
     }   
 }
@@ -2693,7 +2967,7 @@ html, body{
     .modal{
         width: 250px;
         #buttonShareModal{
-            button{
+            button, #shareSosmed{
                 height: 70px;
                 width: 70px;
             }
@@ -2719,9 +2993,11 @@ html, body{
         margin: 0rem 1rem 0rem 1rem;
         padding: 1rem 0rem 1rem 0rem;
         cursor: pointer;
+        color: $textColor;
     }
     #editButton{
         border-bottom: 2px solid rgb(0, 0, 0);
+        color: $textColor;
     }
     
 }
@@ -2735,6 +3011,9 @@ html, body{
     text-align: center;
     font-weight: 500;
     z-index: 10;
+    background-color: $lightMainColor;
+    padding: 2rem;
+    border-radius: 10px;
     svg{
         width: 80px;
         border: 8px solid black;
@@ -2754,6 +3033,10 @@ html, body{
         border: none;
         padding: 0.5rem 1.2rem 0.5rem 1.2rem;
         cursor: pointer;
+    }
+    input{
+        width: 100%;
+        font-size: 14px;
     }
 }
 
@@ -2787,10 +3070,12 @@ html, body{
                 border-bottom: 1px solid $line;
                 font-size: 20px;
                 font-weight: 500;
+                color: $textColor;
             }
             #dmPeopleList{
                 height: 90%;
                 overflow-y: scroll;
+                color: $textColor;
                 .receiverProfile{
                     display: flex;
                     cursor:pointer;
@@ -2847,6 +3132,7 @@ html, body{
                 border-bottom: 1px solid $line;
                 display: flex;
                 align-items: center;
+                color: $textColor;
                 #dmReceiverImage{
                     margin-left: 4rem;
                     display: flex;
@@ -2883,6 +3169,7 @@ html, body{
             }
             #dmMessageDiv{
                 height: 90%;
+                color: $textColor;
                 display: flex;
                 flex-direction: column;
                 #dmMessageList{
@@ -3107,8 +3394,9 @@ html, body{
         display: flex;
         justify-content: space-between;
         padding: 1rem 1rem 1rem 1rem;
-        background-color: $lightMainColor;
+        background-color: $lightSecColor;
         .logo{
+            color: $textColor;
             margin-left: 1rem;
             font-family: "Style Script", cursive;
             font-size: 1rem;
@@ -3121,6 +3409,7 @@ html, body{
             margin-right: 1rem;
             width: 50px;
             height: 50px;
+            color: $textColor;
         }
     }
     #storyMainDiv{
@@ -3133,10 +3422,11 @@ html, body{
             width: 50px;
             height: 50px;
             background:none;
-            border: 1px solid black;
+            border: 1px solid $textColor;
             border-radius: 50%;
             cursor: pointer;
             margin-right: 2rem;
+            color: $textColor;
         }
         #story{
             position: relative;
@@ -3224,10 +3514,11 @@ html, body{
             width: 50px;
             height: 50px;
             background:none;
-            border: 1px solid black;
+            border: 1px solid $textColor;
             border-radius: 50%;
             cursor: pointer;
             margin-left: 2rem;
+            color: $textColor;
         }
     }
     @media screen and (max-width: $phone) {
@@ -3314,6 +3605,7 @@ html, body{
     justify-content: space-between;
     align-items: center;
     margin-bottom: 0.5rem;
+    color: $textColor;
     cursor: pointer;
     .detail{
         display: flex;
@@ -3389,6 +3681,7 @@ html, body{
     cursor: pointer;
     border-bottom: 1px solid $line;
     border-top: 1px solid $line;
+    color: $textColor;
     #storyImg{
         margin-right: 0.5rem;
         a{
@@ -3523,6 +3816,7 @@ html, body{
     min-height: 40px;
     text-decoration: none;
     padding: 0rem 1rem 0rem 1.2rem;
+    
     .loadingButton{
         background:none;
         border: none;
@@ -3549,10 +3843,11 @@ html, body{
             width: 100%px;
             margin: 0%;
             padding: 0%;
-            color: black;
+            
             overflow: hidden;
             text-overflow: ellipsis;
             font-weight: 600;
+            color: $textColor;
         }
     }
 }
@@ -3571,6 +3866,7 @@ html, body{
         justify-content: center;
         align-items: center;
         .postDiv{
+            color: $textColor;
             margin: 1rem 0 1rem 0;
             background-color: $lightMainColor;
             border:1px solid $line;
@@ -3595,12 +3891,13 @@ html, body{
                     width: 100%;
                     height: 50px;
                     min-height: 50px;
+                    
                     a{
                         display: flex;
                         justify-content: center;
                         align-items: center;
                         text-decoration: none;
-                        color: black;
+                        color: $textColor;
                         font-weight: 600;
                         span{
                             margin-left: 1rem;
@@ -3690,12 +3987,13 @@ html, body{
                             justify-content: space-between;
                         }
                         button{
+
                             width: 45px;
                             cursor: pointer;
                             background-color: transparent;
                             border:none;
                             svg{
-                                color: black;
+                                color: $textColor;
                             }
                         }
                     }
@@ -3705,6 +4003,7 @@ html, body{
                     padding: 0%;
                     width: 100%;
                     font-weight: 600;
+                    color: $textColor;
                 }
     
                 .captionDiv{
@@ -3714,7 +4013,9 @@ html, body{
                     width: 100%;
                     align-items: flex-start;
                     justify-content: flex-start;
+                    color: $textColor;
                     #username{
+                        color: $textColor;
                         font-weight: 600;
                         height: 100%;
                         display: flex;
@@ -3811,6 +4112,7 @@ html, body{
                     display: flex;
                     width: 100%;
                     button{
+                        color: $textColor;
                         width: 45px;
                         cursor: pointer;
                         background-color: transparent;

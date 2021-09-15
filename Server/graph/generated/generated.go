@@ -80,6 +80,7 @@ type ComplexityRoot struct {
 		EmailExist                 func(childComplexity int, input string) int
 		GetFollowers               func(childComplexity int, input string) int
 		GetFollowing               func(childComplexity int, input string) int
+		GetMutualFriend            func(childComplexity int, input string) int
 		GetPostBasedOnPostID       func(childComplexity int, input string) int
 		GetPostBasedOnUserID       func(childComplexity int, input string) int
 		GetSavedPostBasedOnUserID  func(childComplexity int, input string) int
@@ -107,6 +108,7 @@ type ComplexityRoot struct {
 		SearchHashtag              func(childComplexity int, input string) int
 		SearchUser                 func(childComplexity int, input string) int
 		SelectPostExplorePage      func(childComplexity int, nextpost *string) int
+		SelectPostHomePage         func(childComplexity int, nextpost *string, userID string) int
 		SendResetPassword          func(childComplexity int, input string) int
 		UnLikePostByID             func(childComplexity int, input model.NewLikedPost) int
 		UnlikeCommentByID          func(childComplexity int, input model.NewLikeComment) int
@@ -241,6 +243,8 @@ type MutationResolver interface {
 	ReplyIsLiked(ctx context.Context, input model.NewLikedReply) (bool, error)
 	ReplyLikeCount(ctx context.Context, input string) (int, error)
 	SelectPostExplorePage(ctx context.Context, nextpost *string) (*model.PostPagged, error)
+	SelectPostHomePage(ctx context.Context, nextpost *string, userID string) (*model.PostPagged, error)
+	GetMutualFriend(ctx context.Context, input string) ([]*model.User, error)
 }
 type QueryResolver interface {
 	Users(ctx context.Context) ([]*model.User, error)
@@ -493,6 +497,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Mutation.GetFollowing(childComplexity, args["input"].(string)), true
+
+	case "Mutation.getMutualFriend":
+		if e.complexity.Mutation.GetMutualFriend == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_getMutualFriend_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.GetMutualFriend(childComplexity, args["input"].(string)), true
 
 	case "Mutation.getPostBasedOnPostId":
 		if e.complexity.Mutation.GetPostBasedOnPostID == nil {
@@ -817,6 +833,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Mutation.SelectPostExplorePage(childComplexity, args["nextpost"].(*string)), true
+
+	case "Mutation.selectPostHomePage":
+		if e.complexity.Mutation.SelectPostHomePage == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_selectPostHomePage_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.SelectPostHomePage(childComplexity, args["nextpost"].(*string), args["user_id"].(string)), true
 
 	case "Mutation.sendResetPassword":
 		if e.complexity.Mutation.SendResetPassword == nil {
@@ -1510,9 +1538,11 @@ type Mutation{
   deleteReplyById(input: String!): Boolean!
   replyIsLiked(input: newLikedReply!): Boolean!
   replyLikeCount(input: String!): Int!
-
+  
   selectPostExplorePage(nextpost:String): PostPagged!
 
+  selectPostHomePage(nextpost: String, user_id: String!): PostPagged!
+  getMutualFriend(input: String!): [User!]!
 }`, BuiltIn: false},
 }
 var parsedSchema = gqlparser.MustLoadSchema(sources...)
@@ -1702,6 +1732,21 @@ func (ec *executionContext) field_Mutation_getFollowers_args(ctx context.Context
 }
 
 func (ec *executionContext) field_Mutation_getFollowing_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 string
+	if tmp, ok := rawArgs["input"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
+		arg0, err = ec.unmarshalNString2string(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["input"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_Mutation_getMutualFriend_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
 	var arg0 string
@@ -2118,6 +2163,30 @@ func (ec *executionContext) field_Mutation_selectPostExplorePage_args(ctx contex
 		}
 	}
 	args["nextpost"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_Mutation_selectPostHomePage_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 *string
+	if tmp, ok := rawArgs["nextpost"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("nextpost"))
+		arg0, err = ec.unmarshalOString2ᚖstring(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["nextpost"] = arg0
+	var arg1 string
+	if tmp, ok := rawArgs["user_id"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("user_id"))
+		arg1, err = ec.unmarshalNString2string(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["user_id"] = arg1
 	return args, nil
 }
 
@@ -4693,6 +4762,90 @@ func (ec *executionContext) _Mutation_selectPostExplorePage(ctx context.Context,
 	res := resTmp.(*model.PostPagged)
 	fc.Result = res
 	return ec.marshalNPostPagged2ᚖServerᚋgraphᚋmodelᚐPostPagged(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Mutation_selectPostHomePage(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	rawArgs := field.ArgumentMap(ec.Variables)
+	args, err := ec.field_Mutation_selectPostHomePage_args(ctx, rawArgs)
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	fc.Args = args
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Mutation().SelectPostHomePage(rctx, args["nextpost"].(*string), args["user_id"].(string))
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.PostPagged)
+	fc.Result = res
+	return ec.marshalNPostPagged2ᚖServerᚋgraphᚋmodelᚐPostPagged(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Mutation_getMutualFriend(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	rawArgs := field.ArgumentMap(ec.Variables)
+	args, err := ec.field_Mutation_getMutualFriend_args(ctx, rawArgs)
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	fc.Args = args
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Mutation().GetMutualFriend(rctx, args["input"].(string))
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]*model.User)
+	fc.Result = res
+	return ec.marshalNUser2ᚕᚖServerᚋgraphᚋmodelᚐUserᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Post_id(ctx context.Context, field graphql.CollectedField, obj *model.Post) (ret graphql.Marshaler) {
@@ -8228,6 +8381,16 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 			}
 		case "selectPostExplorePage":
 			out.Values[i] = ec._Mutation_selectPostExplorePage(ctx, field)
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "selectPostHomePage":
+			out.Values[i] = ec._Mutation_selectPostHomePage(ctx, field)
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "getMutualFriend":
+			out.Values[i] = ec._Mutation_getMutualFriend(ctx, field)
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}

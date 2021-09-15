@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useMemo, useState } from "react";
 import Popup from "reactjs-popup";
 import { JWTContext } from "../../../App";
 import gql from "graphql-tag";
+import Toggle from "../../../toggle"
 import { debounceTime, distinctUntilChanged, map, Subject } from "rxjs";
 import { useMutation } from "@apollo/client";
 import ReactLoading from "react-loading"
@@ -62,6 +63,7 @@ export default function GuestHeader(){
         <div className="header">
             <div className="logo">
                 <h1>InstagraMT</h1>
+                <Toggle />
             </div>
             <div className="searchBar">
                     <form action="">
