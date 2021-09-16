@@ -797,7 +797,6 @@ func (r *mutationResolver) GetMutualFriend(ctx context.Context, input string) ([
 	followedCount := len(rels)
 	followed_users_id := make([]string, followedCount)
 	for i, u := range rels {
-		//err = r.DB.Model(&user).Where("id = ?", u.TargetId).Select()
 		followed_users_id[i] = u.FollowedID
 	}
 

@@ -33,6 +33,7 @@ html, body {
   display: flex;
   flex-direction: column;
   font-family: Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  transition: 1s all;
 }
 html p, body p {
   margin: 5px 0 5px 0;
@@ -240,7 +241,7 @@ html .countdown, body .countdown {
   border-radius: 7px;
   transition-duration: 0.6s;
   font-family: Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-  font-size: 1rem;
+  font-size: 14px;
   font-weight: 500;
 }
 .pembungkus .header .navDiv a:hover {
@@ -3291,11 +3292,32 @@ html .countdown, body .countdown {
   border-radius: 30px;
   background-color: rgba(0, 0, 0, 0.707);
 }
+#storyOuterDiv #storyMainDiv #story .content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#storyOuterDiv #storyMainDiv #story .content .displayed {
+  display: flex;
+  object-fit: cover;
+  width: 100%;
+  max-height: 100%;
+  overflow: hidden;
+  height: 100%;
+  z-index: 0;
+  position: relative;
+  border-radius: 20px;
+}
 #storyOuterDiv #storyMainDiv #story #profile {
   background-image: linear-gradient(to bottom, black, rgba(0, 0, 0, 0));
   border-radius: 20px;
   display: flex;
   flex-direction: column;
+  position: absolute;
+  width: 100%;
+  z-index: 1;
 }
 #storyOuterDiv #storyMainDiv #story #profile #progressBar {
   margin: 2rem 0.5rem 1rem 0.5rem;
@@ -3316,12 +3338,27 @@ html .countdown, body .countdown {
   object-fit: cover;
   border-radius: 50%;
 }
+#storyOuterDiv #storyMainDiv #story #profile #profileDiv .controls {
+  position: absolute;
+  right: 0%;
+  display: flex;
+}
+#storyOuterDiv #storyMainDiv #story #profile #profileDiv .controls button {
+  width: 50px;
+  height: 50px;
+  background: none;
+  color: var(--lightMainColor);
+  border: none;
+  z-index: 6;
+  cursor: pointer;
+}
 #storyOuterDiv #storyMainDiv #story #profile #profileDiv h1 {
   font-size: 18px;
   font-weight: 500;
   margin: 0%;
   margin-left: 1rem;
   padding: 0%;
+  color: white;
 }
 #storyOuterDiv #storyMainDiv #story #interaction {
   position: absolute;

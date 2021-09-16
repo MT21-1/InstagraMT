@@ -91673,19 +91673,77 @@ var templateObject_1;
 },{"@apollo/client":"node_modules/@apollo/client/index.js","react":"node_modules/react/index.js","react-router-dom":"node_modules/react-router-dom/esm/react-router-dom.js","../AddOns/Footer/Footer":"page/AddOns/Footer/Footer.tsx","../AddOns/Header/GuestHeader":"page/AddOns/Header/GuestHeader.tsx"}],"page/StoryPage/StoryPage.tsx":[function(require,module,exports) {
 "use strict";
 
-var __importDefault = this && this.__importDefault || function (mod) {
-  return mod && mod.__esModule ? mod : {
-    "default": mod
-  };
+var __createBinding = this && this.__createBinding || (Object.create ? function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  Object.defineProperty(o, k2, {
+    enumerable: true,
+    get: function get() {
+      return m[k];
+    }
+  });
+} : function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  o[k2] = m[k];
+});
+
+var __setModuleDefault = this && this.__setModuleDefault || (Object.create ? function (o, v) {
+  Object.defineProperty(o, "default", {
+    enumerable: true,
+    value: v
+  });
+} : function (o, v) {
+  o["default"] = v;
+});
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+  }
+
+  __setModuleDefault(result, mod);
+
+  return result;
 };
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var react_1 = __importDefault(require("react"));
+var react_1 = __importStar(require("react"));
 
 function StoryPage() {
+  var videoCtrl = react_1.useRef(null);
+
+  var _a = react_1.useState(false),
+      play = _a[0],
+      setPlay = _a[1];
+
+  var _b = react_1.useState(false),
+      mute = _b[0],
+      setMute = _b[1];
+
+  function handleMute() {
+    if (videoCtrl.current.muted) {
+      videoCtrl.current.muted = false;
+      setMute(false);
+    } else {
+      videoCtrl.current.muted = true;
+      setMute(true);
+    }
+  }
+
+  function handleVideo() {
+    if (videoCtrl.current.paused) {
+      videoCtrl.current.play();
+      setPlay(true);
+    } else {
+      videoCtrl.current.pause();
+      setPlay(false);
+    }
+  }
+
   return react_1.default.createElement("div", {
     id: "storyOuterDiv"
   }, react_1.default.createElement("div", {
@@ -91733,7 +91791,77 @@ function StoryPage() {
   }, react_1.default.createElement("img", {
     src: "wp.jpg",
     alt: ""
-  }))), react_1.default.createElement("h1", null, "Sugiono"))), react_1.default.createElement("div", {
+  }))), react_1.default.createElement("h1", null, "Sugiono"), react_1.default.createElement("div", {
+    className: "controls"
+  }, react_1.default.createElement("button", {
+    className: "play"
+  }, !play ? react_1.default.createElement("svg", {
+    onMouseDown: handleVideo,
+    onMouseUp: handleVideo,
+    xmlns: "http://www.w3.org/2000/svg",
+    fill: "none",
+    viewBox: "0 0 24 24",
+    stroke: "currentColor"
+  }, react_1.default.createElement("path", {
+    "stroke-linecap": "round",
+    "stroke-linejoin": "round",
+    "stroke-width": "2",
+    d: "M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"
+  }), react_1.default.createElement("path", {
+    "stroke-linecap": "round",
+    "stroke-linejoin": "round",
+    "stroke-width": "2",
+    d: "M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+  })) : react_1.default.createElement("svg", {
+    onMouseDown: handleVideo,
+    onMouseUp: handleVideo,
+    xmlns: "http://www.w3.org/2000/svg",
+    fill: "none",
+    viewBox: "0 0 24 24",
+    stroke: "currentColor"
+  }, react_1.default.createElement("path", {
+    "stroke-linecap": "round",
+    "stroke-linejoin": "round",
+    "stroke-width": "2",
+    d: "M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z"
+  }))), react_1.default.createElement("button", {
+    className: "mute"
+  }, mute == false ? react_1.default.createElement("svg", {
+    onClick: handleMute,
+    xmlns: "http://www.w3.org/2000/svg",
+    fill: "none",
+    viewBox: "0 0 24 24",
+    stroke: "currentColor"
+  }, react_1.default.createElement("path", {
+    "stroke-linecap": "round",
+    "stroke-linejoin": "round",
+    "stroke-width": "2",
+    d: "M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"
+  })) : react_1.default.createElement("svg", {
+    onClick: handleMute,
+    xmlns: "http://www.w3.org/2000/svg",
+    fill: "none",
+    viewBox: "0 0 24 24",
+    stroke: "currentColor"
+  }, react_1.default.createElement("path", {
+    "stroke-linecap": "round",
+    "stroke-linejoin": "round",
+    "stroke-width": "2",
+    d: "M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z",
+    "clip-rule": "evenodd"
+  }), react_1.default.createElement("path", {
+    "stroke-linecap": "round",
+    "stroke-linejoin": "round",
+    "stroke-width": "2",
+    d: "M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"
+  })))))), react_1.default.createElement("div", {
+    className: "content"
+  }, react_1.default.createElement("video", {
+    className: "displayed",
+    src: "/video.mp4",
+    ref: videoCtrl,
+    preload: "auto"
+  })), react_1.default.createElement("div", {
     id: "interaction"
   }, react_1.default.createElement("input", {
     type: "text",
@@ -105124,7 +105252,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50416" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58271" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
