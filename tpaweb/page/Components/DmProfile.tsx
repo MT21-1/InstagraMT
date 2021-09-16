@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react'
 
-export default function DmProfile(){
+export const DmProfile = (props) =>{
+    const username = props.username;
+    const profile = props.profile;
     return(
         <div className="receiverProfile">
             <div id="receiverImage">
-                <img src="wp.jpg" alt="" />
+                <img src={profile} alt="" />
             </div>
             <div id="receiverDetail">
-                <h1>Sugioo</h1>
+                <h1>{username}</h1>
                 <p>Active Now</p>
             </div>
         </div>

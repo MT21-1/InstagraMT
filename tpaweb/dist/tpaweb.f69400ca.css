@@ -78,6 +78,17 @@ html .countdown, body .countdown {
   text-decoration: none;
   padding: 0rem 1rem 0rem 1.2rem;
 }
+.searchPopUp .searchHistory {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  color: var(--textColor);
+  font-size: 14px;
+  font-weight: 600;
+}
+.searchPopUp .searchHistory div {
+  padding: 0.3rem 0 0.3rem 0;
+}
 .searchPopUp .loadingButton {
   background: none;
   border: none;

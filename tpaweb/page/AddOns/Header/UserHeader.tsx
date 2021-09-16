@@ -11,6 +11,7 @@ import gql from "graphql-tag";
 import { debounceTime, distinctUntilChanged, map, Subject } from "rxjs";
 import { useMutation } from "@apollo/client";
 import ReactLoading from "react-loading"
+import { useHistory } from "react-router";
 
 const searchQuery = gql`
     mutation search($username: String!){
@@ -25,22 +26,82 @@ const searchQuery = gql`
         }
     }
 `
+const getSearchHistoryQuery = gql`
+mutation getSearchHistory($user_id: String!){
+    getSearchHistory(input:$user_id){
+      search_history
+    }
+    
+  }
+`
+const addSearchHistoryQuery = gql`  
+  mutation addSearchHistory($user_id: String!, $search_history: String!){
+    addSearchHistory(input:{
+      user_id: $user_id,
+      search_history: $search_history
+    })
+  }
+`
 
 export default function UserHeader(){
     const [_, setJWT] = useContext(JWTContext)
     const jwt = localStorage.getItem("jwt")
+    const [at, setAt] = useState(localStorage.getItem("at") == null? "home" : localStorage.getItem("at"))
+    const atStyle ={
+        "border-bottom":"4px solid gray"
+    }
+    const [homeStyle, setHomeStyle] = useState(null)
+    const [dmStyle, setDmStyle] = useState(null)
+    const [activityStyle, setActivityStyle] = useState(null)
+    const [exploreStyle, setExploreStyle] = useState(null)
+    const [uploadStyle, setUploadStyle] = useState(null)
+
     const user = JSON.parse(localStorage.getItem("user"))
     const subject = useMemo(() => new Subject<string>(), [])
     const [searchQ, searchData] = useMutation(searchQuery)
     const [userList, setUserList] = useState([]);
     const [hashtagList, setHashtagList] = useState([])
     const loadingBtn = (<button className="loadingButton" ><ReactLoading type={"spokes"} color={'black'} height={'7%'} width={'7%'}/></button>)
+    const [searchHistory, searchHistoryData] = useMutation(getSearchHistoryQuery);
+    const [addSearchHistory, addSearchHistoryData] = useMutation(addSearchHistoryQuery);
+    const [searchHistoryCount, setSearchHistoryCount] = useState(0);
+    const [added, setAdded] = useState("")
     console.log(user)
+    const history = useHistory()
     function logOut(){
         setJWT("")    
         console.log("logot")
     }
 
+    useEffect(()=>{
+        console.log("at = " + at)
+        if(at == "home"){
+            setHomeStyle(atStyle)
+        }else if (at == "upload"){
+            setUploadStyle(atStyle)
+        }else if (at == "dm"){
+            setDmStyle(atStyle)
+        }else if (at == "activity"){
+            setActivityStyle(atStyle)
+        }else if (at == "explore"){
+            setExploreStyle(atStyle)
+        }
+    },[at])
+
+    useEffect(()=>{
+        searchHistory({
+            variables:{
+                user_id: user.id
+            }
+        })
+    }, [])
+
+    useEffect(() => {
+        if(searchHistoryData.data != undefined && searchHistoryData.data != null){
+            console.log(searchHistoryData.data.getSearchHistory)
+            setSearchHistoryCount(searchHistoryData.data.getSearchHistory.length)
+        }
+    }, [searchHistoryData.data])
 
     useEffect(() => {
         const subscribe = subject
@@ -84,15 +145,33 @@ export default function UserHeader(){
                     <Popup trigger={<input type="search" autoComplete="off" onChange={(e) => subject.next(e.target.value)} placeholder="Search" name="searchQuery" id=""/>} 
                     position="bottom left">
                         <div className="searchPopUp">
+                            <div className="searchHistory">
+                                {(searchData.data == undefined && searchData.data == null)?
+                                    (searchHistoryCount == 0)? "History Empty": 
+                                    searchHistoryData.data.getSearchHistory.map(content =>{
+                                        return <div>{content.search_history}</div> 
+                                    })
+                                : null}
+                            </div>
+                            
                             {(searchData.loading)?
                                 (loadingBtn)
                             :null}
                             {(searchData.data != undefined && searchData.data != null && userList != null && userList.length != 0)?
-                                searchData.data.searchUser.map(user => {
+                                searchData.data.searchUser.map(users => {
                                     return(
-                                        <a href={"/profile/"+user.username} className="searchStrip">
-                                            <img src={user.picture} alt="" />
-                                            <p>{user.username}</p>
+                                        <a href="#" className="searchStrip" onClick={
+                                            () => {
+                                                addSearchHistory({
+                                                    variables:{
+                                                        user_id: user.id,
+                                                        search_history: users.username
+                                                    }
+                                                }) 
+                                                history.push(`/profile/${users.username}`)
+                                            }}>
+                                            <img src={users.picture} alt="" />
+                                            <p>{users.username}</p>
                                         </a>
                                     )
                                 }): null
@@ -100,7 +179,15 @@ export default function UserHeader(){
                             {(searchData.data != undefined && searchData.data != null && hashtagList != null && hashtagList.length !=0)?
                                 searchData.data.searchHashtag.map(hashtag => {
                                     return(
-                                        <a href={"#"} className="searchStrip">
+                                        <a href={"#"} className="searchStrip" onClick={
+                                            () => {
+                                                addSearchHistory({
+                                                    variables:{
+                                                        user_id: user.id,
+                                                        search_history: hashtag.hashtag
+                                                    }
+                                                }) 
+                                            }}>
                                             <img src="/hashtag.png" alt="" />
                                             <p>{hashtag.hashtag}</p>
                                         </a>
@@ -114,29 +201,37 @@ export default function UserHeader(){
                     </form>
                 </div>
                 <div className="iconDiv">
-                    <a href="/" id="home">
+                    <a href="/" id="home" style={homeStyle} onClick={() => {
+                        localStorage.setItem("at", "home")
+                    }}>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                         </svg>
                     </a>
-                    <a href="/upload" id="upload">
+                    <a href="/upload" id="upload" style={uploadStyle} onClick={() => {
+                        localStorage.setItem("at", "upload")
+                    }}>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
                     </a>
-                    <a href="/dm" id="msg">
+                    <a href="/dm" id="msg" style={dmStyle} onClick={() => {
+                        localStorage.setItem("at", "dm")
+                    }}>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                     </svg>
                     </a>
-                    <a href="/explore" id="explore">
+                    <a href="/explore" id="explore" style={exploreStyle} onClick={() => {
+                        localStorage.setItem("at", "explore")
+                    }}>
                     <svg xmlns="http://www.w3.org/2000/svg"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
                     </svg>
                     </a>
                     
                         <Popup trigger={
-                                <a href="#" id="like">
+                                <a href="#" id="like" style={activityStyle}>
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                                     </svg>
@@ -161,7 +256,10 @@ export default function UserHeader(){
                                     <CommentStrip></CommentStrip>
                                     <CommentStrip></CommentStrip>
                                     <TaggedStrip></TaggedStrip>
-                                    <a href="/activity" id="showMore">Show More</a>
+                                    <a href="/activity" id="showMore" onClick={() => {
+                                        localStorage.setItem("at", "activity")
+                                    }}>Show More
+                                    </a>
                                 </div>
                             </div>
                         </Popup>

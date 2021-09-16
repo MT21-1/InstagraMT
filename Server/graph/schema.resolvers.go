@@ -825,6 +825,50 @@ func (r *mutationResolver) GetMutualFriend(ctx context.Context, input string) ([
 	return mutuals, nil
 }
 
+func (r *mutationResolver) GetFollowingList(ctx context.Context, input string) ([]*model.User, error) {
+	var rels []*model.Relation
+	err := r.Db.Model(&rels).Where("follow_id = ?", input).Select()
+	if err != nil {
+		return nil, err
+	}
+
+	followedCount := len(rels)
+	followed_users_id := make([]string, followedCount)
+	for i, u := range rels {
+		followed_users_id[i] = u.FollowedID
+	}
+
+	var following []*model.User
+
+	errs := r.Db.Model(&following).WhereIn("id in (?) ", followed_users_id).Select()
+	if errs != nil {
+		return nil, err
+	}
+	return following, nil
+}
+
+func (r *mutationResolver) GetSearchHistory(ctx context.Context, input string) ([]*model.SearchHistory, error) {
+	var searchHistory []*model.SearchHistory
+
+	err := r.Db.Model(&searchHistory).Where("user_id = ?", input).Select()
+	if err != nil {
+		return nil, err
+	}
+	return searchHistory, nil
+}
+
+func (r *mutationResolver) AddSearchHistory(ctx context.Context, input model.NewSearchHistory) (bool, error) {
+	var searchHistory = model.SearchHistory{
+		UserID:        input.UserID,
+		SearchHistory: input.SearchHistory,
+	}
+	_, err := r.Db.Model(&searchHistory).Insert()
+	if err != nil {
+		return false, err
+	}
+	return true, nil
+}
+
 func (r *queryResolver) Users(ctx context.Context) ([]*model.User, error) {
 	var users []*model.User
 	err := r.Db.Model(&users).Select()

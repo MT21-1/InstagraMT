@@ -78,6 +78,11 @@ type NewSavedPost struct {
 	PostID string `json:"post_id"`
 }
 
+type NewSearchHistory struct {
+	UserID        string `json:"user_id"`
+	SearchHistory string `json:"search_history"`
+}
+
 type UpdatePassword struct {
 	Token    string `json:"token"`
 	Password string `json:"password"`

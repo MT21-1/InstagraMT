@@ -67,6 +67,7 @@ type ComplexityRoot struct {
 	}
 
 	Mutation struct {
+		AddSearchHistory           func(childComplexity int, input model.NewSearchHistory) int
 		CommentIsLiked             func(childComplexity int, input model.NewLikeComment) int
 		CommentLikeCount           func(childComplexity int, input *string) int
 		CommentPost                func(childComplexity int, input model.NewComment) int
@@ -80,10 +81,12 @@ type ComplexityRoot struct {
 		EmailExist                 func(childComplexity int, input string) int
 		GetFollowers               func(childComplexity int, input string) int
 		GetFollowing               func(childComplexity int, input string) int
+		GetFollowingList           func(childComplexity int, input string) int
 		GetMutualFriend            func(childComplexity int, input string) int
 		GetPostBasedOnPostID       func(childComplexity int, input string) int
 		GetPostBasedOnUserID       func(childComplexity int, input string) int
 		GetSavedPostBasedOnUserID  func(childComplexity int, input string) int
+		GetSearchHistory           func(childComplexity int, input string) int
 		GetTaggedPostBasedOnUserID func(childComplexity int, input string) int
 		GetUserBasedOnEmail        func(childComplexity int, input string) int
 		GetUserBasedOnID           func(childComplexity int, input string) int
@@ -175,6 +178,12 @@ type ComplexityRoot struct {
 		UserID       func(childComplexity int) int
 	}
 
+	SearchHistory struct {
+		ID            func(childComplexity int) int
+		SearchHistory func(childComplexity int) int
+		UserID        func(childComplexity int) int
+	}
+
 	TaggedPost struct {
 		ID           func(childComplexity int) int
 		PostContents func(childComplexity int) int
@@ -245,6 +254,9 @@ type MutationResolver interface {
 	SelectPostExplorePage(ctx context.Context, nextpost *string) (*model.PostPagged, error)
 	SelectPostHomePage(ctx context.Context, nextpost *string, userID string) (*model.PostPagged, error)
 	GetMutualFriend(ctx context.Context, input string) ([]*model.User, error)
+	GetFollowingList(ctx context.Context, input string) ([]*model.User, error)
+	GetSearchHistory(ctx context.Context, input string) ([]*model.SearchHistory, error)
+	AddSearchHistory(ctx context.Context, input model.NewSearchHistory) (bool, error)
 }
 type QueryResolver interface {
 	Users(ctx context.Context) ([]*model.User, error)
@@ -341,6 +353,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.LikedReply.UserID(childComplexity), true
+
+	case "Mutation.addSearchHistory":
+		if e.complexity.Mutation.AddSearchHistory == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_addSearchHistory_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.AddSearchHistory(childComplexity, args["input"].(model.NewSearchHistory)), true
 
 	case "Mutation.commentIsLiked":
 		if e.complexity.Mutation.CommentIsLiked == nil {
@@ -498,6 +522,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Mutation.GetFollowing(childComplexity, args["input"].(string)), true
 
+	case "Mutation.getFollowingList":
+		if e.complexity.Mutation.GetFollowingList == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_getFollowingList_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.GetFollowingList(childComplexity, args["input"].(string)), true
+
 	case "Mutation.getMutualFriend":
 		if e.complexity.Mutation.GetMutualFriend == nil {
 			break
@@ -545,6 +581,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Mutation.GetSavedPostBasedOnUserID(childComplexity, args["input"].(string)), true
+
+	case "Mutation.getSearchHistory":
+		if e.complexity.Mutation.GetSearchHistory == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_getSearchHistory_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.GetSearchHistory(childComplexity, args["input"].(string)), true
 
 	case "Mutation.getTaggedPostBasedOnUserId":
 		if e.complexity.Mutation.GetTaggedPostBasedOnUserID == nil {
@@ -1166,6 +1214,27 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.SavedPost.UserID(childComplexity), true
 
+	case "SearchHistory.id":
+		if e.complexity.SearchHistory.ID == nil {
+			break
+		}
+
+		return e.complexity.SearchHistory.ID(childComplexity), true
+
+	case "SearchHistory.search_history":
+		if e.complexity.SearchHistory.SearchHistory == nil {
+			break
+		}
+
+		return e.complexity.SearchHistory.SearchHistory(childComplexity), true
+
+	case "SearchHistory.user_id":
+		if e.complexity.SearchHistory.UserID == nil {
+			break
+		}
+
+		return e.complexity.SearchHistory.UserID(childComplexity), true
+
 	case "TaggedPost.id":
 		if e.complexity.TaggedPost.ID == nil {
 			break
@@ -1413,6 +1482,12 @@ type PostPagged{
   hasnext:Boolean!
 }
 
+type SearchHistory{
+  id: String!
+  user_id: String!
+  search_history: String!
+}
+
 input InputUser{
   email: String!
   full_name: String!
@@ -1488,6 +1563,11 @@ input newLikedReply{
   reply_id: String!
 }
 
+input newSearchHistory{
+  user_id: String!
+  search_history: String!
+}
+
 type Mutation{
   createUser(input: InputUser!): String!
   loginUser(input: LoginUser!): String!
@@ -1543,6 +1623,10 @@ type Mutation{
 
   selectPostHomePage(nextpost: String, user_id: String!): PostPagged!
   getMutualFriend(input: String!): [User!]!
+
+  getFollowingList(input: String!): [User!]!
+  getSearchHistory(input: String!): [SearchHistory!]!
+  addSearchHistory(input: newSearchHistory!): Boolean!
 }`, BuiltIn: false},
 }
 var parsedSchema = gqlparser.MustLoadSchema(sources...)
@@ -1550,6 +1634,21 @@ var parsedSchema = gqlparser.MustLoadSchema(sources...)
 // endregion ************************** generated!.gotpl **************************
 
 // region    ***************************** args.gotpl *****************************
+
+func (ec *executionContext) field_Mutation_addSearchHistory_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 model.NewSearchHistory
+	if tmp, ok := rawArgs["input"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
+		arg0, err = ec.unmarshalNnewSearchHistory2ServerᚋgraphᚋmodelᚐNewSearchHistory(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["input"] = arg0
+	return args, nil
+}
 
 func (ec *executionContext) field_Mutation_commentIsLiked_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
@@ -1731,6 +1830,21 @@ func (ec *executionContext) field_Mutation_getFollowers_args(ctx context.Context
 	return args, nil
 }
 
+func (ec *executionContext) field_Mutation_getFollowingList_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 string
+	if tmp, ok := rawArgs["input"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
+		arg0, err = ec.unmarshalNString2string(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["input"] = arg0
+	return args, nil
+}
+
 func (ec *executionContext) field_Mutation_getFollowing_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
@@ -1792,6 +1906,21 @@ func (ec *executionContext) field_Mutation_getPostBasedOnUserId_args(ctx context
 }
 
 func (ec *executionContext) field_Mutation_getSavedPostBasedOnUserId_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 string
+	if tmp, ok := rawArgs["input"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
+		arg0, err = ec.unmarshalNString2string(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["input"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_Mutation_getSearchHistory_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
 	var arg0 string
@@ -4848,6 +4977,132 @@ func (ec *executionContext) _Mutation_getMutualFriend(ctx context.Context, field
 	return ec.marshalNUser2ᚕᚖServerᚋgraphᚋmodelᚐUserᚄ(ctx, field.Selections, res)
 }
 
+func (ec *executionContext) _Mutation_getFollowingList(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	rawArgs := field.ArgumentMap(ec.Variables)
+	args, err := ec.field_Mutation_getFollowingList_args(ctx, rawArgs)
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	fc.Args = args
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Mutation().GetFollowingList(rctx, args["input"].(string))
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]*model.User)
+	fc.Result = res
+	return ec.marshalNUser2ᚕᚖServerᚋgraphᚋmodelᚐUserᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Mutation_getSearchHistory(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	rawArgs := field.ArgumentMap(ec.Variables)
+	args, err := ec.field_Mutation_getSearchHistory_args(ctx, rawArgs)
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	fc.Args = args
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Mutation().GetSearchHistory(rctx, args["input"].(string))
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]*model.SearchHistory)
+	fc.Result = res
+	return ec.marshalNSearchHistory2ᚕᚖServerᚋgraphᚋmodelᚐSearchHistoryᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Mutation_addSearchHistory(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	rawArgs := field.ArgumentMap(ec.Variables)
+	args, err := ec.field_Mutation_addSearchHistory_args(ctx, rawArgs)
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	fc.Args = args
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Mutation().AddSearchHistory(rctx, args["input"].(model.NewSearchHistory))
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(bool)
+	fc.Result = res
+	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
+}
+
 func (ec *executionContext) _Post_id(ctx context.Context, field graphql.CollectedField, obj *model.Post) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
@@ -6037,6 +6292,111 @@ func (ec *executionContext) _SavedPost_post_contents(ctx context.Context, field 
 	res := resTmp.([]*model.PostContent)
 	fc.Result = res
 	return ec.marshalNPostContent2ᚕᚖServerᚋgraphᚋmodelᚐPostContentᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _SearchHistory_id(ctx context.Context, field graphql.CollectedField, obj *model.SearchHistory) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "SearchHistory",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _SearchHistory_user_id(ctx context.Context, field graphql.CollectedField, obj *model.SearchHistory) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "SearchHistory",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.UserID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _SearchHistory_search_history(ctx context.Context, field graphql.CollectedField, obj *model.SearchHistory) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "SearchHistory",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.SearchHistory, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _TaggedPost_id(ctx context.Context, field graphql.CollectedField, obj *model.TaggedPost) (ret graphql.Marshaler) {
@@ -7950,6 +8310,34 @@ func (ec *executionContext) unmarshalInputnewSavedPost(ctx context.Context, obj 
 	return it, nil
 }
 
+func (ec *executionContext) unmarshalInputnewSearchHistory(ctx context.Context, obj interface{}) (model.NewSearchHistory, error) {
+	var it model.NewSearchHistory
+	var asMap = obj.(map[string]interface{})
+
+	for k, v := range asMap {
+		switch k {
+		case "user_id":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("user_id"))
+			it.UserID, err = ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "search_history":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("search_history"))
+			it.SearchHistory, err = ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		}
+	}
+
+	return it, nil
+}
+
 func (ec *executionContext) unmarshalInputupdatePassword(ctx context.Context, obj interface{}) (model.UpdatePassword, error) {
 	var it model.UpdatePassword
 	var asMap = obj.(map[string]interface{})
@@ -8394,6 +8782,21 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
+		case "getFollowingList":
+			out.Values[i] = ec._Mutation_getFollowingList(ctx, field)
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "getSearchHistory":
+			out.Values[i] = ec._Mutation_getSearchHistory(ctx, field)
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "addSearchHistory":
+			out.Values[i] = ec._Mutation_addSearchHistory(ctx, field)
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -8744,6 +9147,43 @@ func (ec *executionContext) _SavedPost(ctx context.Context, sel ast.SelectionSet
 			}
 		case "post_contents":
 			out.Values[i] = ec._SavedPost_post_contents(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch()
+	if invalids > 0 {
+		return graphql.Null
+	}
+	return out
+}
+
+var searchHistoryImplementors = []string{"SearchHistory"}
+
+func (ec *executionContext) _SearchHistory(ctx context.Context, sel ast.SelectionSet, obj *model.SearchHistory) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, searchHistoryImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	var invalids uint32
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("SearchHistory")
+		case "id":
+			out.Values[i] = ec._SearchHistory_id(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "user_id":
+			out.Values[i] = ec._SearchHistory_user_id(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "search_history":
+			out.Values[i] = ec._SearchHistory_search_history(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
@@ -9498,6 +9938,53 @@ func (ec *executionContext) marshalNSavedPost2ᚖServerᚋgraphᚋmodelᚐSavedP
 	return ec._SavedPost(ctx, sel, v)
 }
 
+func (ec *executionContext) marshalNSearchHistory2ᚕᚖServerᚋgraphᚋmodelᚐSearchHistoryᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.SearchHistory) graphql.Marshaler {
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNSearchHistory2ᚖServerᚋgraphᚋmodelᚐSearchHistory(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+	return ret
+}
+
+func (ec *executionContext) marshalNSearchHistory2ᚖServerᚋgraphᚋmodelᚐSearchHistory(ctx context.Context, sel ast.SelectionSet, v *model.SearchHistory) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	return ec._SearchHistory(ctx, sel, v)
+}
+
 func (ec *executionContext) unmarshalNString2string(ctx context.Context, v interface{}) (string, error) {
 	res, err := graphql.UnmarshalString(v)
 	return res, graphql.ErrorOnPath(ctx, err)
@@ -9908,6 +10395,11 @@ func (ec *executionContext) unmarshalNnewReply2ServerᚋgraphᚋmodelᚐNewReply
 
 func (ec *executionContext) unmarshalNnewSavedPost2ServerᚋgraphᚋmodelᚐNewSavedPost(ctx context.Context, v interface{}) (model.NewSavedPost, error) {
 	res, err := ec.unmarshalInputnewSavedPost(ctx, v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) unmarshalNnewSearchHistory2ServerᚋgraphᚋmodelᚐNewSearchHistory(ctx context.Context, v interface{}) (model.NewSearchHistory, error) {
+	res, err := ec.unmarshalInputnewSearchHistory(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 

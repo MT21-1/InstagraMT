@@ -34698,7 +34698,7 @@ var react_1 = __importStar(require("react"));
 require("./style.scss");
 
 function Toggle() {
-  var _a = react_1.useState(localStorage.getItem("theme") == "" ? "light" : localStorage.getItem("theme")),
+  var _a = react_1.useState(localStorage.getItem("theme") == null ? "light" : localStorage.getItem("theme")),
       theme = _a[0],
       setTheme = _a[1];
 
@@ -83161,7 +83161,11 @@ var client_1 = require("@apollo/client");
 
 var react_loading_1 = __importDefault(require("react-loading"));
 
+var react_router_1 = require("react-router");
+
 var searchQuery = graphql_tag_1.default(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n    mutation search($username: String!){\n        searchUser(input:$username){\n            id\n            username\n            picture\n        }\n        searchHashtag(input:$username){\n            id\n            hashtag\n        }\n    }\n"], ["\n    mutation search($username: String!){\n        searchUser(input:$username){\n            id\n            username\n            picture\n        }\n        searchHashtag(input:$username){\n            id\n            hashtag\n        }\n    }\n"])));
+var getSearchHistoryQuery = graphql_tag_1.default(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\nmutation getSearchHistory($user_id: String!){\n    getSearchHistory(input:$user_id){\n      search_history\n    }\n    \n  }\n"], ["\nmutation getSearchHistory($user_id: String!){\n    getSearchHistory(input:$user_id){\n      search_history\n    }\n    \n  }\n"])));
+var addSearchHistoryQuery = graphql_tag_1.default(templateObject_3 || (templateObject_3 = __makeTemplateObject(["  \n  mutation addSearchHistory($user_id: String!, $search_history: String!){\n    addSearchHistory(input:{\n      user_id: $user_id,\n      search_history: $search_history\n    })\n  }\n"], ["  \n  mutation addSearchHistory($user_id: String!, $search_history: String!){\n    addSearchHistory(input:{\n      user_id: $user_id,\n      search_history: $search_history\n    })\n  }\n"])));
 
 function UserHeader() {
   var _a = react_1.useContext(App_1.JWTContext),
@@ -83169,22 +83173,51 @@ function UserHeader() {
       setJWT = _a[1];
 
   var jwt = localStorage.getItem("jwt");
+
+  var _b = react_1.useState(localStorage.getItem("at") == null ? "home" : localStorage.getItem("at")),
+      at = _b[0],
+      setAt = _b[1];
+
+  var atStyle = {
+    "border-bottom": "4px solid gray"
+  };
+
+  var _c = react_1.useState(null),
+      homeStyle = _c[0],
+      setHomeStyle = _c[1];
+
+  var _d = react_1.useState(null),
+      dmStyle = _d[0],
+      setDmStyle = _d[1];
+
+  var _e = react_1.useState(null),
+      activityStyle = _e[0],
+      setActivityStyle = _e[1];
+
+  var _f = react_1.useState(null),
+      exploreStyle = _f[0],
+      setExploreStyle = _f[1];
+
+  var _g = react_1.useState(null),
+      uploadStyle = _g[0],
+      setUploadStyle = _g[1];
+
   var user = JSON.parse(localStorage.getItem("user"));
   var subject = react_1.useMemo(function () {
     return new rxjs_1.Subject();
   }, []);
 
-  var _b = client_1.useMutation(searchQuery),
-      searchQ = _b[0],
-      searchData = _b[1];
+  var _h = client_1.useMutation(searchQuery),
+      searchQ = _h[0],
+      searchData = _h[1];
 
-  var _c = react_1.useState([]),
-      userList = _c[0],
-      setUserList = _c[1];
+  var _j = react_1.useState([]),
+      userList = _j[0],
+      setUserList = _j[1];
 
-  var _d = react_1.useState([]),
-      hashtagList = _d[0],
-      setHashtagList = _d[1];
+  var _k = react_1.useState([]),
+      hashtagList = _k[0],
+      setHashtagList = _k[1];
 
   var loadingBtn = react_1.default.createElement("button", {
     className: "loadingButton"
@@ -83194,13 +83227,59 @@ function UserHeader() {
     height: '7%',
     width: '7%'
   }));
+
+  var _l = client_1.useMutation(getSearchHistoryQuery),
+      searchHistory = _l[0],
+      searchHistoryData = _l[1];
+
+  var _m = client_1.useMutation(addSearchHistoryQuery),
+      addSearchHistory = _m[0],
+      addSearchHistoryData = _m[1];
+
+  var _o = react_1.useState(0),
+      searchHistoryCount = _o[0],
+      setSearchHistoryCount = _o[1];
+
+  var _p = react_1.useState(""),
+      added = _p[0],
+      setAdded = _p[1];
+
   console.log(user);
+  var history = react_router_1.useHistory();
 
   function logOut() {
     setJWT("");
     console.log("logot");
   }
 
+  react_1.useEffect(function () {
+    console.log("at = " + at);
+
+    if (at == "home") {
+      setHomeStyle(atStyle);
+    } else if (at == "upload") {
+      setUploadStyle(atStyle);
+    } else if (at == "dm") {
+      setDmStyle(atStyle);
+    } else if (at == "activity") {
+      setActivityStyle(atStyle);
+    } else if (at == "explore") {
+      setExploreStyle(atStyle);
+    }
+  }, [at]);
+  react_1.useEffect(function () {
+    searchHistory({
+      variables: {
+        user_id: user.id
+      }
+    });
+  }, []);
+  react_1.useEffect(function () {
+    if (searchHistoryData.data != undefined && searchHistoryData.data != null) {
+      console.log(searchHistoryData.data.getSearchHistory);
+      setSearchHistoryCount(searchHistoryData.data.getSearchHistory.length);
+    }
+  }, [searchHistoryData.data]);
   react_1.useEffect(function () {
     var subscribe = subject.pipe(rxjs_1.debounceTime(500), rxjs_1.distinctUntilChanged(), rxjs_1.map(function (search) {
       return search.trim();
@@ -83248,18 +83327,39 @@ function UserHeader() {
       position: "bottom left"
     }, react_1.default.createElement("div", {
       className: "searchPopUp"
-    }, searchData.loading ? loadingBtn : null, searchData.data != undefined && searchData.data != null && userList != null && userList.length != 0 ? searchData.data.searchUser.map(function (user) {
+    }, react_1.default.createElement("div", {
+      className: "searchHistory"
+    }, searchData.data == undefined && searchData.data == null ? searchHistoryCount == 0 ? "History Empty" : searchHistoryData.data.getSearchHistory.map(function (content) {
+      return react_1.default.createElement("div", null, content.search_history);
+    }) : null), searchData.loading ? loadingBtn : null, searchData.data != undefined && searchData.data != null && userList != null && userList.length != 0 ? searchData.data.searchUser.map(function (users) {
       return react_1.default.createElement("a", {
-        href: "/profile/" + user.username,
-        className: "searchStrip"
+        href: "#",
+        className: "searchStrip",
+        onClick: function onClick() {
+          addSearchHistory({
+            variables: {
+              user_id: user.id,
+              search_history: users.username
+            }
+          });
+          history.push("/profile/" + users.username);
+        }
       }, react_1.default.createElement("img", {
-        src: user.picture,
+        src: users.picture,
         alt: ""
-      }), react_1.default.createElement("p", null, user.username));
+      }), react_1.default.createElement("p", null, users.username));
     }) : null, searchData.data != undefined && searchData.data != null && hashtagList != null && hashtagList.length != 0 ? searchData.data.searchHashtag.map(function (hashtag) {
       return react_1.default.createElement("a", {
         href: "#",
-        className: "searchStrip"
+        className: "searchStrip",
+        onClick: function onClick() {
+          addSearchHistory({
+            variables: {
+              user_id: user.id,
+              search_history: hashtag.hashtag
+            }
+          });
+        }
       }, react_1.default.createElement("img", {
         src: "/hashtag.png",
         alt: ""
@@ -83268,7 +83368,11 @@ function UserHeader() {
       className: "iconDiv"
     }, react_1.default.createElement("a", {
       href: "/",
-      id: "home"
+      id: "home",
+      style: homeStyle,
+      onClick: function onClick() {
+        localStorage.setItem("at", "home");
+      }
     }, react_1.default.createElement("svg", {
       xmlns: "http://www.w3.org/2000/svg",
       fill: "none",
@@ -83281,7 +83385,11 @@ function UserHeader() {
       d: "M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
     }))), react_1.default.createElement("a", {
       href: "/upload",
-      id: "upload"
+      id: "upload",
+      style: uploadStyle,
+      onClick: function onClick() {
+        localStorage.setItem("at", "upload");
+      }
     }, react_1.default.createElement("svg", {
       xmlns: "http://www.w3.org/2000/svg",
       fill: "none",
@@ -83294,7 +83402,11 @@ function UserHeader() {
       d: "M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
     }))), react_1.default.createElement("a", {
       href: "/dm",
-      id: "msg"
+      id: "msg",
+      style: dmStyle,
+      onClick: function onClick() {
+        localStorage.setItem("at", "dm");
+      }
     }, react_1.default.createElement("svg", {
       xmlns: "http://www.w3.org/2000/svg",
       fill: "none",
@@ -83307,7 +83419,11 @@ function UserHeader() {
       d: "M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
     }))), react_1.default.createElement("a", {
       href: "/explore",
-      id: "explore"
+      id: "explore",
+      style: exploreStyle,
+      onClick: function onClick() {
+        localStorage.setItem("at", "explore");
+      }
     }, react_1.default.createElement("svg", {
       xmlns: "http://www.w3.org/2000/svg",
       fill: "none",
@@ -83321,7 +83437,8 @@ function UserHeader() {
     }))), react_1.default.createElement(reactjs_popup_1.default, {
       trigger: react_1.default.createElement("a", {
         href: "#",
-        id: "like"
+        id: "like",
+        style: activityStyle
       }, react_1.default.createElement("svg", {
         xmlns: "http://www.w3.org/2000/svg",
         fill: "none",
@@ -83342,7 +83459,10 @@ function UserHeader() {
       id: "activityPopUpFooter"
     }, react_1.default.createElement(MentionStrip_1.default, null), react_1.default.createElement(followStrip_1.default, null), react_1.default.createElement(followStrip_1.default, null), react_1.default.createElement(followStrip_1.default, null), react_1.default.createElement(followStrip_1.default, null), react_1.default.createElement(followStrip_1.default, null), react_1.default.createElement(likeStrip_1.default, null), react_1.default.createElement(commentStrip_1.default, null), react_1.default.createElement(commentStrip_1.default, null), react_1.default.createElement(commentStrip_1.default, null), react_1.default.createElement(commentStrip_1.default, null), react_1.default.createElement(TaggedStrip_1.default, null), react_1.default.createElement("a", {
       href: "/activity",
-      id: "showMore"
+      id: "showMore",
+      onClick: function onClick() {
+        localStorage.setItem("at", "activity");
+      }
     }, "Show More")))), react_1.default.createElement(reactjs_popup_1.default, {
       trigger: react_1.default.createElement("a", {
         href: "#",
@@ -83512,8 +83632,8 @@ function UserHeader() {
 }
 
 exports.default = UserHeader;
-var templateObject_1;
-},{"reactjs-popup":"node_modules/reactjs-popup/dist/reactjs-popup.esm.js","../../ActivityPage/MentionStrip":"page/ActivityPage/MentionStrip.tsx","../../../App":"App.tsx","../../ActivityPage/TaggedStrip":"page/ActivityPage/TaggedStrip.tsx","../../ActivityPage/commentStrip":"page/ActivityPage/commentStrip.tsx","../../ActivityPage/likeStrip":"page/ActivityPage/likeStrip.tsx","../../ActivityPage/followStrip":"page/ActivityPage/followStrip.tsx","../../../toggle":"toggle.tsx","react":"node_modules/react/index.js","graphql-tag":"node_modules/graphql-tag/lib/index.js","rxjs":"node_modules/rxjs/dist/esm5/index.js","@apollo/client":"node_modules/@apollo/client/index.js","react-loading":"node_modules/react-loading/dist/react-loading.js"}],"page/ActivityPage/ActivityPage.tsx":[function(require,module,exports) {
+var templateObject_1, templateObject_2, templateObject_3;
+},{"reactjs-popup":"node_modules/reactjs-popup/dist/reactjs-popup.esm.js","../../ActivityPage/MentionStrip":"page/ActivityPage/MentionStrip.tsx","../../../App":"App.tsx","../../ActivityPage/TaggedStrip":"page/ActivityPage/TaggedStrip.tsx","../../ActivityPage/commentStrip":"page/ActivityPage/commentStrip.tsx","../../ActivityPage/likeStrip":"page/ActivityPage/likeStrip.tsx","../../ActivityPage/followStrip":"page/ActivityPage/followStrip.tsx","../../../toggle":"toggle.tsx","react":"node_modules/react/index.js","graphql-tag":"node_modules/graphql-tag/lib/index.js","rxjs":"node_modules/rxjs/dist/esm5/index.js","@apollo/client":"node_modules/@apollo/client/index.js","react-loading":"node_modules/react-loading/dist/react-loading.js","react-router":"node_modules/react-router/esm/react-router.js"}],"page/ActivityPage/ActivityPage.tsx":[function(require,module,exports) {
 "use strict";
 
 var __importDefault = this && this.__importDefault || function (mod) {
@@ -83551,36 +83671,7 @@ function ActivityPage() {
 }
 
 exports.default = ActivityPage;
-},{"react":"node_modules/react/index.js","../AddOns/Footer/Footer":"page/AddOns/Footer/Footer.tsx","../AddOns/Header/UserHeader":"page/AddOns/Header/UserHeader.tsx","./commentStrip":"page/ActivityPage/commentStrip.tsx","./followStrip":"page/ActivityPage/followStrip.tsx","./likeStrip":"page/ActivityPage/likeStrip.tsx","./MentionStrip":"page/ActivityPage/MentionStrip.tsx","./TaggedStrip":"page/ActivityPage/TaggedStrip.tsx"}],"page/Components/dmProfile.tsx":[function(require,module,exports) {
-"use strict";
-
-var __importDefault = this && this.__importDefault || function (mod) {
-  return mod && mod.__esModule ? mod : {
-    "default": mod
-  };
-};
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var react_1 = __importDefault(require("react"));
-
-function DmProfile() {
-  return react_1.default.createElement("div", {
-    className: "receiverProfile"
-  }, react_1.default.createElement("div", {
-    id: "receiverImage"
-  }, react_1.default.createElement("img", {
-    src: "wp.jpg",
-    alt: ""
-  })), react_1.default.createElement("div", {
-    id: "receiverDetail"
-  }, react_1.default.createElement("h1", null, "Sugioo"), react_1.default.createElement("p", null, "Active Now")));
-}
-
-exports.default = DmProfile;
-},{"react":"node_modules/react/index.js"}],"page/Components/receiveDm.tsx":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","../AddOns/Footer/Footer":"page/AddOns/Footer/Footer.tsx","../AddOns/Header/UserHeader":"page/AddOns/Header/UserHeader.tsx","./commentStrip":"page/ActivityPage/commentStrip.tsx","./followStrip":"page/ActivityPage/followStrip.tsx","./likeStrip":"page/ActivityPage/likeStrip.tsx","./MentionStrip":"page/ActivityPage/MentionStrip.tsx","./TaggedStrip":"page/ActivityPage/TaggedStrip.tsx"}],"page/Components/receiveDm.tsx":[function(require,module,exports) {
 "use strict";
 
 var __importDefault = this && this.__importDefault || function (mod) {
@@ -83639,7 +83730,7 @@ function SendDm() {
 }
 
 exports.default = SendDm;
-},{"react":"node_modules/react/index.js"}],"page/DMPage/DMPage.tsx":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js"}],"page/Components/DmProfile.tsx":[function(require,module,exports) {
 "use strict";
 
 var __importDefault = this && this.__importDefault || function (mod) {
@@ -83651,22 +83742,135 @@ var __importDefault = this && this.__importDefault || function (mod) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.DmProfile = void 0;
 
 var react_1 = __importDefault(require("react"));
+
+var DmProfile = function DmProfile(props) {
+  var username = props.username;
+  var profile = props.profile;
+  return react_1.default.createElement("div", {
+    className: "receiverProfile"
+  }, react_1.default.createElement("div", {
+    id: "receiverImage"
+  }, react_1.default.createElement("img", {
+    src: profile,
+    alt: ""
+  })), react_1.default.createElement("div", {
+    id: "receiverDetail"
+  }, react_1.default.createElement("h1", null, username), react_1.default.createElement("p", null, "Active Now")));
+};
+
+exports.DmProfile = DmProfile;
+},{"react":"node_modules/react/index.js"}],"page/DMPage/DMPage.tsx":[function(require,module,exports) {
+"use strict";
+
+var __makeTemplateObject = this && this.__makeTemplateObject || function (cooked, raw) {
+  if (Object.defineProperty) {
+    Object.defineProperty(cooked, "raw", {
+      value: raw
+    });
+  } else {
+    cooked.raw = raw;
+  }
+
+  return cooked;
+};
+
+var __createBinding = this && this.__createBinding || (Object.create ? function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  Object.defineProperty(o, k2, {
+    enumerable: true,
+    get: function get() {
+      return m[k];
+    }
+  });
+} : function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  o[k2] = m[k];
+});
+
+var __setModuleDefault = this && this.__setModuleDefault || (Object.create ? function (o, v) {
+  Object.defineProperty(o, "default", {
+    enumerable: true,
+    value: v
+  });
+} : function (o, v) {
+  o["default"] = v;
+});
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+  }
+
+  __setModuleDefault(result, mod);
+
+  return result;
+};
+
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var client_1 = require("@apollo/client");
+
+var graphql_tag_1 = __importDefault(require("graphql-tag"));
+
+var react_1 = __importStar(require("react"));
 
 var Footer_1 = __importDefault(require("../AddOns/Footer/Footer"));
 
 var UserHeader_1 = __importDefault(require("../AddOns/Header/UserHeader"));
 
-var dmProfile_1 = __importDefault(require("../Components/dmProfile"));
-
 var receiveDm_1 = __importDefault(require("../Components/receiveDm"));
 
 var sendDm_1 = __importDefault(require("../Components/sendDm"));
 
+var react_loading_1 = __importDefault(require("react-loading"));
+
+var DmProfile_1 = require("../Components/DmProfile");
+
+var getFollowingQuery = graphql_tag_1.default(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n    mutation getFollowing($user_id: String!){\n        getFollowingList(input:$user_id){\n            id\n        username\n        picture\n    }\n    }\n"], ["\n    mutation getFollowing($user_id: String!){\n        getFollowingList(input:$user_id){\n            id\n        username\n        picture\n    }\n    }\n"])));
+
 function DMPage() {
   var user = JSON.parse(localStorage.getItem("user"));
   console.log(user);
+
+  var _a = client_1.useMutation(getFollowingQuery),
+      following = _a[0],
+      followingData = _a[1];
+
+  var _b = react_1.useState(0),
+      followCount = _b[0],
+      setFollowCount = _b[1];
+
+  var loadingBtn = react_1.default.createElement(react_loading_1.default, {
+    type: "spokes",
+    color: 'black',
+    height: '7%',
+    width: '7%'
+  });
+  react_1.useEffect(function () {
+    following({
+      variables: {
+        user_id: user.id
+      }
+    });
+  }, []);
+  react_1.useEffect(function () {
+    if (followingData.data != null && followingData.data != undefined) {
+      setFollowCount(followingData.data.getFollowingList.length);
+    }
+  }, [followingData.data]);
   return react_1.default.createElement(react_1.default.Fragment, null, react_1.default.createElement(UserHeader_1.default, null), react_1.default.createElement("div", {
     id: "dmOuterDiv"
   }, react_1.default.createElement("div", {
@@ -83677,7 +83881,12 @@ function DMPage() {
     id: "dmHeader"
   }, user.username), react_1.default.createElement("div", {
     id: "dmPeopleList"
-  }, react_1.default.createElement(dmProfile_1.default, null), react_1.default.createElement(dmProfile_1.default, null), react_1.default.createElement(dmProfile_1.default, null), react_1.default.createElement(dmProfile_1.default, null), react_1.default.createElement(dmProfile_1.default, null), react_1.default.createElement(dmProfile_1.default, null), react_1.default.createElement(dmProfile_1.default, null), react_1.default.createElement(dmProfile_1.default, null), react_1.default.createElement(dmProfile_1.default, null), react_1.default.createElement(dmProfile_1.default, null), react_1.default.createElement(dmProfile_1.default, null), react_1.default.createElement(dmProfile_1.default, null))), react_1.default.createElement("div", {
+  }, followingData.loading ? loadingBtn : followCount > 0 ? followingData.data.getFollowingList.map(function (content) {
+    return react_1.default.createElement(DmProfile_1.DmProfile, {
+      username: content.username,
+      profile: content.picture
+    });
+  }) : "Zero Following")), react_1.default.createElement("div", {
     id: "dmMainRight"
   }, react_1.default.createElement("div", {
     id: "dmReceiverHeader"
@@ -83703,7 +83912,8 @@ function DMPage() {
 }
 
 exports.default = DMPage;
-},{"react":"node_modules/react/index.js","../AddOns/Footer/Footer":"page/AddOns/Footer/Footer.tsx","../AddOns/Header/UserHeader":"page/AddOns/Header/UserHeader.tsx","../Components/dmProfile":"page/Components/dmProfile.tsx","../Components/receiveDm":"page/Components/receiveDm.tsx","../Components/sendDm":"page/Components/sendDm.tsx"}],"page/ExplorePage/ExplorePage.tsx":[function(require,module,exports) {
+var templateObject_1;
+},{"@apollo/client":"node_modules/@apollo/client/index.js","graphql-tag":"node_modules/graphql-tag/lib/index.js","react":"node_modules/react/index.js","../AddOns/Footer/Footer":"page/AddOns/Footer/Footer.tsx","../AddOns/Header/UserHeader":"page/AddOns/Header/UserHeader.tsx","../Components/receiveDm":"page/Components/receiveDm.tsx","../Components/sendDm":"page/Components/sendDm.tsx","react-loading":"node_modules/react-loading/dist/react-loading.js","../Components/DmProfile":"page/Components/DmProfile.tsx"}],"page/ExplorePage/ExplorePage.tsx":[function(require,module,exports) {
 "use strict";
 
 var __makeTemplateObject = this && this.__makeTemplateObject || function (cooked, raw) {
@@ -105252,7 +105462,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58271" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59953" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

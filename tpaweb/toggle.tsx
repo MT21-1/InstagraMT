@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import './style.scss'
 export default function Toggle(){
-    const [theme, setTheme] = useState(localStorage.getItem("theme") == ""? "light": localStorage.getItem("theme"))
+    const [theme, setTheme] = useState(localStorage.getItem("theme") == null? "light": localStorage.getItem("theme"))
     console.log("theme =" + theme)
     const toggleTheme = () => {
         document.body.classList.toggle("dark")
