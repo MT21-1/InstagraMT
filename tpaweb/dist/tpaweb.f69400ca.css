@@ -2949,6 +2949,7 @@ html .countdown, body .countdown {
 }
 #dmOuterDiv #dmMainDiv #dmMainLeft #dmHeader {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 10%;
@@ -3144,6 +3145,9 @@ html .countdown, body .countdown {
   }
   #dmOuterDiv #dmMainDiv #dmMainLeft #dmHeader {
     font-size: 14px;
+  }
+  #dmOuterDiv #dmMainDiv #dmMainLeft #dmHeader input {
+    width: 100px;
   }
   #dmOuterDiv #dmMainDiv #dmMainLeft #dmPeopleList {
     height: 90%;

@@ -3227,6 +3227,7 @@ html, body{
             
             #dmHeader{
                 display: flex;
+                flex-direction: column;
                 justify-content: center;
                 align-items: center;
                 height: 10%;
@@ -3235,6 +3236,7 @@ html, body{
                 font-size: 20px;
                 font-weight: 500;
                 color: $textColor;
+                
             }
             #dmPeopleList{
                 height: 90%;
@@ -3436,6 +3438,9 @@ html, body{
             #dmMainLeft{
                 #dmHeader{
                     font-size: 14px;
+                    input{
+                        width: 100px;
+                    }
                 }
                 #dmPeopleList{
                     height: 90%;

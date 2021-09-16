@@ -83839,7 +83839,14 @@ var react_loading_1 = __importDefault(require("react-loading"));
 
 var DmProfile_1 = require("../Components/DmProfile");
 
+var rxjs_1 = require("rxjs");
+
+var reactjs_popup_1 = __importDefault(require("reactjs-popup"));
+
 var getFollowingQuery = graphql_tag_1.default(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n    mutation getFollowing($user_id: String!){\n        getFollowingList(input:$user_id){\n            id\n        username\n        picture\n    }\n    }\n"], ["\n    mutation getFollowing($user_id: String!){\n        getFollowingList(input:$user_id){\n            id\n        username\n        picture\n    }\n    }\n"])));
+var searchQuery = graphql_tag_1.default(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n    mutation search($username: String!){\n        searchUser(input:$username){\n            id\n            username\n            picture\n        }\n        searchHashtag(input:$username){\n            id\n            hashtag\n        }\n    }\n"], ["\n    mutation search($username: String!){\n        searchUser(input:$username){\n            id\n            username\n            picture\n        }\n        searchHashtag(input:$username){\n            id\n            hashtag\n        }\n    }\n"])));
+var getSearchHistoryQuery = graphql_tag_1.default(templateObject_3 || (templateObject_3 = __makeTemplateObject(["\nmutation getSearchHistory($user_id: String!){\n    getSearchHistory(input:$user_id){\n      search_history\n    }\n    \n  }\n"], ["\nmutation getSearchHistory($user_id: String!){\n    getSearchHistory(input:$user_id){\n      search_history\n    }\n    \n  }\n"])));
+var addSearchHistoryQuery = graphql_tag_1.default(templateObject_4 || (templateObject_4 = __makeTemplateObject(["  \n  mutation addSearchHistory($user_id: String!, $search_history: String!){\n    addSearchHistory(input:{\n      user_id: $user_id,\n      search_history: $search_history\n    })\n  }\n"], ["  \n  mutation addSearchHistory($user_id: String!, $search_history: String!){\n    addSearchHistory(input:{\n      user_id: $user_id,\n      search_history: $search_history\n    })\n  }\n"])));
 
 function DMPage() {
   var user = JSON.parse(localStorage.getItem("user"));
@@ -83859,6 +83866,22 @@ function DMPage() {
     height: '7%',
     width: '7%'
   });
+  var subject = react_1.useMemo(function () {
+    return new rxjs_1.Subject();
+  }, []);
+
+  var _c = client_1.useMutation(searchQuery),
+      searchQ = _c[0],
+      searchData = _c[1];
+
+  var _d = react_1.useState([]),
+      userList = _d[0],
+      setUserList = _d[1];
+
+  var _e = react_1.useState([]),
+      hashtagList = _e[0],
+      setHashtagList = _e[1];
+
   react_1.useEffect(function () {
     following({
       variables: {
@@ -83871,6 +83894,28 @@ function DMPage() {
       setFollowCount(followingData.data.getFollowingList.length);
     }
   }, [followingData.data]);
+  react_1.useEffect(function () {
+    var subscribe = subject.pipe(rxjs_1.debounceTime(500), rxjs_1.distinctUntilChanged(), rxjs_1.map(function (search) {
+      return search.trim();
+    })).subscribe(function (search) {
+      searchQ({
+        variables: {
+          username: search
+        }
+      });
+    });
+    return function () {
+      subject.unsubscribe;
+    };
+  }, [subject]);
+  react_1.useEffect(function () {
+    console.log(searchData.data);
+
+    if (searchData.data !== undefined && searchData != null) {
+      setUserList(searchData.data.searchUser);
+      setHashtagList(searchData.data.searchHashtag);
+    }
+  }, [searchData.data]);
   return react_1.default.createElement(react_1.default.Fragment, null, react_1.default.createElement(UserHeader_1.default, null), react_1.default.createElement("div", {
     id: "dmOuterDiv"
   }, react_1.default.createElement("div", {
@@ -83879,7 +83924,29 @@ function DMPage() {
     id: "dmMainLeft"
   }, react_1.default.createElement("div", {
     id: "dmHeader"
-  }, user.username), react_1.default.createElement("div", {
+  }, user.username, react_1.default.createElement(reactjs_popup_1.default, {
+    trigger: react_1.default.createElement("input", {
+      type: "search",
+      autoComplete: "off",
+      onChange: function onChange(e) {
+        return subject.next(e.target.value);
+      },
+      placeholder: "username",
+      name: "searchQuery",
+      id: ""
+    }),
+    position: "bottom left"
+  }, react_1.default.createElement("div", {
+    className: "searchPopUp"
+  }, searchData.loading ? loadingBtn : null, searchData.data != undefined && searchData.data != null && userList != null && userList.length != 0 ? searchData.data.searchUser.map(function (users) {
+    return react_1.default.createElement("a", {
+      href: "#",
+      className: "searchStrip"
+    }, react_1.default.createElement("img", {
+      src: users.picture,
+      alt: ""
+    }), react_1.default.createElement("p", null, users.username));
+  }) : null))), react_1.default.createElement("div", {
     id: "dmPeopleList"
   }, followingData.loading ? loadingBtn : followCount > 0 ? followingData.data.getFollowingList.map(function (content) {
     return react_1.default.createElement(DmProfile_1.DmProfile, {
@@ -83912,8 +83979,8 @@ function DMPage() {
 }
 
 exports.default = DMPage;
-var templateObject_1;
-},{"@apollo/client":"node_modules/@apollo/client/index.js","graphql-tag":"node_modules/graphql-tag/lib/index.js","react":"node_modules/react/index.js","../AddOns/Footer/Footer":"page/AddOns/Footer/Footer.tsx","../AddOns/Header/UserHeader":"page/AddOns/Header/UserHeader.tsx","../Components/receiveDm":"page/Components/receiveDm.tsx","../Components/sendDm":"page/Components/sendDm.tsx","react-loading":"node_modules/react-loading/dist/react-loading.js","../Components/DmProfile":"page/Components/DmProfile.tsx"}],"page/ExplorePage/ExplorePage.tsx":[function(require,module,exports) {
+var templateObject_1, templateObject_2, templateObject_3, templateObject_4;
+},{"@apollo/client":"node_modules/@apollo/client/index.js","graphql-tag":"node_modules/graphql-tag/lib/index.js","react":"node_modules/react/index.js","../AddOns/Footer/Footer":"page/AddOns/Footer/Footer.tsx","../AddOns/Header/UserHeader":"page/AddOns/Header/UserHeader.tsx","../Components/receiveDm":"page/Components/receiveDm.tsx","../Components/sendDm":"page/Components/sendDm.tsx","react-loading":"node_modules/react-loading/dist/react-loading.js","../Components/DmProfile":"page/Components/DmProfile.tsx","rxjs":"node_modules/rxjs/dist/esm5/index.js","reactjs-popup":"node_modules/reactjs-popup/dist/reactjs-popup.esm.js"}],"page/ExplorePage/ExplorePage.tsx":[function(require,module,exports) {
 "use strict";
 
 var __makeTemplateObject = this && this.__makeTemplateObject || function (cooked, raw) {
@@ -105462,7 +105529,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59953" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64342" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
