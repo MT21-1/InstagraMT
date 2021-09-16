@@ -5,7 +5,7 @@ export default function MentionStrip(){
        <div className="mentionStrip">
            <div id="storyImg">
                <a href="/story">
-                    <img src="wp.jpg" alt="" />
+                    <img src="/wp.jpg" alt="" />
                </a>
            </div>
            <div id="detail">

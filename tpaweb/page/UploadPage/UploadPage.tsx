@@ -16,6 +16,7 @@ const postQuery = gql`
         user_id: $user_id
     }){
         caption
+        id
     }
     }
 
@@ -35,6 +36,7 @@ export default function UploadPage(){
     const loadingBtn = (<button className="loadingButton" ><ReactLoading type={"spokes"} color={'white'} height={'7%'} width={'7%'}/></button>)
     const [loadingStyle, setloadingStyle] = useState({"width" : '0'})
     const [uploadProgress, setUploadProgress] = useState(0)
+    const [autoShare, setAutoShare] = useState(false);
 
     useEffect(() => {
         setloadingStyle({"width" : `${uploadProgress}&`})
@@ -43,7 +45,8 @@ export default function UploadPage(){
 
     useEffect(() => {
         if(data !== undefined && data != null){
-
+            if(autoShare)
+                handleShareByTwitter(data.insertNewPost.id);
         }
     }, [data])
 
@@ -91,7 +94,9 @@ export default function UploadPage(){
         })        
         setUploadProgress(100);
     }
-
+    function handleShareByTwitter(postId: string) {
+        window.open(`http://www.twitter.com/share?url=${location.host}/post/${postId}`, "_blank");
+    }
     async function handleSubmit() {
         if(uploadProgress < 100){
             setErrorMessage("Upload not done...");
@@ -125,7 +130,7 @@ export default function UploadPage(){
                 detail  : arrayOfDetail
             }
         })
-
+        
         setCaption("")
         setUpload({contents:[]})
         setVisible(true);
@@ -190,8 +195,7 @@ export default function UploadPage(){
                                     setCaption(e.target.value)
                                 }}></textarea>
                                 <p id="errorLabel">{errorMessage}</p>
-                                <span id="shareDiv"><input type="checkbox" name="share" id="shareChk"/> share to other social media</span>
-                                
+                                <span id="shareDiv"><input type="checkbox" name="share" id="shareChk" onClick={()=> setAutoShare(!autoShare)}/> share to other social media</span>
                             </div>
                             <div id="loadingBarBackground">
                                 <div id="loadingBarFill" style={{"width":`${uploadProgress}%`}}>

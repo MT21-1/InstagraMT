@@ -10,7 +10,6 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
-	"fmt"
 	"io/ioutil"
 	"net/http"
 	"strings"
@@ -789,7 +788,42 @@ func (r *mutationResolver) SelectPostHomePage(ctx context.Context, nextpost *str
 }
 
 func (r *mutationResolver) GetMutualFriend(ctx context.Context, input string) ([]*model.User, error) {
-	panic(fmt.Errorf("not implemented"))
+	var rels []*model.Relation
+	err := r.Db.Model(&rels).Where("follow_id = ?", input).Select()
+	if err != nil {
+		return nil, err
+	}
+
+	followedCount := len(rels)
+	followed_users_id := make([]string, followedCount)
+	for i, u := range rels {
+		//err = r.DB.Model(&user).Where("id = ?", u.TargetId).Select()
+		followed_users_id[i] = u.FollowedID
+	}
+
+	var FollowingFollows []*model.Relation
+	err2 := r.Db.Model(&FollowingFollows).WhereIn("follow_id in (?)", followed_users_id).Where("followed_id != ?", input).WhereIn("followed_id not in (?)", followed_users_id).Select()
+
+	if err2 != nil {
+		return nil, err2
+	}
+
+	mutualCount := len(FollowingFollows)
+	mutualUser := make([]string, mutualCount)
+
+	for i, mutual := range FollowingFollows {
+		mutualUser[i] = mutual.FollowedID
+	}
+
+	var mutuals []*model.User
+
+	err3 := r.Db.Model(&mutuals).WhereIn("id in (?) ", mutualUser).Select()
+
+	if err3 != nil {
+		return nil, err3
+	}
+
+	return mutuals, nil
 }
 
 func (r *queryResolver) Users(ctx context.Context) ([]*model.User, error) {

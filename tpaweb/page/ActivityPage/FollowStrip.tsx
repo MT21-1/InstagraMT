@@ -13,7 +13,9 @@ export default function FollowStrip(){
     return(
         <div className="activityStrip">
             <div className="detail">
-                <img src="wp.jpg" alt="" />
+                <a href="/profile/user123">
+                    <img src="/wp.jpg" alt="" />
+                </a>
                 <p><b>username</b> started following you.</p>
             </div>
             <div className="right">

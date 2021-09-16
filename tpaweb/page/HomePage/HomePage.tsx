@@ -4,9 +4,9 @@ import React, { useEffect, useRef, useState } from 'react'
 import Footer from '../AddOns/Footer/Footer'
 import UserHeader from '../AddOns/Header/UserHeader'
 import Story from '../Components/Story'
-import Suggestion from '../Components/suggestion'
 import ReactLoading from "react-loading"
 import { Post } from '../Components/Post'
+import { Suggestion } from '../Components/Suggestion'
 
 const selectPostHomeQuery = gql`
     mutation selectPostHome($nextpost: String, $userId: String!){
@@ -22,6 +22,16 @@ const selectPostHomeQuery = gql`
         }
     }
 `
+const getMutualQuery = gql`
+    mutation getMutuals($user_id: String!){
+  getMutualFriend(input: $user_id){
+    id
+    picture
+    username
+    full_name
+  }
+}
+`
 
 export default function HomePage(){
 
@@ -35,9 +45,11 @@ export default function HomePage(){
     const apollo = useApolloClient()
     const [hasnext,SetNext] = useState(true);
     const [selectPost, selectPostData] = useMutation(selectPostHomeQuery)
+    const [getMutuals, getMutualData] = useMutation(getMutualQuery);
     const loadingBtn = (<div className="loadingAnimation"><ReactLoading type={"spokes"} color={'black'} height={'100%'} width={'100%'}/></div>)
     
     const user = JSON.parse(localStorage.getItem("user"))
+    const [mutualCount, setMutualCount] = useState(0);
     console.log(user)
     async function loadMoreItems() {
         const postPagged = await apollo.mutate({
@@ -62,6 +74,12 @@ export default function HomePage(){
     }, [nextpost])
 
     useEffect(()=>{
+        console.log("test =" + user.id)
+        getMutuals({
+            variables:{
+                user_id: user.id
+            }
+        })
         setObserver(new IntersectionObserver(
             (entries,observer)=>{
                 if(!entries[0].isIntersecting ){
@@ -73,7 +91,21 @@ export default function HomePage(){
                 loadMoreItems()
             },
         ));
+        
     },[])
+
+    useEffect(() => {
+        console.log("mutual hehe = " + getMutualData)
+        if(getMutualData.data != undefined && getMutualData.data != null){
+            if(getMutualData.error != null){
+                setMutualCount(0)
+            }else{
+                setMutualCount(getMutualData.data.getMutualFriend.length)
+                console.log(getMutualData.data.getMutualFriend)
+            }
+        }
+
+    }, [getMutualData])
 
     useEffect(() => {
         if(observer === undefined || isLoading || nextpost == null || hasnext == false){
@@ -133,14 +165,14 @@ export default function HomePage(){
                             <a href="#">Switch</a>
                         </div>
 
-                        <span>Suggestions For You <a href="#">See All</a></span>
+                        <span>Suggestions For You <a href="/suggestion">See All</a></span>
 
                         {/* nanti map suggestion disini */}
-                        <Suggestion></Suggestion>
-                        <Suggestion></Suggestion>
-                        <Suggestion></Suggestion>
-                        <Suggestion></Suggestion>
-                        <Suggestion></Suggestion>
+                        {(mutualCount > 0)?(getMutualData.data.getMutualFriend.map((content)=>{
+                            return(
+                                <Suggestion key ={content.id} picture={content.picture} username={content.username}/>
+                            )
+                        })):"No Mutual User"}
                         <div>
 
                         </div>

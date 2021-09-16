@@ -404,7 +404,9 @@ export const Post = (props)=>{
             {/* Profile */}
             <div className="postProfileDiv">
                 <Popup2 trigger={<a href={"/profile/" + username} id="username">
-                    <img src={userProfile} alt="" />
+                    <a href="/story">
+                        <img src={userProfile} alt="" />
+                    </a>
                     <span>{username}</span>
                 </a>} on="hover" position="bottom left">
                     <iframe src={"/profile/" + username} width="600" height="400"></iframe>

@@ -16,6 +16,8 @@ import VerifyEmailPage from './page/VerifyEmailPage/VerifyEmailPage'
 import firebase from "firebase/app";
 import "firebase/storage";
 import PostPage from './page/PostPage/PostPage'
+import SettingPage from './page/SettingPage/SettingPage'
+import SuggestionPage from './page/SuggestionPage/SuggestionPage'
 
 export const JWTContext = createContext<[string, React.Dispatch<React.SetStateAction<string>>]>(["", () => { }]);
 
@@ -125,6 +127,22 @@ export default function App(){
                             
                             {
                                 jwt !== ""? <PostPage/>: <LoginPage/>
+                            }
+                            
+                            
+                        </Route>
+                        <Route exact path="/setting">
+                            
+                            {
+                                jwt !== ""? <SettingPage/>: <LoginPage/>
+                            }
+                            
+                            
+                        </Route>
+                        <Route exact path="/suggestion">
+                            
+                            {
+                                jwt !== ""? <SuggestionPage/>: <LoginPage/>
                             }
                             
                             

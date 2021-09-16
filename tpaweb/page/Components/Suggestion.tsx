@@ -1,17 +1,20 @@
 import React from 'react'
 
-export default function Suggestion(){
+export const Suggestion= (props)=>{
+    const username = props.username
+    const picture = props.picture
+    const fullname = props.fullname
+
     return(
         <div className="friendSuggestion">
             <div className="profileDetail">
-                <img src="/profile.jpg" alt="profilepic" />
+                <img src={picture} alt="profilepic"/>
                 <div>
-                    <p className="username">bambang</p>
-                    <p className="subname">Followed by bambang</p>    
+                    <p className="username">{username}</p>
+                    <p className="subname">{fullname}</p>    
                 </div>
             </div>
-            
-            <a href="#">Follow</a>
+            <a href={`/profile/${username}`}>Follow</a>
         </div>
     )
 }

@@ -34389,7 +34389,7 @@ function MentionStrip() {
   }, react_1.default.createElement("a", {
     href: "/story"
   }, react_1.default.createElement("img", {
-    src: "wp.jpg",
+    src: "/wp.jpg",
     alt: ""
   }))), react_1.default.createElement("div", {
     id: "detail"
@@ -34417,15 +34417,19 @@ function TaggedStrip() {
     className: "activityStrip"
   }, react_1.default.createElement("div", {
     className: "detail"
+  }, react_1.default.createElement("a", {
+    href: "/profile/user123"
   }, react_1.default.createElement("img", {
-    src: "wp.jpg",
+    src: "/wp.jpg",
     alt: ""
-  }), react_1.default.createElement("p", null, react_1.default.createElement("b", null, "username"), " tagged you in a post.")), react_1.default.createElement("div", {
+  })), react_1.default.createElement("p", null, react_1.default.createElement("b", null, "username"), " tagged you in a post.")), react_1.default.createElement("div", {
     className: "right"
+  }, react_1.default.createElement("a", {
+    href: "/post/12"
   }, react_1.default.createElement("img", {
-    src: "wp.jpg",
+    src: "/wp.jpg",
     alt: ""
-  })));
+  }))));
 }
 
 exports.default = TaggedStrip;
@@ -34449,15 +34453,19 @@ function CommentStrip() {
     className: "activityStrip"
   }, react_1.default.createElement("div", {
     className: "detail"
+  }, react_1.default.createElement("a", {
+    href: "/profile/user123"
   }, react_1.default.createElement("img", {
-    src: "wp.jpg",
+    src: "/wp.jpg",
     alt: ""
-  }), react_1.default.createElement("p", null, react_1.default.createElement("b", null, "username"), " commented: apa gitu \uD83E\uDD21")), react_1.default.createElement("div", {
+  })), react_1.default.createElement("p", null, react_1.default.createElement("b", null, "username"), " commented: apa gitu \uD83E\uDD21")), react_1.default.createElement("div", {
     className: "right"
+  }, react_1.default.createElement("a", {
+    href: "/post/12"
   }, react_1.default.createElement("img", {
-    src: "wp.jpg",
+    src: "/wp.jpg",
     alt: ""
-  })));
+  }))));
 }
 
 exports.default = CommentStrip;
@@ -34481,15 +34489,19 @@ function LikeStrip() {
     className: "activityStrip"
   }, react_1.default.createElement("div", {
     className: "detail"
+  }, react_1.default.createElement("a", {
+    href: "/profile/user123"
   }, react_1.default.createElement("img", {
-    src: "wp.jpg",
+    src: "/wp.jpg",
     alt: ""
-  }), react_1.default.createElement("p", null, react_1.default.createElement("b", null, "username"), " liked your post.")), react_1.default.createElement("div", {
+  })), react_1.default.createElement("p", null, react_1.default.createElement("b", null, "username"), " liked your post.")), react_1.default.createElement("div", {
     className: "right"
+  }, react_1.default.createElement("a", {
+    href: "/post/12"
   }, react_1.default.createElement("img", {
-    src: "wp.jpg",
+    src: "/wp.jpg",
     alt: ""
-  })));
+  }))));
 }
 
 exports.default = LikeStrip;
@@ -34557,16 +34569,90 @@ function FollowStrip() {
     className: "activityStrip"
   }, react_1.default.createElement("div", {
     className: "detail"
+  }, react_1.default.createElement("a", {
+    href: "/profile/user123"
   }, react_1.default.createElement("img", {
-    src: "wp.jpg",
+    src: "/wp.jpg",
     alt: ""
-  }), react_1.default.createElement("p", null, react_1.default.createElement("b", null, "username"), " started following you.")), react_1.default.createElement("div", {
+  })), react_1.default.createElement("p", null, react_1.default.createElement("b", null, "username"), " started following you.")), react_1.default.createElement("div", {
     className: "right"
   }, follow ? followingBtn : followBtn));
 }
 
 exports.default = FollowStrip;
-},{"react":"node_modules/react/index.js"}],"toggle.tsx":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js"}],"node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
+var bundleURL = null;
+
+function getBundleURLCached() {
+  if (!bundleURL) {
+    bundleURL = getBundleURL();
+  }
+
+  return bundleURL;
+}
+
+function getBundleURL() {
+  // Attempt to find the URL of the current script and use that as the base URL
+  try {
+    throw new Error();
+  } catch (err) {
+    var matches = ('' + err.stack).match(/(https?|file|ftp|chrome-extension|moz-extension):\/\/[^)\n]+/g);
+
+    if (matches) {
+      return getBaseURL(matches[0]);
+    }
+  }
+
+  return '/';
+}
+
+function getBaseURL(url) {
+  return ('' + url).replace(/^((?:https?|file|ftp|chrome-extension|moz-extension):\/\/.+)?\/[^/]+(?:\?.*)?$/, '$1') + '/';
+}
+
+exports.getBundleURL = getBundleURLCached;
+exports.getBaseURL = getBaseURL;
+},{}],"node_modules/parcel-bundler/src/builtins/css-loader.js":[function(require,module,exports) {
+var bundle = require('./bundle-url');
+
+function updateLink(link) {
+  var newLink = link.cloneNode();
+
+  newLink.onload = function () {
+    link.remove();
+  };
+
+  newLink.href = link.href.split('?')[0] + '?' + Date.now();
+  link.parentNode.insertBefore(newLink, link.nextSibling);
+}
+
+var cssTimeout = null;
+
+function reloadCSS() {
+  if (cssTimeout) {
+    return;
+  }
+
+  cssTimeout = setTimeout(function () {
+    var links = document.querySelectorAll('link[rel="stylesheet"]');
+
+    for (var i = 0; i < links.length; i++) {
+      if (bundle.getBaseURL(links[i].href) === bundle.getBundleURL()) {
+        updateLink(links[i]);
+      }
+    }
+
+    cssTimeout = null;
+  }, 50);
+}
+
+module.exports = reloadCSS;
+},{"./bundle-url":"node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"style.scss":[function(require,module,exports) {
+var reloadCSS = require('_css_loader');
+
+module.hot.dispose(reloadCSS);
+module.hot.accept(reloadCSS);
+},{"_css_loader":"node_modules/parcel-bundler/src/builtins/css-loader.js"}],"toggle.tsx":[function(require,module,exports) {
 "use strict";
 
 var __createBinding = this && this.__createBinding || (Object.create ? function (o, m, k, k2) {
@@ -34609,25 +34695,25 @@ Object.defineProperty(exports, "__esModule", {
 
 var react_1 = __importStar(require("react"));
 
-function Toggle() {
-  var _a = react_1.useState(false),
-      dark = _a[0],
-      setDark = _a[1];
+require("./style.scss");
 
-  var theme = localStorage.getItem("theme");
-  console.log(theme);
+function Toggle() {
+  var _a = react_1.useState(localStorage.getItem("theme") == "" ? "light" : localStorage.getItem("theme")),
+      theme = _a[0],
+      setTheme = _a[1];
+
+  console.log("theme =" + theme);
 
   var toggleTheme = function toggleTheme() {
     document.body.classList.toggle("dark");
-    setDark(!dark);
 
-    if (!dark) {
+    if (theme == "light") {
+      setTheme("dark");
       localStorage.setItem("theme", "dark");
     } else {
+      setTheme("light");
       localStorage.setItem("theme", "light");
     }
-
-    console.log(localStorage.getItem("theme"));
   };
 
   react_1.useEffect(function () {
@@ -34638,11 +34724,27 @@ function Toggle() {
   return react_1.default.createElement("button", {
     onClick: toggleTheme,
     className: "toggle"
-  }, "Toggle");
+  }, theme == "light" ? react_1.default.createElement("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    fill: "none",
+    viewBox: "0 0 24 24",
+    stroke: "currentColor"
+  }, react_1.default.createElement("path", {
+    "stroke-linecap": "round",
+    "stroke-linejoin": "round",
+    "stroke-width": "2",
+    d: "M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
+  })) : react_1.default.createElement("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    viewBox: "0 0 20 20",
+    fill: "currentColor"
+  }, react_1.default.createElement("path", {
+    d: "M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+  })));
 }
 
 exports.default = Toggle;
-},{"react":"node_modules/react/index.js"}],"node_modules/tslib/tslib.es6.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","./style.scss":"style.scss"}],"node_modules/tslib/tslib.es6.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -83230,7 +83332,9 @@ function UserHeader() {
         "stroke-linejoin": "round",
         "stroke-width": "2",
         d: "M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-      }))),
+      })), react_1.default.createElement("div", {
+        className: "notificationIndicator"
+      }, "5")),
       position: "bottom right"
     }, react_1.default.createElement("div", {
       className: "activityPopUp"
@@ -83263,7 +83367,7 @@ function UserHeader() {
       "stroke-width": "2",
       d: "M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"
     })), "Profile"), react_1.default.createElement("a", {
-      href: "#"
+      href: "/profile/" + user.username + "/saved"
     }, react_1.default.createElement("svg", {
       xmlns: "http://www.w3.org/2000/svg",
       fill: "none",
@@ -83275,7 +83379,7 @@ function UserHeader() {
       "stroke-width": "2",
       d: "M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"
     })), "Saved"), react_1.default.createElement("a", {
-      href: "#"
+      href: "/setting"
     }, react_1.default.createElement("svg", {
       xmlns: "http://www.w3.org/2000/svg",
       fill: "none",
@@ -83294,7 +83398,7 @@ function UserHeader() {
     })), "Settings"), react_1.default.createElement("a", null, react_1.default.createElement("button", {
       onClick: logOut
     }, "Log Out")))), react_1.default.createElement("a", {
-      href: "#",
+      href: "/dm",
       id: "msgMobile"
     }, react_1.default.createElement("svg", {
       xmlns: "http://www.w3.org/2000/svg",
@@ -83306,7 +83410,104 @@ function UserHeader() {
       "stroke-linejoin": "round",
       "stroke-width": "2",
       d: "M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
-    }))))))
+    }))))), react_1.default.createElement("div", {
+      className: "mobileBottomHeader"
+    }, react_1.default.createElement("div", {
+      className: "iconDiv"
+    }, react_1.default.createElement("a", {
+      href: "/",
+      id: "home"
+    }, react_1.default.createElement("svg", {
+      xmlns: "http://www.w3.org/2000/svg",
+      fill: "none",
+      viewBox: "0 0 24 24",
+      stroke: "currentColor"
+    }, react_1.default.createElement("path", {
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round",
+      "stroke-width": "2",
+      d: "M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+    }))), react_1.default.createElement("a", {
+      href: "/explore",
+      id: "explore"
+    }, react_1.default.createElement("svg", {
+      xmlns: "http://www.w3.org/2000/svg",
+      fill: "none",
+      viewBox: "0 0 24 24",
+      stroke: "currentColor"
+    }, react_1.default.createElement("path", {
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round",
+      "stroke-width": "2",
+      d: "M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"
+    }))), react_1.default.createElement("a", {
+      href: "/dm",
+      id: "msgMobile"
+    }, react_1.default.createElement("svg", {
+      xmlns: "http://www.w3.org/2000/svg",
+      fill: "none",
+      viewBox: "0 0 24 24",
+      stroke: "currentColor"
+    }, react_1.default.createElement("path", {
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round",
+      "stroke-width": "2",
+      d: "M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+    }))), react_1.default.createElement(reactjs_popup_1.default, {
+      trigger: react_1.default.createElement("a", {
+        href: "#",
+        id: "profile"
+      }, react_1.default.createElement("img", {
+        src: user.picture,
+        alt: ""
+      })),
+      position: "top right"
+    }, react_1.default.createElement("div", {
+      className: "popUp"
+    }, react_1.default.createElement("a", {
+      href: "/profile/" + user.username
+    }, react_1.default.createElement("svg", {
+      xmlns: "http://www.w3.org/2000/svg",
+      fill: "none",
+      viewBox: "0 0 24 24",
+      stroke: "currentColor"
+    }, react_1.default.createElement("path", {
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round",
+      "stroke-width": "2",
+      d: "M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+    })), "Profile"), react_1.default.createElement("a", {
+      href: "/profile/" + user.username + "/saved"
+    }, react_1.default.createElement("svg", {
+      xmlns: "http://www.w3.org/2000/svg",
+      fill: "none",
+      viewBox: "0 0 24 24",
+      stroke: "currentColor"
+    }, react_1.default.createElement("path", {
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round",
+      "stroke-width": "2",
+      d: "M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"
+    })), "Saved"), react_1.default.createElement("a", {
+      href: "/setting"
+    }, react_1.default.createElement("svg", {
+      xmlns: "http://www.w3.org/2000/svg",
+      fill: "none",
+      viewBox: "0 0 24 24",
+      stroke: "currentColor"
+    }, react_1.default.createElement("path", {
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round",
+      "stroke-width": "2",
+      d: "M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
+    }), react_1.default.createElement("path", {
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round",
+      "stroke-width": "2",
+      d: "M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+    })), "Settings"), react_1.default.createElement("a", null, react_1.default.createElement("button", {
+      onClick: logOut
+    }, "Log Out")))))))
   );
 }
 
@@ -84902,39 +85103,6 @@ function Story() {
 }
 
 exports.default = Story;
-},{"react":"node_modules/react/index.js"}],"page/Components/suggestion.tsx":[function(require,module,exports) {
-"use strict";
-
-var __importDefault = this && this.__importDefault || function (mod) {
-  return mod && mod.__esModule ? mod : {
-    "default": mod
-  };
-};
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var react_1 = __importDefault(require("react"));
-
-function Suggestion() {
-  return react_1.default.createElement("div", {
-    className: "friendSuggestion"
-  }, react_1.default.createElement("div", {
-    className: "profileDetail"
-  }, react_1.default.createElement("img", {
-    src: "/profile.jpg",
-    alt: "profilepic"
-  }), react_1.default.createElement("div", null, react_1.default.createElement("p", {
-    className: "username"
-  }, "bambang"), react_1.default.createElement("p", {
-    className: "subname"
-  }, "Followed by bambang"))), react_1.default.createElement("a", {
-    href: "#"
-  }, "Follow"));
-}
-
-exports.default = Suggestion;
 },{"react":"node_modules/react/index.js"}],"node_modules/millify/dist/options.js":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -89504,10 +89672,12 @@ var Post = function Post(props) {
     trigger: react_1.default.createElement("a", {
       href: "/profile/" + username,
       id: "username"
+    }, react_1.default.createElement("a", {
+      href: "/story"
     }, react_1.default.createElement("img", {
       src: userProfile,
       alt: ""
-    }), react_1.default.createElement("span", null, username)),
+    })), react_1.default.createElement("span", null, username)),
     on: "hover",
     position: "bottom left"
   }, react_1.default.createElement("iframe", {
@@ -89835,7 +90005,44 @@ var Post = function Post(props) {
 
 exports.Post = Post;
 var templateObject_1, templateObject_2, templateObject_3, templateObject_4, templateObject_5, templateObject_6, templateObject_7, templateObject_8, templateObject_9, templateObject_10, templateObject_11, templateObject_12, templateObject_13;
-},{"react":"node_modules/react/index.js","millify":"node_modules/millify/dist/millify.js","react-copy-to-clipboard":"node_modules/react-copy-to-clipboard/lib/index.js","reactjs-popup":"node_modules/reactjs-popup/dist/reactjs-popup.esm.js","./Comment":"page/Components/Comment.tsx","graphql-tag":"node_modules/graphql-tag/lib/index.js","@apollo/client":"node_modules/@apollo/client/index.js","react-router":"node_modules/react-router/esm/react-router.js","react-loading":"node_modules/react-loading/dist/react-loading.js","react-share":"node_modules/react-share/es/index.js"}],"page/HomePage/HomePage.tsx":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","millify":"node_modules/millify/dist/millify.js","react-copy-to-clipboard":"node_modules/react-copy-to-clipboard/lib/index.js","reactjs-popup":"node_modules/reactjs-popup/dist/reactjs-popup.esm.js","./Comment":"page/Components/Comment.tsx","graphql-tag":"node_modules/graphql-tag/lib/index.js","@apollo/client":"node_modules/@apollo/client/index.js","react-router":"node_modules/react-router/esm/react-router.js","react-loading":"node_modules/react-loading/dist/react-loading.js","react-share":"node_modules/react-share/es/index.js"}],"page/Components/Suggestion.tsx":[function(require,module,exports) {
+"use strict";
+
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Suggestion = void 0;
+
+var react_1 = __importDefault(require("react"));
+
+var Suggestion = function Suggestion(props) {
+  var username = props.username;
+  var picture = props.picture;
+  var fullname = props.fullname;
+  return react_1.default.createElement("div", {
+    className: "friendSuggestion"
+  }, react_1.default.createElement("div", {
+    className: "profileDetail"
+  }, react_1.default.createElement("img", {
+    src: picture,
+    alt: "profilepic"
+  }), react_1.default.createElement("div", null, react_1.default.createElement("p", {
+    className: "username"
+  }, username), react_1.default.createElement("p", {
+    className: "subname"
+  }, fullname))), react_1.default.createElement("a", {
+    href: "/profile/" + username
+  }, "Follow"));
+};
+
+exports.Suggestion = Suggestion;
+},{"react":"node_modules/react/index.js"}],"page/HomePage/HomePage.tsx":[function(require,module,exports) {
 "use strict";
 
 var __makeTemplateObject = this && this.__makeTemplateObject || function (cooked, raw) {
@@ -90049,13 +90256,14 @@ var UserHeader_1 = __importDefault(require("../AddOns/Header/UserHeader"));
 
 var Story_1 = __importDefault(require("../Components/Story"));
 
-var suggestion_1 = __importDefault(require("../Components/suggestion"));
-
 var react_loading_1 = __importDefault(require("react-loading"));
 
 var Post_1 = require("../Components/Post");
 
+var Suggestion_1 = require("../Components/Suggestion");
+
 var selectPostHomeQuery = graphql_tag_1.default(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n    mutation selectPostHome($nextpost: String, $userId: String!){\n        selectPostHomePage(nextpost:$nextpost, user_id:$userId){\n            posts{\n            id\n            user_id\n            caption\n            created_at\n        }\n        nextpost\n        hasnext\n        }\n    }\n"], ["\n    mutation selectPostHome($nextpost: String, $userId: String!){\n        selectPostHomePage(nextpost:$nextpost, user_id:$userId){\n            posts{\n            id\n            user_id\n            caption\n            created_at\n        }\n        nextpost\n        hasnext\n        }\n    }\n"])));
+var getMutualQuery = graphql_tag_1.default(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n    mutation getMutuals($user_id: String!){\n  getMutualFriend(input: $user_id){\n    id\n    picture\n    username\n    full_name\n  }\n}\n"], ["\n    mutation getMutuals($user_id: String!){\n  getMutualFriend(input: $user_id){\n    id\n    picture\n    username\n    full_name\n  }\n}\n"])));
 
 function HomePage() {
   var _a = react_1.useState({
@@ -90090,6 +90298,10 @@ function HomePage() {
       selectPost = _f[0],
       selectPostData = _f[1];
 
+  var _g = client_1.useMutation(getMutualQuery),
+      getMutuals = _g[0],
+      getMutualData = _g[1];
+
   var loadingBtn = react_1.default.createElement("div", {
     className: "loadingAnimation"
   }, react_1.default.createElement(react_loading_1.default, {
@@ -90099,6 +90311,11 @@ function HomePage() {
     width: '100%'
   }));
   var user = JSON.parse(localStorage.getItem("user"));
+
+  var _h = react_1.useState(0),
+      mutualCount = _h[0],
+      setMutualCount = _h[1];
+
   console.log(user);
 
   function loadMoreItems() {
@@ -90143,6 +90360,12 @@ function HomePage() {
     nextPostKeyRef.current = nextpost;
   }, [nextpost]);
   react_1.useEffect(function () {
+    console.log("test =" + user.id);
+    getMutuals({
+      variables: {
+        user_id: user.id
+      }
+    });
     setObserver(new IntersectionObserver(function (entries, observer) {
       if (!entries[0].isIntersecting) {
         return;
@@ -90153,6 +90376,18 @@ function HomePage() {
       loadMoreItems();
     }));
   }, []);
+  react_1.useEffect(function () {
+    console.log("mutual hehe = " + getMutualData);
+
+    if (getMutualData.data != undefined && getMutualData.data != null) {
+      if (getMutualData.error != null) {
+        setMutualCount(0);
+      } else {
+        setMutualCount(getMutualData.data.getMutualFriend.length);
+        console.log(getMutualData.data.getMutualFriend);
+      }
+    }
+  }, [getMutualData]);
   react_1.useEffect(function () {
     if (observer === undefined || isLoading || nextpost == null || hasnext == false) {
       return;
@@ -90192,13 +90427,19 @@ function HomePage() {
   }, user.full_name))), react_1.default.createElement("a", {
     href: "#"
   }, "Switch")), react_1.default.createElement("span", null, "Suggestions For You ", react_1.default.createElement("a", {
-    href: "#"
-  }, "See All")), react_1.default.createElement(suggestion_1.default, null), react_1.default.createElement(suggestion_1.default, null), react_1.default.createElement(suggestion_1.default, null), react_1.default.createElement(suggestion_1.default, null), react_1.default.createElement(suggestion_1.default, null), react_1.default.createElement("div", null), react_1.default.createElement(Footer_1.default, null)))));
+    href: "/suggestion"
+  }, "See All")), mutualCount > 0 ? getMutualData.data.getMutualFriend.map(function (content) {
+    return react_1.default.createElement(Suggestion_1.Suggestion, {
+      key: content.id,
+      picture: content.picture,
+      username: content.username
+    });
+  }) : "No Mutual User", react_1.default.createElement("div", null), react_1.default.createElement(Footer_1.default, null)))));
 }
 
 exports.default = HomePage;
-var templateObject_1;
-},{"@apollo/client":"node_modules/@apollo/client/index.js","graphql-tag":"node_modules/graphql-tag/lib/index.js","react":"node_modules/react/index.js","../AddOns/Footer/Footer":"page/AddOns/Footer/Footer.tsx","../AddOns/Header/UserHeader":"page/AddOns/Header/UserHeader.tsx","../Components/Story":"page/Components/Story.tsx","../Components/suggestion":"page/Components/suggestion.tsx","react-loading":"node_modules/react-loading/dist/react-loading.js","../Components/Post":"page/Components/Post.tsx"}],"node_modules/react-google-login/dist/google-login.js":[function(require,module,exports) {
+var templateObject_1, templateObject_2;
+},{"@apollo/client":"node_modules/@apollo/client/index.js","graphql-tag":"node_modules/graphql-tag/lib/index.js","react":"node_modules/react/index.js","../AddOns/Footer/Footer":"page/AddOns/Footer/Footer.tsx","../AddOns/Header/UserHeader":"page/AddOns/Header/UserHeader.tsx","../Components/Story":"page/Components/Story.tsx","react-loading":"node_modules/react-loading/dist/react-loading.js","../Components/Post":"page/Components/Post.tsx","../Components/Suggestion":"page/Components/Suggestion.tsx"}],"node_modules/react-google-login/dist/google-login.js":[function(require,module,exports) {
 var define;
 !function(e,t){"object"==typeof exports&&"object"==typeof module?module.exports=t(require("react")):"function"==typeof define&&define.amd?define(["react"],t):"object"==typeof exports?exports.GoogleLogin=t(require("react")):e.GoogleLogin=t(e.react)}("undefined"!=typeof self?self:this,(function(e){return o={},t.m=n=[function(t){t.exports=e},function(e,t,n){e.exports=n(2)()},function(e,t,n){"use strict";function o(){}function r(){}var i=n(3);r.resetWarningCache=o,e.exports=function(){function e(e,t,n,o,r,a){if(a!==i){var c=Error("Calling PropTypes validators directly is not supported by the `prop-types` package. Use PropTypes.checkPropTypes() to call them. Read more at http://fb.me/use-check-prop-types");throw c.name="Invariant Violation",c}}function t(){return e}var n={array:e.isRequired=e,bool:e,func:e,number:e,object:e,string:e,symbol:e,any:e,arrayOf:t,element:e,elementType:e,instanceOf:t,node:e,objectOf:t,oneOf:t,oneOfType:t,shape:t,exact:t,checkPropTypes:r,resetWarningCache:o};return n.PropTypes=n}},function(e){"use strict";e.exports="SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED"},function(e,t,n){"use strict";function o(e,t){return function(e){if(Array.isArray(e))return e}(e)||function(e,t){if("undefined"!=typeof Symbol&&Symbol.iterator in Object(e)){var n=[],o=!0,r=!1,i=void 0;try{for(var a,c=e[Symbol.iterator]();!(o=(a=c.next()).done)&&(n.push(a.value),!t||n.length!==t);o=!0);}catch(e){r=!0,i=e}finally{try{o||null==c.return||c.return()}finally{if(r)throw i}}return n}}(e,t)||function(e,t){if(e){if("string"==typeof e)return r(e,t);var n=Object.prototype.toString.call(e).slice(8,-1);return"Object"===n&&e.constructor&&(n=e.constructor.name),"Map"===n||"Set"===n?Array.from(n):"Arguments"===n||/^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)?r(e,t):void 0}}(e,t)||function(){throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")}()}function r(e,t){null!=t&&t<=e.length||(t=e.length);for(var n=0,o=Array(t);n<t;n++)o[n]=e[n];return o}function i(e,t){return function(e){if(Array.isArray(e))return e}(e)||function(e,t){if("undefined"!=typeof Symbol&&Symbol.iterator in Object(e)){var n=[],o=!0,r=!1,i=void 0;try{for(var a,c=e[Symbol.iterator]();!(o=(a=c.next()).done)&&(n.push(a.value),!t||n.length!==t);o=!0);}catch(e){r=!0,i=e}finally{try{o||null==c.return||c.return()}finally{if(r)throw i}}return n}}(e,t)||function(e,t){if(e){if("string"==typeof e)return a(e,t);var n=Object.prototype.toString.call(e).slice(8,-1);return"Object"===n&&e.constructor&&(n=e.constructor.name),"Map"===n||"Set"===n?Array.from(n):"Arguments"===n||/^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)?a(e,t):void 0}}(e,t)||function(){throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")}()}function a(e,t){null!=t&&t<=e.length||(t=e.length);for(var n=0,o=Array(t);n<t;n++)o[n]=e[n];return o}function c(e,t){return function(e){if(Array.isArray(e))return e}(e)||function(e,t){if("undefined"!=typeof Symbol&&Symbol.iterator in Object(e)){var n=[],o=!0,r=!1,i=void 0;try{for(var a,c=e[Symbol.iterator]();!(o=(a=c.next()).done)&&(n.push(a.value),!t||n.length!==t);o=!0);}catch(e){r=!0,i=e}finally{try{o||null==c.return||c.return()}finally{if(r)throw i}}return n}}(e,t)||function(e,t){if(e){if("string"==typeof e)return u(e,t);var n=Object.prototype.toString.call(e).slice(8,-1);return"Object"===n&&e.constructor&&(n=e.constructor.name),"Map"===n||"Set"===n?Array.from(n):"Arguments"===n||/^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)?u(e,t):void 0}}(e,t)||function(){throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")}()}function u(e,t){null!=t&&t<=e.length||(t=e.length);for(var n=0,o=Array(t);n<t;n++)o[n]=e[n];return o}function l(e,t){return function(e){if(Array.isArray(e))return e}(e)||function(e,t){if("undefined"!=typeof Symbol&&Symbol.iterator in Object(e)){var n=[],o=!0,r=!1,i=void 0;try{for(var a,c=e[Symbol.iterator]();!(o=(a=c.next()).done)&&(n.push(a.value),!t||n.length!==t);o=!0);}catch(e){r=!0,i=e}finally{try{o||null==c.return||c.return()}finally{if(r)throw i}}return n}}(e,t)||function(e,t){if(e){if("string"==typeof e)return s(e,t);var n=Object.prototype.toString.call(e).slice(8,-1);return"Object"===n&&e.constructor&&(n=e.constructor.name),"Map"===n||"Set"===n?Array.from(n):"Arguments"===n||/^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)?s(e,t):void 0}}(e,t)||function(){throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")}()}function s(e,t){null!=t&&t<=e.length||(t=e.length);for(var n=0,o=Array(t);n<t;n++)o[n]=e[n];return o}function f(e,t,n,o,r,i){var a=e.getElementsByTagName(t)[0],c=a,u=a;(u=e.createElement(t)).id=n,u.src=o,c&&c.parentNode?c.parentNode.insertBefore(u,c):e.head.appendChild(u),u.onerror=i,u.onload=r}function d(e,t){var n=e.getElementById(t);n&&n.parentNode.removeChild(n)}function p(e){return b.a.createElement("span",{style:{paddingRight:10,fontWeight:500,paddingLeft:e.icon?0:10,paddingTop:10,paddingBottom:10}},e.children)}function g(e){return b.a.createElement("div",{style:{marginRight:10,background:e.active?"#eee":"#fff",padding:10,borderRadius:2}},b.a.createElement("svg",{width:"18",height:"18",xmlns:"http://www.w3.org/2000/svg"},b.a.createElement("g",{fill:"#000",fillRule:"evenodd"},b.a.createElement("path",{d:"M9 3.48c1.69 0 2.83.73 3.48 1.34l2.54-2.48C13.46.89 11.43 0 9 0 5.48 0 2.44 2.02.96 4.96l2.91 2.26C4.6 5.05 6.62 3.48 9 3.48z",fill:"#EA4335"}),b.a.createElement("path",{d:"M17.64 9.2c0-.74-.06-1.28-.19-1.84H9v3.34h4.96c-.1.83-.64 2.08-1.84 2.92l2.84 2.2c1.7-1.57 2.68-3.88 2.68-6.62z",fill:"#4285F4"}),b.a.createElement("path",{d:"M3.88 10.78A5.54 5.54 0 0 1 3.58 9c0-.62.11-1.22.29-1.78L.96 4.96A9.008 9.008 0 0 0 0 9c0 1.45.35 2.82.96 4.04l2.92-2.26z",fill:"#FBBC05"}),b.a.createElement("path",{d:"M9 18c2.43 0 4.47-.8 5.96-2.18l-2.84-2.2c-.76.53-1.78.9-3.12.9-2.38 0-4.4-1.57-5.12-3.74L.97 13.04C2.45 15.98 5.48 18 9 18z",fill:"#34A853"}),b.a.createElement("path",{fill:"none",d:"M0 0h18v18H0z"}))))}function y(e){var t=i(Object(m.useState)(!1),2),n=t[0],o=t[1],r=i(Object(m.useState)(!1),2),a=r[0],c=r[1],u=e.tag,l=e.type,s=e.className,f=e.disabledStyle,d=e.buttonText,y=e.children,v=e.render,S=e.theme,j=e.icon,O=e.disabled,x=h({onSuccess:e.onSuccess,onAutoLoadFinished:e.onAutoLoadFinished,onRequest:e.onRequest,onFailure:e.onFailure,onScriptLoadFailure:e.onScriptLoadFailure,clientId:e.clientId,cookiePolicy:e.cookiePolicy,loginHint:e.loginHint,hostedDomain:e.hostedDomain,autoLoad:e.autoLoad,isSignedIn:e.isSignedIn,fetchBasicProfile:e.fetchBasicProfile,redirectUri:e.redirectUri,discoveryDocs:e.discoveryDocs,uxMode:e.uxMode,scope:e.scope,accessType:e.accessType,responseType:e.responseType,jsSrc:e.jsSrc,prompt:e.prompt}),I=x.signIn,w=O||!x.loaded;if(v)return v({onClick:I,disabled:w});var k={backgroundColor:"dark"===S?"rgb(66, 133, 244)":"#fff",display:"inline-flex",alignItems:"center",color:"dark"===S?"#fff":"rgba(0, 0, 0, .54)",boxShadow:"0 2px 2px 0 rgba(0, 0, 0, .24), 0 0 1px 0 rgba(0, 0, 0, .24)",padding:0,borderRadius:2,border:"1px solid transparent",fontSize:14,fontWeight:"500",fontFamily:"Roboto, sans-serif"},A={cursor:"pointer",backgroundColor:"dark"===S?"#3367D6":"#eee",color:"dark"===S?"#fff":"rgba(0, 0, 0, .54)",opacity:1},_=w?Object.assign({},k,f):a?Object.assign({},k,A):n?Object.assign({},k,{cursor:"pointer",opacity:.9}):k;return b.a.createElement(u,{onMouseEnter:function(){return o(!0)},onMouseLeave:function(){o(!1),c(!1)},onMouseDown:function(){return c(!0)},onMouseUp:function(){return c(!1)},onClick:I,style:_,type:l,disabled:w,className:s},[j&&b.a.createElement(g,{key:1,active:a}),b.a.createElement(p,{icon:j,key:2},y||d)])}n.r(t),n.d(t,"default",(function(){return S})),n.d(t,"GoogleLogin",(function(){return S})),n.d(t,"GoogleLogout",(function(){return O})),n.d(t,"useGoogleLogin",(function(){return h})),n.d(t,"useGoogleLogout",(function(){return j}));var m=n(0),b=n.n(m),h=(n(1),function(e){function t(e){var t=e.getBasicProfile(),n=e.getAuthResponse(!0);e.googleId=t.getId(),e.tokenObj=n,e.tokenId=n.id_token,e.accessToken=n.access_token,e.profileObj={googleId:t.getId(),imageUrl:t.getImageUrl(),email:t.getEmail(),name:t.getName(),givenName:t.getGivenName(),familyName:t.getFamilyName()},i(e)}function n(e){if(e&&e.preventDefault(),P){var n=window.gapi.auth2.getAuthInstance(),o={prompt:L};p(),"code"===_?n.grantOfflineAccess(o).then((function(e){return i(e)}),(function(e){return l(e)})):n.signIn(o).then((function(e){return t(e)}),(function(e){return l(e)}))}}var r=e.onSuccess,i=void 0===r?function(){}:r,a=e.onAutoLoadFinished,c=void 0===a?function(){}:a,u=e.onFailure,l=void 0===u?function(){}:u,s=e.onRequest,p=void 0===s?function(){}:s,g=e.onScriptLoadFailure,y=e.clientId,b=e.cookiePolicy,h=e.loginHint,v=e.hostedDomain,S=e.autoLoad,j=e.isSignedIn,O=e.fetchBasicProfile,x=e.redirectUri,I=e.discoveryDocs,w=e.uxMode,k=e.scope,A=e.accessType,_=e.responseType,E=e.jsSrc,T=void 0===E?"https://apis.google.com/js/api.js":E,L=e.prompt,M=o(Object(m.useState)(!1),2),P=M[0],C=M[1];return Object(m.useEffect)((function(){var e=!1,n=g||l;return f(document,"script","google-login",T,(function(){var o={client_id:y,cookie_policy:b,login_hint:h,hosted_domain:v,fetch_basic_profile:O,discoveryDocs:I,ux_mode:w,redirect_uri:x,scope:k,access_type:A};"code"===_&&(o.access_type="offline"),window.gapi.load("auth2",(function(){var r=window.gapi.auth2.getAuthInstance();r?r.then((function(){e||(j&&r.isSignedIn.get()?(C(!0),c(!0),t(r.currentUser.get())):(C(!0),c(!1)))}),(function(e){l(e)})):window.gapi.auth2.init(o).then((function(n){if(!e){C(!0);var o=j&&n.isSignedIn.get();c(o),o&&t(n.currentUser.get())}}),(function(e){C(!0),c(!1),n(e)}))}))}),(function(e){n(e)})),function(){e=!0,d(document,"google-login")}}),[]),Object(m.useEffect)((function(){S&&n()}),[P]),{signIn:n,loaded:P}});function v(e){var t=l(Object(m.useState)(!1),2),n=t[0],o=t[1],r=l(Object(m.useState)(!1),2),i=r[0],a=r[1],c=e.tag,u=e.type,s=e.className,f=e.disabledStyle,d=e.buttonText,y=e.children,h=e.render,v=e.theme,S=e.icon,O=e.disabled,x=j({jsSrc:e.jsSrc,onFailure:e.onFailure,onScriptLoadFailure:e.onScriptLoadFailure,clientId:e.clientId,cookiePolicy:e.cookiePolicy,loginHint:e.loginHint,hostedDomain:e.hostedDomain,fetchBasicProfile:e.fetchBasicProfile,discoveryDocs:e.discoveryDocs,uxMode:e.uxMode,redirectUri:e.redirectUri,scope:e.scope,accessType:e.accessType,onLogoutSuccess:e.onLogoutSuccess}),I=x.signOut,w=O||!x.loaded;if(h)return h({onClick:I,disabled:w});var k={backgroundColor:"dark"===v?"rgb(66, 133, 244)":"#fff",display:"inline-flex",alignItems:"center",color:"dark"===v?"#fff":"rgba(0, 0, 0, .54)",boxShadow:"0 2px 2px 0 rgba(0, 0, 0, .24), 0 0 1px 0 rgba(0, 0, 0, .24)",padding:0,borderRadius:2,border:"1px solid transparent",fontSize:14,fontWeight:"500",fontFamily:"Roboto, sans-serif"},A={cursor:"pointer",backgroundColor:"dark"===v?"#3367D6":"#eee",color:"dark"===v?"#fff":"rgba(0, 0, 0, .54)",opacity:1},_=w?Object.assign({},k,f):i?Object.assign({},k,A):n?Object.assign({},k,{cursor:"pointer",opacity:.9}):k;return b.a.createElement(c,{onMouseEnter:function(){return o(!0)},onMouseLeave:function(){o(!1),a(!1)},onMouseDown:function(){return a(!0)},onMouseUp:function(){return a(!1)},onClick:I,style:_,type:u,disabled:w,className:s},[S&&b.a.createElement(g,{key:1,active:i}),b.a.createElement(p,{icon:S,key:2},y||d)])}y.defaultProps={type:"button",tag:"button",buttonText:"Sign in with Google",scope:"profile email",accessType:"online",prompt:"",cookiePolicy:"single_host_origin",fetchBasicProfile:!0,isSignedIn:!1,uxMode:"popup",disabledStyle:{opacity:.6},icon:!0,theme:"light",onRequest:function(){}};var S=y,j=function(e){var t=e.jsSrc,n=void 0===t?"https://apis.google.com/js/api.js":t,o=e.onFailure,r=e.onScriptLoadFailure,i=e.clientId,a=e.cookiePolicy,u=e.loginHint,l=e.hostedDomain,s=e.fetchBasicProfile,p=e.discoveryDocs,g=e.uxMode,y=e.redirectUri,b=e.scope,h=e.accessType,v=e.onLogoutSuccess,S=c(Object(m.useState)(!1),2),j=S[0],O=S[1],x=Object(m.useCallback)((function(){if(window.gapi){var e=window.gapi.auth2.getAuthInstance();null!=e&&e.then((function(){e.signOut().then((function(){e.disconnect(),v()}))}),(function(e){return o(e)}))}}),[v]);return Object(m.useEffect)((function(){var e=r||o;return f(document,"script","google-login",n,(function(){var t={client_id:i,cookie_policy:a,login_hint:u,hosted_domain:l,fetch_basic_profile:s,discoveryDocs:p,ux_mode:g,redirect_uri:y,scope:b,access_type:h};window.gapi.load("auth2",(function(){window.gapi.auth2.getAuthInstance()?O(!0):window.gapi.auth2.init(t).then((function(){return O(!0)}),(function(t){return e(t)}))}))}),(function(t){e(t)})),function(){d(document,"google-login")}}),[]),{signOut:x,loaded:j}};v.defaultProps={type:"button",tag:"button",buttonText:"Logout of Google",disabledStyle:{opacity:.6},icon:!0,theme:"light",jsSrc:"https://apis.google.com/js/api.js"};var O=v}],t.c=o,t.d=function(e,n,o){t.o(e,n)||Object.defineProperty(e,n,{enumerable:!0,get:o})},t.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},t.t=function(e,n){if(1&n&&(e=t(e)),8&n)return e;if(4&n&&"object"==typeof e&&e&&e.__esModule)return e;var o=Object.create(null);if(t.r(o),Object.defineProperty(o,"default",{enumerable:!0,value:e}),2&n&&"string"!=typeof e)for(var r in e)t.d(o,r,function(t){return e[t]}.bind(null,r));return o},t.n=function(e){var n=e&&e.__esModule?function(){return e.default}:function(){return e};return t.d(n,"a",n),n},t.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},t.p="",t(t.s=4);function t(e){if(o[e])return o[e].exports;var r=o[e]={i:e,l:!1,exports:{}};return n[e].call(r.exports,r,r.exports,t),r.l=!0,r.exports}var n,o}));
 },{"react":"node_modules/react/index.js"}],"page/Components/GmailLogin.tsx":[function(require,module,exports) {
@@ -94625,7 +94866,7 @@ var react_loading_1 = __importDefault(require("react-loading"));
 
 var react_animated_popup_1 = __importDefault(require("react-animated-popup"));
 
-var postQuery = client_1.gql(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n\n    mutation insertPost($detail: [newPostContent]!, $caption: String!, $user_id: String!){\n        insertNewPost(input:{\n        content:$detail,\n        caption: $caption,\n        user_id: $user_id\n    }){\n        caption\n    }\n    }\n\n"], ["\n\n    mutation insertPost($detail: [newPostContent]!, $caption: String!, $user_id: String!){\n        insertNewPost(input:{\n        content:$detail,\n        caption: $caption,\n        user_id: $user_id\n    }){\n        caption\n    }\n    }\n\n"])));
+var postQuery = client_1.gql(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n\n    mutation insertPost($detail: [newPostContent]!, $caption: String!, $user_id: String!){\n        insertNewPost(input:{\n        content:$detail,\n        caption: $caption,\n        user_id: $user_id\n    }){\n        caption\n        id\n    }\n    }\n\n"], ["\n\n    mutation insertPost($detail: [newPostContent]!, $caption: String!, $user_id: String!){\n        insertNewPost(input:{\n        content:$detail,\n        caption: $caption,\n        user_id: $user_id\n    }){\n        caption\n        id\n    }\n    }\n\n"])));
 
 function UploadPage() {
   var _a = react_1.useState({
@@ -94681,6 +94922,10 @@ function UploadPage() {
       uploadProgress = _j[0],
       setUploadProgress = _j[1];
 
+  var _k = react_1.useState(false),
+      autoShare = _k[0],
+      setAutoShare = _k[1];
+
   react_1.useEffect(function () {
     setloadingStyle({
       "width": uploadProgress + "&"
@@ -94688,7 +94933,9 @@ function UploadPage() {
     console.log("tes");
   }, [uploadProgress]);
   react_1.useEffect(function () {
-    if (data !== undefined && data != null) {}
+    if (data !== undefined && data != null) {
+      if (autoShare) handleShareByTwitter(data.insertNewPost.id);
+    }
   }, [data]);
 
   function left() {
@@ -94764,6 +95011,10 @@ function UploadPage() {
         }
       });
     });
+  }
+
+  function handleShareByTwitter(postId) {
+    window.open("http://www.twitter.com/share?url=" + location.host + "/post/" + postId, "_blank");
   }
 
   function handleSubmit() {
@@ -94940,7 +95191,10 @@ function UploadPage() {
   }, react_1.default.createElement("input", {
     type: "checkbox",
     name: "share",
-    id: "shareChk"
+    id: "shareChk",
+    onClick: function onClick() {
+      return setAutoShare(!autoShare);
+    }
   }), " share to other social media")), react_1.default.createElement("div", {
     id: "loadingBarBackground"
   }, react_1.default.createElement("div", {
@@ -104587,7 +104841,59 @@ function PostPage() {
 
 exports.default = PostPage;
 var templateObject_1, templateObject_2, templateObject_3, templateObject_4, templateObject_5, templateObject_6, templateObject_7, templateObject_8, templateObject_9, templateObject_10, templateObject_11, templateObject_12, templateObject_13;
-},{"@apollo/client":"node_modules/@apollo/client/index.js","graphql-tag":"node_modules/graphql-tag/lib/index.js","react":"node_modules/react/index.js","react-animated-popup":"node_modules/react-animated-popup/index.js","react-router":"node_modules/react-router/esm/react-router.js","../AddOns/Footer/Footer":"page/AddOns/Footer/Footer.tsx","../AddOns/Header/UserHeader":"page/AddOns/Header/UserHeader.tsx","reactjs-popup":"node_modules/reactjs-popup/dist/reactjs-popup.esm.js","millify":"node_modules/millify/dist/millify.js","react-copy-to-clipboard":"node_modules/react-copy-to-clipboard/lib/index.js","react-loading":"node_modules/react-loading/dist/react-loading.js","../Components/Comment":"page/Components/Comment.tsx"}],"App.tsx":[function(require,module,exports) {
+},{"@apollo/client":"node_modules/@apollo/client/index.js","graphql-tag":"node_modules/graphql-tag/lib/index.js","react":"node_modules/react/index.js","react-animated-popup":"node_modules/react-animated-popup/index.js","react-router":"node_modules/react-router/esm/react-router.js","../AddOns/Footer/Footer":"page/AddOns/Footer/Footer.tsx","../AddOns/Header/UserHeader":"page/AddOns/Header/UserHeader.tsx","reactjs-popup":"node_modules/reactjs-popup/dist/reactjs-popup.esm.js","millify":"node_modules/millify/dist/millify.js","react-copy-to-clipboard":"node_modules/react-copy-to-clipboard/lib/index.js","react-loading":"node_modules/react-loading/dist/react-loading.js","../Components/Comment":"page/Components/Comment.tsx"}],"page/SettingPage/SettingPage.tsx":[function(require,module,exports) {
+"use strict";
+
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var react_1 = __importDefault(require("react"));
+
+var Footer_1 = __importDefault(require("../AddOns/Footer/Footer"));
+
+var UserHeader_1 = __importDefault(require("../AddOns/Header/UserHeader"));
+
+function SettingPage() {
+  return react_1.default.createElement(react_1.default.Fragment, null, react_1.default.createElement(UserHeader_1.default, null), react_1.default.createElement("div", {
+    className: "settingOuterDiv"
+  }, "Setting"), react_1.default.createElement(Footer_1.default, null));
+}
+
+exports.default = SettingPage;
+},{"react":"node_modules/react/index.js","../AddOns/Footer/Footer":"page/AddOns/Footer/Footer.tsx","../AddOns/Header/UserHeader":"page/AddOns/Header/UserHeader.tsx"}],"page/SuggestionPage/SuggestionPage.tsx":[function(require,module,exports) {
+"use strict";
+
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var react_1 = __importDefault(require("react"));
+
+var Footer_1 = __importDefault(require("../AddOns/Footer/Footer"));
+
+var UserHeader_1 = __importDefault(require("../AddOns/Header/UserHeader"));
+
+function SuggestionPage() {
+  return react_1.default.createElement(react_1.default.Fragment, null, react_1.default.createElement(UserHeader_1.default, null), react_1.default.createElement("div", {
+    className: "settingOuterDiv"
+  }, "Suggestions"), react_1.default.createElement(Footer_1.default, null));
+}
+
+exports.default = SuggestionPage;
+},{"react":"node_modules/react/index.js","../AddOns/Footer/Footer":"page/AddOns/Footer/Footer.tsx","../AddOns/Header/UserHeader":"page/AddOns/Header/UserHeader.tsx"}],"App.tsx":[function(require,module,exports) {
 "use strict";
 
 var __createBinding = this && this.__createBinding || (Object.create ? function (o, m, k, k2) {
@@ -104669,6 +104975,10 @@ require("firebase/storage");
 
 var PostPage_1 = __importDefault(require("./page/PostPage/PostPage"));
 
+var SettingPage_1 = __importDefault(require("./page/SettingPage/SettingPage"));
+
+var SuggestionPage_1 = __importDefault(require("./page/SuggestionPage/SuggestionPage"));
+
 exports.JWTContext = react_1.createContext(["", function () {}]);
 var firebaseConfig = app_1.default.initializeApp({
   apiKey: "AIzaSyCbDGCRMWIKB13JxL4lZHMzFf_JBA7eEYA",
@@ -104739,83 +105049,17 @@ function App() {
   }, jwt !== "" ? react_1.default.createElement(ActivityPage_1.default, null) : react_1.default.createElement(LoginPage_1.default, null)), react_1.default.createElement(react_router_dom_1.Route, {
     exact: true,
     path: "/post/:postId"
-  }, jwt !== "" ? react_1.default.createElement(PostPage_1.default, null) : react_1.default.createElement(LoginPage_1.default, null)))))));
+  }, jwt !== "" ? react_1.default.createElement(PostPage_1.default, null) : react_1.default.createElement(LoginPage_1.default, null)), react_1.default.createElement(react_router_dom_1.Route, {
+    exact: true,
+    path: "/setting"
+  }, jwt !== "" ? react_1.default.createElement(SettingPage_1.default, null) : react_1.default.createElement(LoginPage_1.default, null)), react_1.default.createElement(react_router_dom_1.Route, {
+    exact: true,
+    path: "/suggestion"
+  }, jwt !== "" ? react_1.default.createElement(SuggestionPage_1.default, null) : react_1.default.createElement(LoginPage_1.default, null)))))));
 }
 
 exports.default = App;
-},{"react":"node_modules/react/index.js","react-router-dom":"node_modules/react-router-dom/esm/react-router-dom.js","./page/ActivityPage/ActivityPage":"page/ActivityPage/ActivityPage.tsx","./page/DMPage/DMPage":"page/DMPage/DMPage.tsx","./page/ExplorePage/ExplorePage":"page/ExplorePage/ExplorePage.tsx","./page/ForgotPasswordPage/ForgotPasswordPage":"page/ForgotPasswordPage/ForgotPasswordPage.tsx","./page/HomePage/HomePage":"page/HomePage/HomePage.tsx","./page/LoginPage/LoginPage":"page/LoginPage/LoginPage.tsx","./page/Profile/Profile":"page/Profile/Profile.tsx","./page/RegisterPage/RegisterPage":"page/RegisterPage/RegisterPage.tsx","./page/ResetPasswordPage/ResetPasswordPage":"page/ResetPasswordPage/ResetPasswordPage.tsx","./page/StoryPage/StoryPage":"page/StoryPage/StoryPage.tsx","./page/UploadPage/UploadPage":"page/UploadPage/UploadPage.tsx","./page/VerifyEmailPage/VerifyEmailPage":"page/VerifyEmailPage/VerifyEmailPage.tsx","firebase/app":"node_modules/firebase/app/dist/index.esm.js","firebase/storage":"node_modules/firebase/storage/dist/index.esm.js","./page/PostPage/PostPage":"page/PostPage/PostPage.tsx"}],"node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
-var bundleURL = null;
-
-function getBundleURLCached() {
-  if (!bundleURL) {
-    bundleURL = getBundleURL();
-  }
-
-  return bundleURL;
-}
-
-function getBundleURL() {
-  // Attempt to find the URL of the current script and use that as the base URL
-  try {
-    throw new Error();
-  } catch (err) {
-    var matches = ('' + err.stack).match(/(https?|file|ftp|chrome-extension|moz-extension):\/\/[^)\n]+/g);
-
-    if (matches) {
-      return getBaseURL(matches[0]);
-    }
-  }
-
-  return '/';
-}
-
-function getBaseURL(url) {
-  return ('' + url).replace(/^((?:https?|file|ftp|chrome-extension|moz-extension):\/\/.+)?\/[^/]+(?:\?.*)?$/, '$1') + '/';
-}
-
-exports.getBundleURL = getBundleURLCached;
-exports.getBaseURL = getBaseURL;
-},{}],"node_modules/parcel-bundler/src/builtins/css-loader.js":[function(require,module,exports) {
-var bundle = require('./bundle-url');
-
-function updateLink(link) {
-  var newLink = link.cloneNode();
-
-  newLink.onload = function () {
-    link.remove();
-  };
-
-  newLink.href = link.href.split('?')[0] + '?' + Date.now();
-  link.parentNode.insertBefore(newLink, link.nextSibling);
-}
-
-var cssTimeout = null;
-
-function reloadCSS() {
-  if (cssTimeout) {
-    return;
-  }
-
-  cssTimeout = setTimeout(function () {
-    var links = document.querySelectorAll('link[rel="stylesheet"]');
-
-    for (var i = 0; i < links.length; i++) {
-      if (bundle.getBaseURL(links[i].href) === bundle.getBundleURL()) {
-        updateLink(links[i]);
-      }
-    }
-
-    cssTimeout = null;
-  }, 50);
-}
-
-module.exports = reloadCSS;
-},{"./bundle-url":"node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"style.scss":[function(require,module,exports) {
-var reloadCSS = require('_css_loader');
-
-module.hot.dispose(reloadCSS);
-module.hot.accept(reloadCSS);
-},{"_css_loader":"node_modules/parcel-bundler/src/builtins/css-loader.js"}],"index.tsx":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","react-router-dom":"node_modules/react-router-dom/esm/react-router-dom.js","./page/ActivityPage/ActivityPage":"page/ActivityPage/ActivityPage.tsx","./page/DMPage/DMPage":"page/DMPage/DMPage.tsx","./page/ExplorePage/ExplorePage":"page/ExplorePage/ExplorePage.tsx","./page/ForgotPasswordPage/ForgotPasswordPage":"page/ForgotPasswordPage/ForgotPasswordPage.tsx","./page/HomePage/HomePage":"page/HomePage/HomePage.tsx","./page/LoginPage/LoginPage":"page/LoginPage/LoginPage.tsx","./page/Profile/Profile":"page/Profile/Profile.tsx","./page/RegisterPage/RegisterPage":"page/RegisterPage/RegisterPage.tsx","./page/ResetPasswordPage/ResetPasswordPage":"page/ResetPasswordPage/ResetPasswordPage.tsx","./page/StoryPage/StoryPage":"page/StoryPage/StoryPage.tsx","./page/UploadPage/UploadPage":"page/UploadPage/UploadPage.tsx","./page/VerifyEmailPage/VerifyEmailPage":"page/VerifyEmailPage/VerifyEmailPage.tsx","firebase/app":"node_modules/firebase/app/dist/index.esm.js","firebase/storage":"node_modules/firebase/storage/dist/index.esm.js","./page/PostPage/PostPage":"page/PostPage/PostPage.tsx","./page/SettingPage/SettingPage":"page/SettingPage/SettingPage.tsx","./page/SuggestionPage/SuggestionPage":"page/SuggestionPage/SuggestionPage.tsx"}],"index.tsx":[function(require,module,exports) {
 "use strict";
 
 var __importDefault = this && this.__importDefault || function (mod) {
@@ -104880,7 +105124,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56375" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50416" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
